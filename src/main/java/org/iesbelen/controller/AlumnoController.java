@@ -23,11 +23,4 @@ public class AlumnoController {
         log.info("Creando un nuevo alumno");
         return this.alumnoService.create(alumno);
     }
-
-    @GetMapping("/alumnos/{id}")
-    public Alumno one(@PathVariable("id") Long id) {
-        log.info("Accediendo al alumno con código {}", id);
-        return this.alumnoService.one(id);
-    }
-
 }

@@ -5,7 +5,9 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-  Home
+  <div class="max-w-7xl m-auto mt-10">
+    <p>Home</p>
+  </div>
   `,
   styleUrl: './home.component.css'
 })
