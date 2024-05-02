@@ -13,6 +13,8 @@ CREATE TABLE instrumento (
 DROP TABLE IF EXISTS `alumno`;
 CREATE TABLE alumno (
     id INT PRIMARY KEY,
+    email VARCHAR(100),
+    password VARCHAR(100),
     nombre VARCHAR(100),
     apellidos VARCHAR(100),
     curso INT
@@ -103,17 +105,17 @@ INSERT INTO `instrumento` (`id`, `nombre`) VALUES
 
 -- Volcando datos para la tabla amadeus.alumno:
 DELETE FROM `alumno`;
-INSERT INTO `alumno` (`id`, `nombre`,`apellidos`,`curso`) VALUES
-	(1, 'Alberto', 'Díaz Muñoz', 4),
-	(2, 'Jonathan', 'Barreiro Gómez', 4),
-	(3, 'María', 'Torres González', 3),
-	(4, 'Jorge Antonio', 'Aranburu Pazos', 3),
-	(5, 'María José', 'Garrido Martínez', 2),
-	(6, 'Antonia', 'Grajales García', 2),
-	(7, 'Lucas', 'Rodríguez Jiménez', 1),
-	(8, 'Alonso', 'Bazaga Cuesta', 1),
-	(9, 'Alicia', 'Robles Olmedo', 1),
-    (10, 'Federico', 'Cebrián López', 1);
+INSERT INTO `alumno` (`id`, `email`, `password`, `nombre`,`apellidos`,`curso`) VALUES
+	(1, 'albertodm@gmail.com', 'user', 'Alberto', 'Díaz Muñoz', 4),
+	(2, 'jonathanbg@gmail.com', 'user', 'Jonathan', 'Barreiro Gómez', 4),
+	(3, 'mariatg@gmail.com', 'user', 'María', 'Torres González', 3),
+	(4, 'jorgeantonioap@gmail.com', 'user', 'Jorge Antonio', 'Aranburu Pazos', 3),
+	(5, 'mariajosegm@gmail.com', 'user', 'María José', 'Garrido Martínez', 2),
+	(6, 'antoniagg@gmail.com', 'user', 'Antonia', 'Grajales García', 2),
+	(7, 'lucasrj@gmail.com', 'user', 'Lucas', 'Rodríguez Jiménez', 1),
+	(8, 'alonsobc@gmail.com', 'user', 'Alonso', 'Bazaga Cuesta', 1),
+	(9, 'aliciaro@gmail.com', 'user', 'Alicia', 'Robles Olmedo', 1),
+    (10, 'federicocl@gmail.com', 'user', 'Federico', 'Cebrián López', 1);
 
 -- Volcando datos para la tabla amadeus.alumno:
 DELETE FROM `profesor`;

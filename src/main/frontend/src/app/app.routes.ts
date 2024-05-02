@@ -6,6 +6,8 @@ import { AdminMainComponent } from './components/admin/admin-main/admin-main.com
 import { ProfesoradoListaComponent } from './components/admin/profesorado/profesorado-lista/profesorado-lista.component';
 import { AudicionesListaComponent } from './components/admin/audiciones/audiciones-lista/audiciones-lista.component';
 import { AdmisionesListaComponent } from './components/admin/admisiones/admisiones-lista/admisiones-lista.component';
+import { adminGuard } from './guards/admin.guard';
+import { LoginComponent } from './components/auth/login/login.component';
 
 export const routes: Routes = [
     {
@@ -15,6 +17,7 @@ export const routes: Routes = [
     },
     {
         path: 'admin',
+        canActivate: [adminGuard],
         component: AdminMainComponent,
         title: 'Administración',
         children: [
@@ -44,5 +47,10 @@ export const routes: Routes = [
                 title: 'Administración Admisiones'
             }
         ]
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
+        title: 'Login'
     },
 ];

@@ -29,7 +29,7 @@ import { AdmisionesService } from '../../../../services/admisiones.service';
         </th>
         <th
             class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left font-semibold text-blue-900 tracking-wider">
-            Curso solicitado
+            Decisión
         </th>
         <th
             class="border-b-2 border-gray-200 bg-blue-100">
@@ -42,16 +42,16 @@ import { AdmisionesService } from '../../../../services/admisiones.service';
           {{ admision.idAdmision }}
         </td>
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
-          {{ admision.idAlumno }}
+          {{ admision.alumno.id }}
         </td>
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
-          {{ admision.alumno }}
+          {{ admision.alumno.nombre + ' ' + admision.alumno.apellidos }}
         </td>
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
           {{ admision.instrumento }}
         </td>
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
-          {{ admision.curso }}
+          {{ admision.decision == null ? 'Decisión no tomada' : (admision.decision ? 'Admitido' : 'No admitido') }}
         </td>
         <td class="border-b border-gray-200 bg-white text-blue-900 text-center">
           <button class="mr-3">

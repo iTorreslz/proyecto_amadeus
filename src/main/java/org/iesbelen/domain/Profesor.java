@@ -18,7 +18,10 @@ public class Profesor {
     @Column(name="id")
     private long id;
 
+    @Column(name="nombre")
     private String nombre;
+
+    @Column(name="apellidos")
     private String apellidos;
 
     @ManyToOne
