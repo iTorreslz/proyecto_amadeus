@@ -30,10 +30,10 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                         <a [routerLink]="['/']" class="mr-3 hover:bg-blue-400 p-2 rounded-xl">
                           Sobre nosotros
                         </a>
-                        <button (click)="logueado()">si</button>
+                        
                     </div>
 
-                    <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
+                    <div style="display: none;" class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
                         <a [routerLink]="['/']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
                           Registrarse
                         </a>
@@ -51,7 +51,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                         </a>
                     </div>
 
-                    <div style="display: none;" class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
+                    <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
                         <a [routerLink]="['/admin']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
                           Administrar
                         </a>

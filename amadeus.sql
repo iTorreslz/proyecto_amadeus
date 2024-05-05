@@ -46,6 +46,8 @@ CREATE TABLE nota_alumno (
 DROP TABLE IF EXISTS `profesor`;
 CREATE TABLE profesor (
     id INT PRIMARY KEY,
+    email VARCHAR(100),
+    password VARCHAR(100),
     nombre VARCHAR(100),
     apellidos VARCHAR(100),
     instrumento INT,
@@ -99,7 +101,7 @@ CREATE TABLE audicion_alumno (
 -- Volcando datos para la tabla amadeus.alumno:
 DELETE FROM `admin`;
 INSERT INTO `admin` (`id`, `email`, `password`) VALUES
-	(1, 'ivantl@gmail.com', '1234');
+	(1, 'ivantladmin@gmail.com', '1234');
 
 -- Volcando datos para la tabla amadeus.instrumento:
 DELETE FROM `instrumento`;
@@ -131,15 +133,15 @@ INSERT INTO `alumno` (`id`, `email`, `password`, `nombre`,`apellidos`,`curso`) V
 
 -- Volcando datos para la tabla amadeus.alumno:
 DELETE FROM `profesor`;
-INSERT INTO `profesor` (`id`, `nombre`, `apellidos`, `instrumento`) VALUES
-	(1, 'Juan José', 'Gil Ramos', '1'),
-    (2, 'Miguel', 'Navarro Gómez', '2'),
-    (3, 'Carmen Ainhoa', 'Núñez González', '3'),
-    (4, 'Alicia', 'Romero Molina', '4'),
-    (5, 'Laura', 'Blanco Rivas', '5'),
-    (6, 'Pilar', 'Suárez Ortega', '6'),
-    (7, 'Iván', 'Torres López', '7'),
-    (8, 'Alberto', 'Muñoz Sánchez', '8'),
-    (9, 'Ricardo', 'Rubio Morales', '9'),
-    (10, 'Clara', 'Lennon', '10');
+INSERT INTO `profesor` (`id`, `email`, `password`, `nombre`, `apellidos`, `instrumento`) VALUES
+	(1, 'juanjosegr@gmail.com', 'user', 'Juan José', 'Gil Ramos', '1'),
+    (2, 'miguelng@gmail.com', 'user', 'Miguel', 'Navarro Gómez', '2'),
+    (3, 'carmenainhoang@gmail.com', 'user', 'Carmen Ainhoa', 'Núñez González', '3'),
+    (4, 'aliciarm@gmail.com', 'user', 'Alicia', 'Romero Molina', '4'),
+    (5, 'laurabr@gmail.com', 'user', 'Laura', 'Blanco Rivas', '5'),
+    (6, 'pilarso@gmail.com', 'user', 'Pilar', 'Suárez Ortega', '6'),
+    (7, 'ivantl@gmail.com', 'user', 'Iván', 'Torres López', '7'),
+    (8, 'albertoms@gmail.com', 'user', 'Alberto', 'Muñoz Sánchez', '8'),
+    (9, 'ricardorm@gmail.com', 'user', 'Ricardo', 'Rubio Morales', '9'),
+    (10, 'claral@gmail.com', 'user', 'Clara', 'Lennon', '10');
     
