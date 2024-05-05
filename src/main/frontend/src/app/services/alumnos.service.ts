@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Alumno } from '../interfaces/alumno';
+import {Injectable} from '@angular/core';
+import {Alumno} from '../interfaces/alumno';
 
 @Injectable({
   providedIn: 'root'

@@ -1,10 +1,11 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, HttpClientModule],
   template: `
   <main>
         <nav class="border-b border-gray-300">
@@ -29,13 +30,14 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                         <a [routerLink]="['/']" class="mr-3 hover:bg-blue-400 p-2 rounded-xl">
                           Sobre nosotros
                         </a>
+                        <button (click)="logueado()">si</button>
                     </div>
 
-                    <div style="display: none;" class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
+                    <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
                         <a [routerLink]="['/']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
                           Registrarse
                         </a>
-                        <a [routerLink]="['/']" class="hover:bg-blue-400 p-2 rounded-xl">
+                        <a [routerLink]="['/login']" class="hover:bg-blue-400 p-2 rounded-xl">
                           Iniciar sesión
                         </a>
                     </div>
@@ -49,7 +51,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                         </a>
                     </div>
 
-                    <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
+                    <div style="display: none;" class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
                         <a [routerLink]="['/admin']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
                           Administrar
                         </a>
@@ -68,5 +70,21 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+
+  constructor(private http: HttpClient) { }
+
   title = 'amadeus';
+
+  logueado() {
+    this.http.get<boolean>('http://localhost:8082/auth/logueado').subscribe(
+      (response) => {
+        alert(response);
+        return response;
+      },
+      (error) => {
+        console.error('Error al verificar la sesión:', error);
+        return false;
+      }
+    );
+  }
 }

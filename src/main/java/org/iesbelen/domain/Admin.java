@@ -1,17 +1,16 @@
 package org.iesbelen.domain;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="alumno")
+@Table(name = "admin")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Alumno  {
+public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,12 +23,4 @@ public class Alumno  {
     @Column(name = "password")
     private String password;
 
-    @Column(name="nombre")
-    private String nombre;
-
-    @Column(name="apellidos")
-    private String apellidos;
-
-    @Column(name="curso")
-    private int curso;
 }

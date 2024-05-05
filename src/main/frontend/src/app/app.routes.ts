@@ -1,13 +1,12 @@
-import { Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { AdminHomeComponent } from './components/admin/admin-home/admin-home.component';
-import { AlumnadoListaComponent } from './components/admin/alumnado/alumnado-lista/alumnado-lista.component';
-import { AdminMainComponent } from './components/admin/admin-main/admin-main.component';
-import { ProfesoradoListaComponent } from './components/admin/profesorado/profesorado-lista/profesorado-lista.component';
-import { AudicionesListaComponent } from './components/admin/audiciones/audiciones-lista/audiciones-lista.component';
-import { AdmisionesListaComponent } from './components/admin/admisiones/admisiones-lista/admisiones-lista.component';
-import { adminGuard } from './guards/admin.guard';
-import { LoginComponent } from './components/auth/login/login.component';
+import {Routes} from '@angular/router';
+import {HomeComponent} from './components/home/home.component';
+import {AdminHomeComponent} from './components/admin/admin-home/admin-home.component';
+import {AlumnadoListaComponent} from './components/admin/alumnado/alumnado-lista/alumnado-lista.component';
+import {AdminMainComponent} from './components/admin/admin-main/admin-main.component';
+import {ProfesoradoListaComponent} from './components/admin/profesorado/profesorado-lista/profesorado-lista.component';
+import {AudicionesListaComponent} from './components/admin/audiciones/audiciones-lista/audiciones-lista.component';
+import {AdmisionesListaComponent} from './components/admin/admisiones/admisiones-lista/admisiones-lista.component';
+import {LoginComponent} from './components/auth/login/login.component';
 
 export const routes: Routes = [
     {
@@ -16,8 +15,12 @@ export const routes: Routes = [
         title: 'Amadeus'
     },
     {
+        path: 'login',
+        component: LoginComponent,
+        title: 'Login'
+    },
+    {
         path: 'admin',
-        canActivate: [adminGuard],
         component: AdminMainComponent,
         title: 'Administración',
         children: [
@@ -48,9 +51,5 @@ export const routes: Routes = [
             }
         ]
     },
-    {
-        path: 'login',
-        component: LoginComponent,
-        title: 'Login'
-    },
+    
 ];

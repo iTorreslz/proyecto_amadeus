@@ -3,7 +3,6 @@ package org.iesbelen.service;
 import org.iesbelen.domain.Alumno;
 import org.iesbelen.exception.AlumnoNotFoundException;
 import org.iesbelen.repository.AlumnoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

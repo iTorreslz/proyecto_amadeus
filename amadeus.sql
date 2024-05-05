@@ -4,6 +4,13 @@ DROP DATABASE IF EXISTS `amadeus`;
 CREATE DATABASE IF NOT EXISTS `amadeus`;
 USE `amadeus`;
 
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE admin (
+    id INT PRIMARY KEY,
+    email VARCHAR(100),
+    password VARCHAR(100)
+);
+
 DROP TABLE IF EXISTS `instrumento`;
 CREATE TABLE instrumento (
     id INT PRIMARY KEY,
@@ -88,6 +95,11 @@ CREATE TABLE audicion_alumno (
     FOREIGN KEY (alumno_id) REFERENCES alumno(id),
     PRIMARY KEY (audicion_id, alumno_id)
 );
+
+-- Volcando datos para la tabla amadeus.alumno:
+DELETE FROM `admin`;
+INSERT INTO `admin` (`id`, `email`, `password`) VALUES
+	(1, 'ivantl@gmail.com', '1234');
 
 -- Volcando datos para la tabla amadeus.instrumento:
 DELETE FROM `instrumento`;

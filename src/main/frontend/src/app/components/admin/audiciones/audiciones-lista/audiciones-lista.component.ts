@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Audicion } from '../../../../interfaces/audicion';
-import { AudicionesService } from '../../../../services/audiciones.service';
+import {Component, inject} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Audicion} from '../../../../interfaces/audicion';
+import {AudicionesService} from '../../../../services/audiciones.service';
 
 @Component({
   selector: 'app-audiciones-lista',

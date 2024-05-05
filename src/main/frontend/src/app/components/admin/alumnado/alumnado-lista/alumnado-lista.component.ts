@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Alumno } from '../../../../interfaces/alumno';
-import { AlumnosService } from '../../../../services/alumnos.service';
+import {Component, inject} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Alumno} from '../../../../interfaces/alumno';
+import {AlumnosService} from '../../../../services/alumnos.service';
 
 @Component({
   selector: 'app-alumnado-lista',

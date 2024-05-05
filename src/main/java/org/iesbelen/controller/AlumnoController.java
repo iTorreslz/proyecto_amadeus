@@ -7,8 +7,6 @@ import org.iesbelen.service.AdmisionService;
 import org.iesbelen.service.AlumnoService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Slf4j
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")

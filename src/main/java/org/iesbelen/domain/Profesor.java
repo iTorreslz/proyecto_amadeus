@@ -15,8 +15,14 @@ public class Profesor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
-    private long id;
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name="nombre")
     private String nombre;

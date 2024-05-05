@@ -1,4 +1,4 @@
-import { Alumno } from "./alumno";
+import {Alumno} from "./alumno";
 
 export interface Admision {
     idAdmision: number;

@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Admision } from '../../../../interfaces/admision';
-import { AdmisionesService } from '../../../../services/admisiones.service';
+import {Component, inject} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Admision} from '../../../../interfaces/admision';
+import {AdmisionesService} from '../../../../services/admisiones.service';
 
 @Component({
   selector: 'app-admisiones-lista',

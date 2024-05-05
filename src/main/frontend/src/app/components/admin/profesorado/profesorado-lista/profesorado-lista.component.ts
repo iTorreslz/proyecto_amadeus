@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Profesor } from '../../../../interfaces/profesor';
-import { ProfesoresService } from '../../../../services/profesores.service';
+import {Component, inject} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Profesor} from '../../../../interfaces/profesor';
+import {ProfesoresService} from '../../../../services/profesores.service';
 
 @Component({
   selector: 'app-profesorado-lista',

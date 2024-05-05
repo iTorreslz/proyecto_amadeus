@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Audicion } from '../interfaces/audicion';
+import {Injectable} from '@angular/core';
+import {Audicion} from '../interfaces/audicion';
 
 @Injectable({
   providedIn: 'root'
