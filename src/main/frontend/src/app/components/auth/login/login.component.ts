@@ -10,7 +10,7 @@ import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http'
     <form class="flex flex-col items-center m-auto w-3/6">
       <input class="w-60 p-2 border border-black rounded mb-2" type="email" placeholder="Email" #email>
       <input class="w-60 p-2 border border-black rounded mb-2" type="password" placeholder="Password" #password>
-      <button class="w-32 p-2 border border-black rounded bg-blue-300" type="submit" (click)="login(email.value,password.value)">Login</button>
+      <button class="w-32 p-2 border border-black rounded bg-blue-300" type="button" (click)="login(email.value,password.value)">Login</button>
     </form>
   </div>
   `,
@@ -26,8 +26,7 @@ export class LoginComponent {
     body.set('password', password);
 
     const options = {
-      headers: new HttpHeaders()
-        .set('Content-Type', 'application/x-www-form-urlencoded')
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     };
 
     this.http.post<any>('http://localhost:8082/auth/login', body.toString(), options).subscribe(

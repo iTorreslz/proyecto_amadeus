@@ -19,7 +19,7 @@ CREATE TABLE instrumento (
 
 DROP TABLE IF EXISTS `alumno`;
 CREATE TABLE alumno (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(100),
     password VARCHAR(100),
     nombre VARCHAR(100),

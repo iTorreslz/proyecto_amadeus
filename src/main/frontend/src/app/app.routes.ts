@@ -7,12 +7,18 @@ import {ProfesoradoListaComponent} from './components/admin/profesorado/profesor
 import {AudicionesListaComponent} from './components/admin/audiciones/audiciones-lista/audiciones-lista.component';
 import {AdmisionesListaComponent} from './components/admin/admisiones/admisiones-lista/admisiones-lista.component';
 import {LoginComponent} from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 
 export const routes: Routes = [
     {
         path: '',
         component: HomeComponent,
         title: 'Amadeus'
+    },
+    {
+        path: 'register',
+        component: RegisterComponent,
+        title: 'Registro'
     },
     {
         path: 'login',

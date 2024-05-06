@@ -4,12 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.iesbelen.domain.Alumno;
-import org.iesbelen.domain.Profesor;
 import org.iesbelen.service.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,29 +24,56 @@ public class AuthController {
         this.profesorService = profesorService;
     }
 
+    // REGISTER
+    @PostMapping("/register")
+    public ResponseEntity<Map<String, String>> register(@RequestBody Alumno alumno) {
+        Map<String, String> response = new HashMap<>();
+        alumnoService.create(alumno);
+        response.put("respuesta", "Registro exitoso");
+        return ResponseEntity.ok(response);
+    }
+
     // LOGIN
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
         List<Alumno> alumnos = alumnoService.all();
         Map<String, String> response = new HashMap<>();
+        HttpSession session = request.getSession();
+
+        boolean found = false;
+
         for (Alumno alumno : alumnos) {
             if (alumno.getEmail().equals(username) && alumno.getPassword().equals(password)) {
-                HttpSession session = request.getSession();
                 session.setAttribute("username", username);
                 response.put("respuesta", "Login exitoso");
-            } else {
-                response.put("respuesta", "Credenciales inválidas");
+                System.out.println(session.getAttribute("username"));
+                found = true;
+                break;
             }
-            return ResponseEntity.ok(response);
         }
-        response.put("respuesta", "No existe alumno");
+
+        if (!found) {
+            response.put("respuesta", "Credenciales inválidas");
+            System.out.println(session.getAttribute("username"));
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<Map<String, String>> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        Map<String, String> response = new HashMap<>();
+        response.put("respuesta", "Logout exitoso");
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/logueado")
     public boolean logueado(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        System.out.println(session.getAttribute("username"));
         return session.getAttribute("username") != null;
     }
 }
