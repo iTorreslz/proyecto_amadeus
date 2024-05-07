@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http'
 })
 export class LoginComponent {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string) {
     const body = new URLSearchParams();
@@ -34,6 +35,7 @@ export class LoginComponent {
         switch (response.respuesta) {
           case 'Login exitoso':
             alert('Login exitoso');
+            this.router.navigate(['/']);
             break;
           case 'Credenciales inválidas':
             alert('Credenciales inválidas');

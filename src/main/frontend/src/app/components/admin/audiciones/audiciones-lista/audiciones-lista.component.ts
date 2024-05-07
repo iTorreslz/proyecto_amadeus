@@ -50,12 +50,19 @@ import {AudicionesService} from '../../../../services/audiciones.service';
   styleUrl: './audiciones-lista.component.css'
 })
 export class AudicionesListaComponent {
+  
   audicionesList: Audicion[] = [];
-  audicionesService: AudicionesService = inject(AudicionesService);
 
-  constructor() {
-    this.audicionesService.getAllAudiciones().then((audicionesList: Audicion[]) => {
-      this.audicionesList = audicionesList;
+  constructor(private audicionesService: AudicionesService) { }
+
+  ngOnInit() {
+    this.audicionesService.getAll().subscribe({
+      next: (audiciones: Audicion[]) => {
+        this.audicionesList = audiciones;
+      },
+      error: (error) => {
+        console.error('Error al obtener la lista de audiciones:', error);
+      }
     });
   }
 }

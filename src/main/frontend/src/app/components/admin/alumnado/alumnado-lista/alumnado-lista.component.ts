@@ -1,7 +1,7 @@
-import {Component, inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {Alumno} from '../../../../interfaces/alumno';
-import {AlumnosService} from '../../../../services/alumnos.service';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Alumno } from '../../../../interfaces/alumno';
+import { AlumnosService } from '../../../../services/alumnos.service';
 
 @Component({
   selector: 'app-alumnado-lista',
@@ -53,7 +53,7 @@ import {AlumnosService} from '../../../../services/alumnos.service';
           <button class="mr-3">
               <i class="fa-solid fa-pencil-alt"></i>
           </button>
-          <button>
+          <button (click)="deleteAlumno(alumno.id)">
               <i class="fa-solid fa-trash-alt"></i>
           </button>
         </td>
@@ -63,14 +63,31 @@ import {AlumnosService} from '../../../../services/alumnos.service';
   `,
   styleUrl: './alumnado-lista.component.css'
 })
-export class AlumnadoListaComponent {
+export class AlumnadoListaComponent implements OnInit {
   alumnosList: Alumno[] = [];
-  alumnosService: AlumnosService = inject(AlumnosService);
   nombreCurso: string = '';
 
-  constructor() {
-    this.alumnosService.getAllAlumnos().then((alumnosList: Alumno[]) => {
-      this.alumnosList = alumnosList;
+  constructor(private alumnosService: AlumnosService) { }
+
+  ngOnInit() {
+    this.alumnosService.getAll().subscribe({
+      next: (alumnos: Alumno[]) => {
+        this.alumnosList = alumnos;
+      },
+      error: (error) => {
+        console.error('Error al obtener la lista de alumnos:', error);
+      }
+    });
+  }
+
+  deleteAlumno(id: number) {
+    this.alumnosService.delete(id).subscribe({
+      next: (response.respuesta) => {
+        alert(response);
+      },
+      error: () => {
+        console.error('Error al eliminar el alumno con código' + id);
+      }
     });
   }
 

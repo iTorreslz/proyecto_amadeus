@@ -34,18 +34,29 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                         
                     </div>
 
-                    <ng-template #loggedIn>
-                      <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
-                        <a [routerLink]="['/']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
-                          Mi usuario
-                        </a>
-                        <button (click)="logout()" class="hover:bg-blue-400 p-2 rounded-xl">
-                          Cerrar sesión
-                        </button>
+                    <div *ngIf="loggedIn">
+                      <div *ngIf="isAdmin(); else loggedInNav">
+                        <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
+                          <a [routerLink]="['/admin']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
+                            Administrar
+                          </a>
+                          <button (click)="logout()" class="hover:bg-blue-400 p-2 rounded-xl">
+                            Cerrar sesión
+                          </button>
+                        </div>
                       </div>
-                    </ng-template>
-
-                    <ng-template #notLoggedIn>
+                      <ng-template #loggedInNav>
+                        <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
+                          <a [routerLink]="['/']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
+                            Mi usuario
+                          </a>
+                          <button (click)="logout()" class="hover:bg-blue-400 p-2 rounded-xl">
+                            Cerrar sesión
+                          </button>
+                        </div>
+                      </ng-template>
+                    </div>
+                    <div *ngIf="!loggedIn">
                       <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
                         <a [routerLink]="['/register']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
                           Registrarse
@@ -54,34 +65,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                           Iniciar sesión
                         </a>
                       </div>
-                    </ng-template>
-
-                    <ng-template #admin>
-                      <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
-                        <a [routerLink]="['/admin']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
-                          Administrar
-                        </a>
-                        <button (click)="logout()" class="hover:bg-blue-400 p-2 rounded-xl">
-                          Cerrar sesión
-                        </button>
-                      </div>
-                    </ng-template>
-
-                    <div *ngIf="loggedIn; else notLoggedIn">
-                      <ng-container *ngTemplateOutlet="loggedIn"></ng-container>
-                    </div>
-
-                    <div *ngIf="isAdmin(); else notAdmin">
-                      <ng-container *ngTemplateOutlet="admin"></ng-container>
-                    </div>
-
-                    <ng-template #notAdmin>
-                      <ng-container *ngTemplateOutlet="notLoggedIn"></ng-container>
-                    </ng-template>
-
-
-                    <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
-                      <button class="w-32 p-2 border border-black rounded bg-blue-300" type="submit" (click)="logueado()">A ver</button>
                     </div>
                 </div>
             </div>
@@ -97,7 +80,7 @@ export class AppComponent {
 
   constructor(private http: HttpClient) { }
 
-  loggedIn: boolean = false;
+  loggedIn: boolean = true;
 
   title = 'amadeus';
 
@@ -116,25 +99,13 @@ export class AppComponent {
   }
 
   isAdmin() {
+    return true;
     this.http.get<boolean>('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').subscribe(
       (response) => {
         this.loggedIn = response;
       },
       (error) => {
         console.error('Error al verificar si el usuario es administrador:', error);
-      }
-    );
-  }
-
-  logueado() {
-    this.http.get<boolean>('http://localhost:8082/auth/logueado').subscribe(
-      (response) => {
-        alert('Logueado: ' + response);
-        alert(this.loggedIn);
-        this.loggedIn = response;
-      },
-      (error) => {
-        console.error('Error al verificar la sesión:', error);
       }
     );
   }

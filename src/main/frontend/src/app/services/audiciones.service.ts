@@ -1,15 +1,14 @@
-import {Injectable} from '@angular/core';
-import {Audicion} from '../interfaces/audicion';
+import { Injectable } from '@angular/core';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Audicion } from '../interfaces/audicion';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: HttpClientModule
 })
 export class AudicionesService {
 
-  url = 'http://localhost:8082/admin/audiciones';
+  constructor(private http: HttpClient) { }
 
-  async getAllAudiciones(): Promise<Audicion[]> {
-    const data = await fetch(this.url);
-    return await data.json() ?? [];
-  }
+  getAll(): Observable<any> { return this.http.get<Audicion[]>('http://localhost:8082/admin/audiciones'); }
 }

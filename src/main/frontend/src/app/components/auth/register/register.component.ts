@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,7 @@ import { Component } from '@angular/core';
 })
 export class RegisterComponent {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   register(email: string, password: string, nombre: string, apellidos: string) {
     const body = {
@@ -40,6 +41,7 @@ export class RegisterComponent {
         switch (response.respuesta) {
           case 'Registro exitoso':
             alert('Registro exitoso');
+            this.router.navigate(['/']);
             break;
           case 'Credenciales inválidas':
             alert('Credenciales inválidas');

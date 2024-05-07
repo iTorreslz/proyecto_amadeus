@@ -1,20 +1,16 @@
-import {Injectable} from '@angular/core';
-import {Alumno} from '../interfaces/alumno';
+import { Injectable } from '@angular/core';
+import { Alumno } from '../interfaces/alumno';
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: HttpClientModule
 })
 export class AlumnosService {
 
-  url = 'http://localhost:8082/admin/alumnos';
+  constructor(private http: HttpClient) { }
 
-  async getAllAlumnos(): Promise<Alumno[]> {
-    const data = await fetch(this.url);
-    return await data.json() ?? [];
-  }
+  getAll() { return this.http.get<Alumno[]>('http://localhost:8082/alumnos'); }
 
-  /* async getEmpresaById(id: number): Promise<Alumno | undefined> {
-    const data = await fetch(`${this.url}/${id}`);
-    return await data.json() ?? {};
-  } */
+  delete(id: number): Observable<string> { return this.http.delete<any>(`http://localhost:8082/alumnos/delete/${id}`); }
 }

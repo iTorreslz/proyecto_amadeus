@@ -41,20 +41,6 @@ public class AdminController {
         return this.admisionService.one(id);
     }
 
-    // ALUMNO
-
-    @GetMapping({"/alumnos"})
-    public List<Alumno> allAlumnos() {
-        log.info("Accediendo a todos los alumnos");
-        return this.alumnoService.all();
-    }
-
-    @GetMapping("/alumnos/{id}")
-    public Alumno oneAlumno(@PathVariable("id") Long id) {
-        log.info("Accediendo al alumno con código {}", id);
-        return this.alumnoService.one(id);
-    }
-
     // AUDICIÓN
 
     @GetMapping({"/audiciones"})

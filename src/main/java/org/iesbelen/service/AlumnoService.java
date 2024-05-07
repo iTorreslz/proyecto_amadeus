@@ -28,4 +28,24 @@ public class AlumnoService {
     public Alumno create(Alumno alumno) {
         return this.alumnoRepository.save(alumno);
     }
+
+    public Alumno update(Long id, Alumno updatedAlumno) {
+        Alumno alumno = this.alumnoRepository.findById(id)
+                .orElseThrow(() -> new AlumnoNotFoundException(id));
+
+        alumno.setEmail(updatedAlumno.getEmail());
+        alumno.setPassword(updatedAlumno.getPassword());
+        alumno.setNombre(updatedAlumno.getNombre());
+        alumno.setApellidos(updatedAlumno.getApellidos());
+        alumno.setCurso(updatedAlumno.getCurso());
+
+        return this.alumnoRepository.save(alumno);
+    }
+
+    public void delete(Long id) {
+        Alumno alumno = this.alumnoRepository.findById(id)
+                .orElseThrow(() -> new AlumnoNotFoundException(id));
+
+        this.alumnoRepository.delete(alumno);
+    }
 }

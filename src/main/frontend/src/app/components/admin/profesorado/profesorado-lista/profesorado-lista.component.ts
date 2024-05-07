@@ -1,7 +1,7 @@
-import {Component, inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {Profesor} from '../../../../interfaces/profesor';
-import {ProfesoresService} from '../../../../services/profesores.service';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Profesor } from '../../../../interfaces/profesor';
+import { ProfesoresService } from '../../../../services/profesores.service';
 
 @Component({
   selector: 'app-profesorado-lista',
@@ -65,11 +65,17 @@ import {ProfesoresService} from '../../../../services/profesores.service';
 })
 export class ProfesoradoListaComponent {
   profesoresList: Profesor[] = [];
-  profesoresService: ProfesoresService = inject(ProfesoresService);
 
-  constructor() {
-    this.profesoresService.getAllProfesores().then((profesoresList: Profesor[]) => {
-      this.profesoresList = profesoresList;
+  constructor(private profesoresService: ProfesoresService) { }
+
+  ngOnInit() {
+    this.profesoresService.getAll().subscribe({
+      next: (profesores: Profesor[]) => {
+        this.profesoresList = profesores;
+      },
+      error: (error) => {
+        console.error('Error al obtener la lista de profesores:', error);
+      }
     });
   }
 }
