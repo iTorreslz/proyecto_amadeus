@@ -1,6 +1,6 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -19,16 +19,16 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                         <a [routerLink]="['/']" class="mr-3 hover:bg-blue-400 p-2 rounded-xl">
                           Inicio
                         </a>
-                        <a [routerLink]="['/']" class="mr-3 hover:bg-blue-400 p-2 rounded-xl">
-                          Información
+                        <a [routerLink]="['/events']" class="mr-3 hover:bg-blue-400 p-2 rounded-xl">
+                          Próximos eventos
                         </a>
-                        <a [routerLink]="['/']" class="mr-3 hover:bg-blue-400 p-2 rounded-xl">
+                        <a [routerLink]="['/informacion']" class="mr-3 hover:bg-blue-400 p-2 rounded-xl">
                           ¡Hazte alumno!
                         </a>
-                        <a [routerLink]="['/']" class="mr-3 hover:bg-blue-400 p-2 rounded-xl">
+                        <a [routerLink]="['/contacto']" class="mr-3 hover:bg-blue-400 p-2 rounded-xl">
                           Contacto
                         </a>
-                        <a [routerLink]="['/']" class="mr-3 hover:bg-blue-400 p-2 rounded-xl">
+                        <a [routerLink]="['/about']" class="mr-3 hover:bg-blue-400 p-2 rounded-xl">
                           Sobre nosotros
                         </a>
                         
@@ -76,13 +76,28 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   `,
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  loggedIn: boolean = true;
+  loggedIn: boolean = false;
+
+  ngOnInit() {
+    this.isLoggedIn();
+  }
 
   title = 'amadeus';
+
+  isLoggedIn() {
+    this.http.get<boolean>('http://localhost:8082/auth/logueado').subscribe(
+      (response) => {
+        this.loggedIn = response;
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    );
+  }
 
   logout() {
     this.http.get<string>('http://localhost:8082/auth/logout').subscribe(
@@ -99,7 +114,7 @@ export class AppComponent {
   }
 
   isAdmin() {
-    return true;
+    return false;
     this.http.get<boolean>('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').subscribe(
       (response) => {
         this.loggedIn = response;

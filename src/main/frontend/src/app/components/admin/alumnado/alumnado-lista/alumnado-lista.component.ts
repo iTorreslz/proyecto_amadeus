@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Alumno } from '../../../../interfaces/alumno';
 import { AlumnosService } from '../../../../services/alumnos.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-alumnado-lista',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   template: `
   <table class="m-auto w-full">
     <thead>
@@ -47,7 +48,7 @@ import { AlumnosService } from '../../../../services/alumnos.service';
           {{ getNombreCurso(alumno.curso) }}
         </td>
         <td class="border-b border-gray-200 bg-white text-blue-900 text-center">
-          <button class="mr-3">
+          <button class="mr-3" [routerLink]="['/admin/alumnado/detalle', alumno.id]">
               <i class="fa-solid fa-eye"></i>
           </button>
           <button class="mr-3">
@@ -67,7 +68,7 @@ export class AlumnadoListaComponent implements OnInit {
   alumnosList: Alumno[] = [];
   nombreCurso: string = '';
 
-  constructor(private alumnosService: AlumnosService) { }
+  constructor(private alumnosService: AlumnosService, private router: Router) { }
 
   ngOnInit() {
     this.alumnosService.getAll().subscribe({
@@ -82,11 +83,11 @@ export class AlumnadoListaComponent implements OnInit {
 
   deleteAlumno(id: number) {
     this.alumnosService.delete(id).subscribe({
-      next: (response.respuesta) => {
-        alert(response);
+      next: (response) => {
+        window.location.reload();
       },
       error: () => {
-        console.error('Error al eliminar el alumno con código' + id);
+        console.error('Error al eliminar el alumno con código ' + id);
       }
     });
   }

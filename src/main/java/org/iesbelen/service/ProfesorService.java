@@ -28,4 +28,24 @@ public class ProfesorService {
     public Profesor create(Profesor profesor) {
         return this.profesorRepository.save(profesor);
     }
+
+    public Profesor update(Long id, Profesor updatedProfesor) {
+        Profesor profesor = this.profesorRepository.findById(id)
+                .orElseThrow(() -> new ProfesorNotFoundException(id));
+
+        profesor.setEmail(updatedProfesor.getEmail());
+        profesor.setPassword(updatedProfesor.getPassword());
+        profesor.setNombre(updatedProfesor.getNombre());
+        profesor.setApellidos(updatedProfesor.getApellidos());
+        profesor.setInstrumento(updatedProfesor.getInstrumento());
+
+        return this.profesorRepository.save(profesor);
+    }
+
+    public void delete(Long id) {
+        Profesor profesor = this.profesorRepository.findById(id)
+                .orElseThrow(() -> new ProfesorNotFoundException(id));
+
+        this.profesorRepository.delete(profesor);
+    }
 }

@@ -33,7 +33,7 @@ import {RouterLink, RouterOutlet} from '@angular/router';
     </ul>
     <p class="mb-14 px-5 py-3 text-center text-xs">Iván Torres López | 2024</p>
   </div>
-  <div class="fixed top-36 right-80" style="left: 36rem;">
+  <div class="fixed right-80 max-h-[calc(100vh-100px)] overflow-y-auto mb-16" style="left: 34rem; top: 8rem;">
     <div class="content">
       <router-outlet></router-outlet>
     </div>

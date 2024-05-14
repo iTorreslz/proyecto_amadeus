@@ -12,5 +12,5 @@ export class AlumnosService {
 
   getAll() { return this.http.get<Alumno[]>('http://localhost:8082/alumnos'); }
 
-  delete(id: number): Observable<string> { return this.http.delete<any>(`http://localhost:8082/alumnos/delete/${id}`); }
+  delete(id: number) { return this.http.delete<any>(`http://localhost:8082/alumnos/delete/${id}`); }
 }

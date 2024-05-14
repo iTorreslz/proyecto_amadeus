@@ -20,11 +20,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/alumnos")
 public class AlumnoController {
     private final AlumnoService alumnoService;
-    private final AdmisionService admisionService;
 
     public AlumnoController(AlumnoService alumnoService, AdmisionService admisionService) {
         this.alumnoService = alumnoService;
-        this.admisionService = admisionService;
     }
 
     @GetMapping({""})
@@ -39,16 +37,10 @@ public class AlumnoController {
         return this.alumnoService.one(id);
     }
 
-    @PostMapping("/nuevaAdmision")
-    public Admision create(@RequestBody Admision admision) {
-        log.info("Creando una nueva admisión para un alumno");
-        return this.admisionService.create(admision);
-    }
-
     @PostMapping("/edit/{id}")
     public ResponseEntity<String> update(@PathVariable("id") Long id, @RequestBody Alumno updatedAlumno) {
         log.info("Actualizando el alumno con código {}", id);
-        Alumno alumno = this.alumnoService.update(id, updatedAlumno);
+        this.alumnoService.update(id, updatedAlumno);
         return new ResponseEntity<>("Alumno modificado correctamente", HttpStatus.OK);
     }
 

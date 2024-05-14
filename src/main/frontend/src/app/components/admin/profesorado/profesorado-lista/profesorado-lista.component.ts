@@ -1,12 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Profesor } from '../../../../interfaces/profesor';
 import { ProfesoresService } from '../../../../services/profesores.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-profesorado-lista',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   template: `
   <table class="m-auto w-full">
     <thead>
@@ -53,7 +54,7 @@ import { ProfesoresService } from '../../../../services/profesores.service';
           <button class="mr-3">
               <i class="fa-solid fa-pencil-alt"></i>
           </button>
-          <button>
+          <button (click)="deleteProfesor(profesor.id)">
               <i class="fa-solid fa-trash-alt"></i>
           </button>
         </td>
@@ -66,7 +67,7 @@ import { ProfesoresService } from '../../../../services/profesores.service';
 export class ProfesoradoListaComponent {
   profesoresList: Profesor[] = [];
 
-  constructor(private profesoresService: ProfesoresService) { }
+  constructor(private profesoresService: ProfesoresService, private router: Router) { }
 
   ngOnInit() {
     this.profesoresService.getAll().subscribe({
@@ -75,6 +76,17 @@ export class ProfesoradoListaComponent {
       },
       error: (error) => {
         console.error('Error al obtener la lista de profesores:', error);
+      }
+    });
+  }
+
+  deleteProfesor(id: number) {
+    this.profesoresService.delete(id).subscribe({
+      next: (response) => {
+        window.location.reload();
+      },
+      error: () => {
+        console.error('Error al eliminar el profesor con código ' + id);
       }
     });
   }

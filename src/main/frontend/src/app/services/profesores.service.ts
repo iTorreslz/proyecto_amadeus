@@ -10,5 +10,7 @@ export class ProfesoresService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<any> { return this.http.get<Profesor[]>('http://localhost:8082/admin/profesores'); }
+  getAll() { return this.http.get<Profesor[]>('http://localhost:8082/profesores'); }
+
+  delete(id: number) { return this.http.delete<any>(`http://localhost:8082/profesores/delete/${id}`); }
 }
