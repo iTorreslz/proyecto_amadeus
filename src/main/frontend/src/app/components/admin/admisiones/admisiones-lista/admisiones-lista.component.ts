@@ -59,13 +59,13 @@ import { AlumnosService } from '../../../../services/alumnos.service';
           {{ getDecision(admision.apto, admision.noApto) }}
         </td>
         <td class="border-b border-gray-200 bg-white text-blue-900 text-center">
-          <button class="mr-3">
+          <button class="mr-3" (click)="admitir(admision.idAdmision)">
               <i class="fa-solid fa-eye"></i>
           </button>
-          <button class="mr-3">
-              <i class="fa-solid fa-pencil-alt"></i>
+          <button class="mr-3" (click)="denegar(admision.idAdmision)">
+              <i class="fa-solid fa-eye"></i>
           </button>
-          <button>
+          <button (click)="deleteAdmision(admision.idAdmision)">
               <i class="fa-solid fa-trash-alt"></i>
           </button>
         </td>
@@ -78,6 +78,13 @@ import { AlumnosService } from '../../../../services/alumnos.service';
 export class AdmisionesListaComponent {
   decision: string = "";
   admisionesList: Admision[] = [];
+  admision: Admision = {
+    idAdmision: 0,
+    idAlumno: 0,
+    instrumento: 0,
+    apto: false,
+    noApto: false
+  };
 
   constructor(private admisionService: AdmisionesService, private alumnoService: AlumnosService, private router: Router) { }
 
@@ -163,5 +170,58 @@ export class AdmisionesListaComponent {
     } else {
       return "Error";
     }
+  }
+
+  admitir(idAdmision: number) {
+    this.admisionService.getById(idAdmision).subscribe({
+      next: (admision: Admision) => {
+        this.admision = admision;
+      },
+      error: () => {
+        console.error('Error.');
+      }
+    });
+
+    this.admision.apto = true;
+    this.admisionService.update(this.admision, this.admision.idAdmision).subscribe({
+      next: () => {
+        window.location.reload();
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  denegar(idAdmision: number) {
+    this.admisionService.getById(idAdmision).subscribe({
+      next: (admision: Admision) => {
+        this.admision = admision;
+      },
+      error: () => {
+        console.error('Error.');
+      }
+    });
+
+    this.admision.noApto = true;
+    this.admisionService.update(this.admision, this.admision.idAdmision).subscribe({
+      next: () => {
+        window.location.reload();
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  deleteAdmision(id: number) {
+    this.admisionService.delete(id).subscribe({
+      next: (response) => {
+        window.location.reload();
+      },
+      error: () => {
+        console.error('Error al eliminar admisión con código ' + id);
+      }
+    });
   }
 }

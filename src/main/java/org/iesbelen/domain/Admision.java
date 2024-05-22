@@ -15,10 +15,10 @@ public class Admision {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private long id;
+    private int id;
 
     @Column(name="id_alumno")
-    private long idAlumno;
+    private int idAlumno;
 
     @Column(name="apto")
     private boolean apto;
@@ -27,5 +27,5 @@ public class Admision {
     private boolean noApto;
 
     @Column(name="instrumento")
-    private long instrumento;
+    private int instrumento;
 }

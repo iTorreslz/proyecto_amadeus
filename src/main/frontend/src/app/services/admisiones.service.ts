@@ -16,7 +16,7 @@ export class AdmisionesService {
 
   create(admision: NewAdmision) { return this.http.post<any>(`http://localhost:8082/admisiones/nuevo`, admision); }
 
-  update(admision: Admision, id: number) { return this.http.post<string>(`http://localhost:8082/admisiones/edit/${id}`, admision); }
+  update(admision: Admision, id: number) { return this.http.post<any>(`http://localhost:8082/admisiones/edit/${id}`, admision); }
 
   delete(id: number) { return this.http.delete<any>(`http://localhost:8082/admisiones/delete/${id}`); }
 }

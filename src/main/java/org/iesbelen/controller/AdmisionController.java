@@ -30,7 +30,7 @@ public class AdmisionController {
     }
 
     @GetMapping("/{id}")
-    public Admision oneAdmision(@PathVariable("id") Long id) {
+    public Admision oneAdmision(@PathVariable("id") int id) {
         log.info("Accediendo a la admisión con código {}", id);
         return this.admisionService.one(id);
     }
@@ -43,12 +43,12 @@ public class AdmisionController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") int id) {
         admisionService.delete(id);
     }
 
     @PostMapping("/{id}/decision")
-    public void decision(@RequestBody Admision admision, @PathVariable("id") Long id) {
+    public void decision(@RequestBody Admision admision, @PathVariable("id") int id) {
         if (admision != null) {
             admisionService.update(id, admision);
         } else {

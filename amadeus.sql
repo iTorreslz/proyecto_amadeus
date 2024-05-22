@@ -68,10 +68,9 @@ DROP TABLE IF EXISTS `admision`;
 CREATE TABLE admision (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_alumno INT,
-    decision BOOLEAN,
-    instrumento INT,
-    FOREIGN KEY (id_alumno) REFERENCES alumno(id),
-    FOREIGN KEY (instrumento) REFERENCES instrumento(id)
+    apto BOOLEAN,
+    no_apto BOOLEAN,
+    instrumento INT
 );
 
 DROP TABLE IF EXISTS `audicion`;
@@ -88,6 +87,11 @@ CREATE TABLE audicion_alumno (
     FOREIGN KEY (alumno_id) REFERENCES alumno(id),
     PRIMARY KEY (audicion_id, alumno_id)
 );
+
+-- Volcando datos para la tabla amadeus.admisiones:
+DELETE FROM `admision`;
+INSERT INTO `admision` (`id`, `id_alumno`, `apto`, `no_apto`, `instrumento`) VALUES
+	(1, 1, false, false, 1);
 
 -- Volcando datos para la tabla amadeus.alumno:
 DELETE FROM `admin`;

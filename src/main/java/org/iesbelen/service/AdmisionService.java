@@ -24,12 +24,12 @@ public class AdmisionService {
         return this.admisionRepository.findAll();
     }
 
-    public Admision one(Long id) {
+    public Admision one(int id) {
         return this.admisionRepository.findById(id)
                 .orElseThrow(() -> new AdmisionNotFoundException(id));
     }
 
-    public Admision update(Long id, Admision updatedAdmision) {
+    public Admision update(int id, Admision updatedAdmision) {
         return this.admisionRepository.findById(id)
                 .map(admision -> {
                     admision.setApto(updatedAdmision.isApto());
@@ -39,5 +39,5 @@ public class AdmisionService {
                 .orElseThrow(() -> new AdmisionNotFoundException(id));
     }
 
-    public void delete(Long id) { this.admisionRepository.deleteById(id); }
+    public void delete(int id) { this.admisionRepository.deleteById(id); }
 }

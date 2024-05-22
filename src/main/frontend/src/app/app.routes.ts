@@ -120,7 +120,7 @@ export const routes: Routes = [
                 path: 'admisiones/nuevo',
                 component: AdmisionesCrearComponent,
                 title: 'Nueva Admisión'
-            },
+            }
         ]
     },
 

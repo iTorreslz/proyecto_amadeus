@@ -1,7 +1,7 @@
 package org.iesbelen.exception;
 
 public class AdmisionNotFoundException extends RuntimeException{
-    public AdmisionNotFoundException(Long id) {
+    public AdmisionNotFoundException(int id) {
         super("Not found Admision with id: " + id);
     }
 }
