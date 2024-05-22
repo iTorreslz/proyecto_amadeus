@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -45,35 +46,9 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 })
 export class LoginComponent {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
 
-  login(username: string, password: string) {
-    const body = new URLSearchParams();
-    body.set('username', username);
-    body.set('password', password);
-
-    const options = {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-    };
-
-    this.http.post<any>('http://localhost:8082/auth/login', body.toString(), options).subscribe(
-      response => {
-        switch (response.respuesta) {
-          case 'Login exitoso':
-            alert('Login exitoso');
-            this.router.navigate(['/']);
-            break;
-          case 'Credenciales inválidas':
-            alert('Credenciales inválidas');
-            break;
-          case 'No existe alumno':
-            alert('No existe alumno');
-            break;
-        }
-      },
-      error => {
-        console.error(error);
-      }
-    );
+  login(email: string, password: string) {
+    this.authService.login(email, password);
   }
 }

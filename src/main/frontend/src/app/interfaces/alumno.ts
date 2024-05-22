@@ -5,4 +5,5 @@ export interface Alumno {
     nombre: string;
     apellidos: string;
     curso: number;
+    idInstrumento: number;
 }

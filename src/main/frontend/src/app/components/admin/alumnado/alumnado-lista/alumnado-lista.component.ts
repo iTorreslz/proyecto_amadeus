@@ -51,7 +51,7 @@ import { Router, RouterLink } from '@angular/router';
           <button class="mr-3" [routerLink]="['/admin/alumnado/detalle', alumno.id]">
               <i class="fa-solid fa-eye"></i>
           </button>
-          <button class="mr-3">
+          <button class="mr-3"[routerLink]="['/admin/alumnado/editar', alumno.id]">
               <i class="fa-solid fa-pencil-alt"></i>
           </button>
           <button (click)="deleteAlumno(alumno.id)">

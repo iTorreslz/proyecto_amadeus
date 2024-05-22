@@ -56,9 +56,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                   Faucibus ornare suspendisse sed nisi lacus sed viverra. Diam in arcu cursus euismod quis viverra
                   nibh cras pulvinar.
               </p>
-              <button
-                  class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10">Click
-                  aquí</button>
           </div>
       </div>
     </div>
@@ -76,9 +73,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                   Faucibus ornare suspendisse sed nisi lacus sed viverra. Diam in arcu cursus euismod quis viverra
                   nibh cras pulvinar.
               </p>
-              <button
-                  class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10">Click
-                  aquí</button>
           </div>
       </div>
       <div class="w-full flex flex-col pl-16">

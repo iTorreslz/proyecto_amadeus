@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -59,36 +60,9 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
 
   register(email: string, password: string, nombre: string, apellidos: string) {
-    const body = {
-      email: email,
-      password: password,
-      nombre: nombre,
-      apellidos: apellidos,
-      curso: 1
-    };
-
-    const options = {
-      headers: new HttpHeaders().set('Content-Type', 'application/json')
-    };
-
-    this.http.post<any>('http://localhost:8082/auth/register', body, options).subscribe(
-      response => {
-        switch (response.respuesta) {
-          case 'Registro exitoso':
-            alert('Registro exitoso');
-            this.router.navigate(['/']);
-            break;
-          case 'Credenciales inválidas':
-            alert('Credenciales inválidas');
-            break;
-          default:
-            alert('Ocurrió un error');
-            break;
-        }
-      }
-    );
+    this.authService.register(email, password, nombre, apellidos);
   }
 }

@@ -4,8 +4,5 @@ export interface Profesor {
     password: string;
     nombre: string;
     apellidos: string;
-    instrumento: {
-        id: number;
-        nombre: string;
-    };
+    idInstrumento: number;
 }

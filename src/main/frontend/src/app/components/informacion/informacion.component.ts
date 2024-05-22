@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
   <div class="bg-blue-200 py-20">
     <div class="max-w-screen-lg mx-auto flex justify-between items-center">
       <div class="max-w-xl">
-          <h2 class="font-black text-sky-950 text-3xl mb-4">Si deseas comenzar ya, te guiamos paso a paso</h2>
+          <h2 class="font-black text-sky-950 text-3xl mb-4">Si deseas comenzar ahora, te guiamos paso a paso</h2>
           <p class="text-base text-sky-950">A continuación te explicaremos el procedimiento natural para unirte a la escuela.</p>
       </div>
       <div class="h-full mt-auto overflow-hidden relative">

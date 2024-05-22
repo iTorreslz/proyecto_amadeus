@@ -1,12 +1,13 @@
-import {Component, inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {Audicion} from '../../../../interfaces/audicion';
-import {AudicionesService} from '../../../../services/audiciones.service';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Audicion } from '../../../../interfaces/audicion';
+import { AudicionesService } from '../../../../services/audiciones.service';
 
 @Component({
   selector: 'app-audiciones-lista',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   template: `
   <table class="m-auto w-full">
     <thead>
@@ -19,8 +20,10 @@ import {AudicionesService} from '../../../../services/audiciones.service';
             class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left font-semibold text-blue-900 tracking-wider">
             Día y Hora
         </th>
-        <th
-            class="border-b-2 border-gray-200 bg-blue-100">
+        <th class="border-b-2 border-gray-200 bg-blue-100">
+          <button class="" [routerLink]="['/admin/audiciones/nuevo']">
+            <i class="fa-regular fa-square-plus text-3xl"></i>
+          </button>
         </th>
       </tr>
     </thead>
@@ -50,7 +53,7 @@ import {AudicionesService} from '../../../../services/audiciones.service';
   styleUrl: './audiciones-lista.component.css'
 })
 export class AudicionesListaComponent {
-  
+
   audicionesList: Audicion[] = [];
 
   constructor(private audicionesService: AudicionesService) { }

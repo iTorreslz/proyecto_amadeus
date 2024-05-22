@@ -1,7 +1,9 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -40,7 +42,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                           <a [routerLink]="['/admin']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
                             Administrar
                           </a>
-                          <button (click)="logout()" class="hover:bg-blue-400 p-2 rounded-xl">
+                          <button (click)="this.logout()" class="hover:bg-blue-400 p-2 rounded-xl">
                             Cerrar sesión
                           </button>
                         </div>
@@ -50,7 +52,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                           <a [routerLink]="['/']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
                             Mi usuario
                           </a>
-                          <button (click)="logout()" class="hover:bg-blue-400 p-2 rounded-xl">
+                          <button (click)="this.logout()" class="hover:bg-blue-400 p-2 rounded-xl">
                             Cerrar sesión
                           </button>
                         </div>
@@ -78,50 +80,36 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private authService: AuthService) { }
 
+  tipoUsuario: string = "";
   loggedIn: boolean = false;
 
   ngOnInit() {
-    this.isLoggedIn();
-  }
+    this.authService.loggedIn$.subscribe(loggedIn => {
+      this.loggedIn = loggedIn;
+    });
 
-  title = 'amadeus';
+    this.authService.tipoUsuario$.subscribe(tipoUsuario => {
+      this.tipoUsuario = tipoUsuario;
+    });
 
-  isLoggedIn() {
-    this.http.get<boolean>('http://localhost:8082/auth/logueado').subscribe(
-      (response) => {
-        this.loggedIn = response;
-      },
-      (error) => {
-        console.error('Error:', error);
-      }
-    );
-  }
-
-  logout() {
-    this.http.get<string>('http://localhost:8082/auth/logout').subscribe(
-      (response) => {
-        alert(response);
-        if (response.includes('Logout exitoso')) {
-          this.loggedIn = false;
-        }
-      },
-      (error) => {
-        console.error('Error al cerrar la sesión:', error);
-      }
-    );
+    if (this.loggedIn === false && localStorage.getItem('usuario')) {
+      this.loggedIn = true;
+      const storageTipoUsuario = localStorage.getItem('tipoUsuario');
+      this.tipoUsuario = storageTipoUsuario !== null ? storageTipoUsuario : 'alumno';
+    }
   }
 
   isAdmin() {
-    return false;
-    this.http.get<boolean>('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').subscribe(
-      (response) => {
-        this.loggedIn = response;
-      },
-      (error) => {
-        console.error('Error al verificar si el usuario es administrador:', error);
-      }
-    );
+    if (this.tipoUsuario == "admin") {
+      return true;
+    } else {
+      return false
+    }
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

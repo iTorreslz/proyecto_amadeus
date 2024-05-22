@@ -13,6 +13,12 @@ import { InformacionComponent } from './components/informacion/informacion.compo
 import { ContactComponent } from './components/contact/contact.component';
 import { EventsComponent } from './components/events/events.component';
 import { AboutComponent } from './components/about/about.component';
+import { AlumnadoEditarComponent } from './components/admin/alumnado/alumnado-editar/alumnado-editar.component';
+import { ProfesoradoDetalleComponent } from './components/admin/profesorado/profesorado-detalle/profesorado-detalle.component';
+import { ProfesoradoEditarComponent } from './components/admin/profesorado/profesorado-editar/profesorado-editar.component';
+import { ProfesoradoCrearComponent } from './components/admin/profesorado/profesorado-crear/profesorado-crear.component';
+import { AudicionesCrearComponent } from './components/admin/audiciones/audiciones-crear/audiciones-crear.component';
+import { AdmisionesCrearComponent } from './components/users/admisiones-crear/admisiones-crear.component';
 
 export const routes: Routes = [
     {
@@ -68,7 +74,12 @@ export const routes: Routes = [
             {
                 path: 'alumnado/detalle/:id',
                 component: AlumnadoDetalleComponent,
-                title: 'Detalle del alumno'
+                title: 'Detalle alumno'
+            },
+            {
+                path: 'alumnado/editar/:id',
+                component: AlumnadoEditarComponent,
+                title: 'Editar alumno'
             },
             {
                 path: 'profesorado',
@@ -76,15 +87,40 @@ export const routes: Routes = [
                 title: 'Administración Profesorado'
             },
             {
+                path: 'profesorado/nuevo',
+                component: ProfesoradoCrearComponent,
+                title: 'Nuevo Profesor'
+            },
+            {
+                path: 'profesorado/detalle/:id',
+                component: ProfesoradoDetalleComponent,
+                title: 'Detalle profesor'
+            },
+            {
+                path: 'profesorado/editar/:id',
+                component: ProfesoradoEditarComponent,
+                title: 'Editar profesor'
+            },
+            {
                 path: 'audiciones',
                 component: AudicionesListaComponent,
                 title: 'Administración Audiciones'
             },
             {
+                path: 'audiciones/nuevo',
+                component: AudicionesCrearComponent,
+                title: 'Nueva Audición'
+            },
+            {
                 path: 'admisiones',
                 component: AdmisionesListaComponent,
                 title: 'Administración Admisiones'
-            }
+            },
+            {
+                path: 'admisiones/nuevo',
+                component: AdmisionesCrearComponent,
+                title: 'Nueva Admisión'
+            },
         ]
     },
 
