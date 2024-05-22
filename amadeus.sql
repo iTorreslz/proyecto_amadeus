@@ -24,16 +24,8 @@ CREATE TABLE alumno (
     password VARCHAR(100),
     nombre VARCHAR(100),
     apellidos VARCHAR(100),
-    curso INT
-);
-
-DROP TABLE IF EXISTS `alumno_instrumento`;
-CREATE TABLE alumno_instrumento (
-    id_alumno INT,
-    id_instrumento INT,
-    FOREIGN KEY (id_alumno) REFERENCES alumno(id),
-    FOREIGN KEY (id_instrumento) REFERENCES instrumento(id),
-    PRIMARY KEY (id_alumno, id_instrumento)
+    curso INT,
+    instrumento INT
 );
 
 DROP TABLE IF EXISTS `nota_alumno`;
@@ -45,18 +37,17 @@ CREATE TABLE nota_alumno (
 
 DROP TABLE IF EXISTS `profesor`;
 CREATE TABLE profesor (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(100),
     password VARCHAR(100),
     nombre VARCHAR(100),
     apellidos VARCHAR(100),
-    instrumento INT,
-    FOREIGN KEY (instrumento) REFERENCES instrumento(id)
+    instrumento INT
 );
 
 DROP TABLE IF EXISTS `clase`;
 CREATE TABLE clase (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     dia_hora DATETIME,
     id_alumno INT,
     id_profesor INT,
@@ -67,7 +58,7 @@ CREATE TABLE clase (
 
 DROP TABLE IF EXISTS `nota`;
 CREATE TABLE nota (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     calificacion DOUBLE,
     id_alumno INT,
     FOREIGN KEY (id_alumno) REFERENCES alumno(id)
@@ -75,7 +66,7 @@ CREATE TABLE nota (
 
 DROP TABLE IF EXISTS `admision`;
 CREATE TABLE admision (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     id_alumno INT,
     decision BOOLEAN,
     instrumento INT,
@@ -85,7 +76,7 @@ CREATE TABLE admision (
 
 DROP TABLE IF EXISTS `audicion`;
 CREATE TABLE audicion (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     dia_hora DATETIME
 );
 
@@ -119,29 +110,29 @@ INSERT INTO `instrumento` (`id`, `nombre`) VALUES
 
 -- Volcando datos para la tabla amadeus.alumno:
 DELETE FROM `alumno`;
-INSERT INTO `alumno` (`id`, `email`, `password`, `nombre`,`apellidos`,`curso`) VALUES
-	(1, 'albertodm@gmail.com', 'user', 'Alberto', 'Díaz Muñoz', 4),
-	(2, 'jonathanbg@gmail.com', 'user', 'Jonathan', 'Barreiro Gómez', 4),
-	(3, 'mariatg@gmail.com', 'user', 'María', 'Torres González', 3),
-	(4, 'jorgeantonioap@gmail.com', 'user', 'Jorge Antonio', 'Aranburu Pazos', 3),
-	(5, 'mariajosegm@gmail.com', 'user', 'María José', 'Garrido Martínez', 2),
-	(6, 'antoniagg@gmail.com', 'user', 'Antonia', 'Grajales García', 2),
-	(7, 'lucasrj@gmail.com', 'user', 'Lucas', 'Rodríguez Jiménez', 1),
-	(8, 'alonsobc@gmail.com', 'user', 'Alonso', 'Bazaga Cuesta', 1),
-	(9, 'aliciaro@gmail.com', 'user', 'Alicia', 'Robles Olmedo', 1),
-    (10, 'federicocl@gmail.com', 'user', 'Federico', 'Cebrián López', 1);
+INSERT INTO `alumno` (`id`, `email`, `password`, `nombre`,`apellidos`,`curso`, `instrumento`) VALUES
+	(1, 'albertodm@gmail.com', 'user', 'Alberto', 'Díaz Muñoz', 4, 8),
+	(2, 'jonathanbg@gmail.com', 'user', 'Jonathan', 'Barreiro Gómez', 4, 4),
+	(3, 'mariatg@gmail.com', 'user', 'María', 'Torres González', 3, 5),
+	(4, 'jorgeantonioap@gmail.com', 'user', 'Jorge Antonio', 'Aranburu Pazos', 3, 1),
+	(5, 'mariajosegm@gmail.com', 'user', 'María José', 'Garrido Martínez', 2, 3),
+	(6, 'antoniagg@gmail.com', 'user', 'Antonia', 'Grajales García', 2, 1),
+	(7, 'lucasrj@gmail.com', 'user', 'Lucas', 'Rodríguez Jiménez', 1, -1),
+	(8, 'alonsobc@gmail.com', 'user', 'Alonso', 'Bazaga Cuesta', 1, -1),
+	(9, 'aliciaro@gmail.com', 'user', 'Alicia', 'Robles Olmedo', 1, -1),
+    (10, 'federicocl@gmail.com', 'user', 'Federico', 'Cebrián López', 1, -1);
 
 -- Volcando datos para la tabla amadeus.alumno:
 DELETE FROM `profesor`;
 INSERT INTO `profesor` (`id`, `email`, `password`, `nombre`, `apellidos`, `instrumento`) VALUES
-	(1, 'juanjosegr@gmail.com', 'user', 'Juan José', 'Gil Ramos', '1'),
-    (2, 'miguelng@gmail.com', 'user', 'Miguel', 'Navarro Gómez', '2'),
-    (3, 'carmenainhoang@gmail.com', 'user', 'Carmen Ainhoa', 'Núñez González', '3'),
-    (4, 'aliciarm@gmail.com', 'user', 'Alicia', 'Romero Molina', '4'),
-    (5, 'laurabr@gmail.com', 'user', 'Laura', 'Blanco Rivas', '5'),
-    (6, 'pilarso@gmail.com', 'user', 'Pilar', 'Suárez Ortega', '6'),
-    (7, 'ivantl@gmail.com', 'user', 'Iván', 'Torres López', '7'),
-    (8, 'albertoms@gmail.com', 'user', 'Alberto', 'Muñoz Sánchez', '8'),
-    (9, 'ricardorm@gmail.com', 'user', 'Ricardo', 'Rubio Morales', '9'),
-    (10, 'claral@gmail.com', 'user', 'Clara', 'Lennon', '10');
+	(1, 'juanjosegr@gmail.com', 'user', 'Juan José', 'Gil Ramos', 1),
+    (2, 'miguelng@gmail.com', 'user', 'Miguel', 'Navarro Gómez', 2),
+    (3, 'carmenainhoang@gmail.com', 'user', 'Carmen Ainhoa', 'Núñez González', 3),
+    (4, 'aliciarm@gmail.com', 'user', 'Alicia', 'Romero Molina', 4),
+    (5, 'laurabr@gmail.com', 'user', 'Laura', 'Blanco Rivas', 5),
+    (6, 'pilarso@gmail.com', 'user', 'Pilar', 'Suárez Ortega', 6),
+    (7, 'ivantl@gmail.com', 'user', 'Iván', 'Torres López', 7),
+    (8, 'albertoms@gmail.com', 'user', 'Alberto', 'Muñoz Sánchez', 8),
+    (9, 'ricardorm@gmail.com', 'user', 'Ricardo', 'Rubio Morales', 9),
+    (10, 'claral@gmail.com', 'user', 'Clara', 'Lennon', 10);
     

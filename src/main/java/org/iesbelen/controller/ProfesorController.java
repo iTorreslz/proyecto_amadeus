@@ -27,6 +27,13 @@ public class ProfesorController {
         return this.profesorService.all();
     }
 
+    @PostMapping({"/nuevo"})
+    public ResponseEntity<Void> create(@RequestBody Profesor nuevoProfesor) {
+        log.info("Creando un nuevo profesor");
+        this.profesorService.create(nuevoProfesor);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @GetMapping("/{id}")
     public Profesor one(@PathVariable("id") Long id) {
         log.info("Accediendo al profesor con código {}", id);
@@ -34,10 +41,10 @@ public class ProfesorController {
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<String> update(@PathVariable("id") Long id, @RequestBody Profesor updatedProfesor) {
+    public ResponseEntity<Void> update(@PathVariable("id") Long id, @RequestBody Profesor updatedProfesor) {
         log.info("Actualizando el profesor con código {}", id);
-        Profesor profesor = this.profesorService.update(id, updatedProfesor);
-        return new ResponseEntity<>("Profesor modificado correctamente", HttpStatus.OK);
+        this.profesorService.update(id, updatedProfesor);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

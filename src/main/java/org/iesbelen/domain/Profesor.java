@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 public class Profesor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private long id;
 
     @Column(name = "email")
     private String email;
@@ -30,7 +30,6 @@ public class Profesor {
     @Column(name="apellidos")
     private String apellidos;
 
-    @ManyToOne
-    @JoinColumn(name="instrumento")
-    private Instrumento instrumento;
+    @Column(name="instrumento")
+    private int idInstrumento;
 }

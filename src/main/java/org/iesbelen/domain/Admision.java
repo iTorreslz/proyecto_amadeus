@@ -13,18 +13,19 @@ import lombok.NoArgsConstructor;
 public class Admision {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name="id_alumno")
-    private Alumno alumno;
+    @Column(name="id_alumno")
+    private long idAlumno;
 
-    @Column(name="decision")
-    private boolean decision;
+    @Column(name="apto")
+    private boolean apto;
 
-    @ManyToOne
-    @JoinColumn(name="instrumento")
-    private Instrumento instrumento;
+    @Column(name="no_apto")
+    private boolean noApto;
+
+    @Column(name="instrumento")
+    private long instrumento;
 }

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Audicion {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private long id;
 

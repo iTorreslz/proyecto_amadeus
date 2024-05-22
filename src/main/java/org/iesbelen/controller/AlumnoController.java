@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.iesbelen.domain.Admision;
 import org.iesbelen.domain.Alumno;
 import org.iesbelen.service.AdmisionService;
 import org.iesbelen.service.AlumnoService;
@@ -38,10 +37,10 @@ public class AlumnoController {
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<String> update(@PathVariable("id") Long id, @RequestBody Alumno updatedAlumno) {
+    public ResponseEntity<Void> update(@PathVariable("id") Long id, @RequestBody Alumno updatedAlumno) {
         log.info("Actualizando el alumno con código {}", id);
         this.alumnoService.update(id, updatedAlumno);
-        return new ResponseEntity<>("Alumno modificado correctamente", HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{id}")

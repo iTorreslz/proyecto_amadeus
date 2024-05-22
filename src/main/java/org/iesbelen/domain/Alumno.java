@@ -32,4 +32,7 @@ public class Alumno  {
 
     @Column(name="curso")
     private int curso;
+
+    @Column(name="instrumento")
+    private int idInstrumento;
 }

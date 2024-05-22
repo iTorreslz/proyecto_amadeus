@@ -16,6 +16,10 @@ public class AdmisionService {
         this.admisionRepository = admisionRepository;
     }
 
+    public Admision create(Admision admision) {
+        return this.admisionRepository.save(admision);
+    }
+
     public List<Admision> all() {
         return this.admisionRepository.findAll();
     }
@@ -25,7 +29,15 @@ public class AdmisionService {
                 .orElseThrow(() -> new AdmisionNotFoundException(id));
     }
 
-    public Admision create(Admision admision) {
-        return this.admisionRepository.save(admision);
+    public Admision update(Long id, Admision updatedAdmision) {
+        return this.admisionRepository.findById(id)
+                .map(admision -> {
+                    admision.setApto(updatedAdmision.isApto());
+                    admision.setNoApto(updatedAdmision.isNoApto());
+                    return this.admisionRepository.save(admision);
+                })
+                .orElseThrow(() -> new AdmisionNotFoundException(id));
     }
+
+    public void delete(Long id) { this.admisionRepository.deleteById(id); }
 }

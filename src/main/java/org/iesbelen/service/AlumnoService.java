@@ -25,6 +25,10 @@ public class AlumnoService {
                 .orElseThrow(() -> new AlumnoNotFoundException(id));
     }
 
+    public Alumno oneByEmail(String email) {
+        return this.alumnoRepository.findByEmail(email);
+    }
+
     public Alumno create(Alumno alumno) {
         return this.alumnoRepository.save(alumno);
     }
@@ -38,6 +42,7 @@ public class AlumnoService {
         alumno.setNombre(updatedAlumno.getNombre());
         alumno.setApellidos(updatedAlumno.getApellidos());
         alumno.setCurso(updatedAlumno.getCurso());
+        alumno.setIdInstrumento(updatedAlumno.getIdInstrumento());
 
         return this.alumnoRepository.save(alumno);
     }

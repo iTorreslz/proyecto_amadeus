@@ -25,6 +25,10 @@ public class ProfesorService {
                 .orElseThrow(() -> new ProfesorNotFoundException(id));
     }
 
+    public Profesor oneByEmail(String email) {
+        return this.profesorRepository.findByEmail(email);
+    }
+
     public Profesor create(Profesor profesor) {
         return this.profesorRepository.save(profesor);
     }
@@ -37,7 +41,7 @@ public class ProfesorService {
         profesor.setPassword(updatedProfesor.getPassword());
         profesor.setNombre(updatedProfesor.getNombre());
         profesor.setApellidos(updatedProfesor.getApellidos());
-        profesor.setInstrumento(updatedProfesor.getInstrumento());
+        profesor.setIdInstrumento(updatedProfesor.getIdInstrumento());
 
         return this.profesorRepository.save(profesor);
     }
