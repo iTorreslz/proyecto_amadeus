@@ -49,7 +49,10 @@ import { Observable } from 'rxjs';
                       </div>
                       <ng-template #loggedInNav>
                         <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
-                          <a [routerLink]="['/']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
+                          <a *ngIf="tipoUsuario.includes('alumno')" [routerLink]="['/perfil_alumno']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
+                            Mi usuario
+                          </a>
+                          <a *ngIf="tipoUsuario.includes('profesor')" [routerLink]="['/perfil_profesor']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
                             Mi usuario
                           </a>
                           <button (click)="this.logout()" class="hover:bg-blue-400 p-2 rounded-xl">

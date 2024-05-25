@@ -100,7 +100,7 @@ export class ProfesoradoCrearComponent {
     this.profesor.idInstrumento = parseInt(instrumento);
     this.profesoresService.create(this.profesor).subscribe({
       next: () => {
-
+        window.location.reload();
       },
       error: (error) => {
         console.error(error);

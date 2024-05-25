@@ -31,20 +31,20 @@ public class AlumnoController {
     }
 
     @GetMapping("/{id}")
-    public Alumno one(@PathVariable("id") Long id) {
+    public Alumno one(@PathVariable("id") int id) {
         log.info("Accediendo al alumno con código {}", id);
         return this.alumnoService.one(id);
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<Void> update(@PathVariable("id") Long id, @RequestBody Alumno updatedAlumno) {
+    public ResponseEntity<Void> update(@PathVariable("id") int id, @RequestBody Alumno updatedAlumno) {
         log.info("Actualizando el alumno con código {}", id);
         this.alumnoService.update(id, updatedAlumno);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Map<String, String>> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Map<String, String>> delete(@PathVariable("id") int id) {
         log.info("Eliminando el alumno con código {}", id);
         alumnoService.delete(id);
         Map<String, String> response = new HashMap<>();

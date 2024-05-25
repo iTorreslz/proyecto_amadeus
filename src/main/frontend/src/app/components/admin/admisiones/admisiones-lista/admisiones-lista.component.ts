@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Admision } from '../../../../interfaces/admision';
 import { AdmisionesService } from '../../../../services/admisiones.service';
@@ -44,13 +44,13 @@ import { AlumnosService } from '../../../../services/alumnos.service';
     <tbody *ngFor="let admision of admisionesList">
       <tr>
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
-          {{ admision.idAdmision }}
+          {{ admision.id }}
         </td>
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
           {{ admision.idAlumno }}
         </td>
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
-          {{ getNombreAlumno(admision.idAdmision) + ' ' + getApellidosAlumno(admision.idAdmision) }}
+          {{ getNombreAlumno(admision.idAlumno) }}
         </td>
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
           {{ getInstrumento(admision.instrumento) }}
@@ -59,13 +59,13 @@ import { AlumnosService } from '../../../../services/alumnos.service';
           {{ getDecision(admision.apto, admision.noApto) }}
         </td>
         <td class="border-b border-gray-200 bg-white text-blue-900 text-center">
-          <button class="mr-3" (click)="admitir(admision.idAdmision)">
-              <i class="fa-solid fa-eye"></i>
+          <button class="mr-3" (click)="admitir(admision)">
+          <i class="fa-regular fa-circle-check"></i>
           </button>
-          <button class="mr-3" (click)="denegar(admision.idAdmision)">
-              <i class="fa-solid fa-eye"></i>
+          <button class="mr-3" (click)="denegar(admision)">
+          <i class="fa-regular fa-circle-xmark"></i>
           </button>
-          <button (click)="deleteAdmision(admision.idAdmision)">
+          <button (click)="deleteAdmision(admision.id)">
               <i class="fa-solid fa-trash-alt"></i>
           </button>
         </td>
@@ -78,15 +78,16 @@ import { AlumnosService } from '../../../../services/alumnos.service';
 export class AdmisionesListaComponent {
   decision: string = "";
   admisionesList: Admision[] = [];
+  alumnos: Alumno[] = [];
   admision: Admision = {
-    idAdmision: 0,
+    id: 0,
     idAlumno: 0,
     instrumento: 0,
     apto: false,
     noApto: false
   };
 
-  constructor(private admisionService: AdmisionesService, private alumnoService: AlumnosService, private router: Router) { }
+  constructor(private admisionService: AdmisionesService, private alumnoService: AlumnosService) { }
 
   ngOnInit() {
     this.admisionService.getAll().subscribe({
@@ -97,30 +98,23 @@ export class AdmisionesListaComponent {
         console.error('Error al obtener la lista de admisiones:', error);
       }
     });
+
+    this.alumnoService.getAll().subscribe({
+      next: (alumnos: Alumno[]) => {
+        this.alumnos = alumnos;
+      },
+      error: (error) => {
+        console.error('Error al obtener la lista de alumnos:', error);
+      }
+    });
   }
 
   getNombreAlumno(idAlumno: number): any {
-    this.alumnoService.getById(idAlumno).subscribe({
-      next: (alumno: Alumno) => {
-        return alumno.nombre;
-      },
-      error: (error) => {
-        console.error('Error al obtener el alumno:', error);
-        return "Error";
+    for (let alumno of this.alumnos) {
+      if (alumno.id === idAlumno) {
+        return alumno.nombre + " " + alumno.apellidos;
       }
-    });
-  }
-
-  getApellidosAlumno(idAlumno: number): any {
-    this.alumnoService.getById(idAlumno).subscribe({
-      next: (alumno: Alumno) => {
-        return alumno.apellidos;
-      },
-      error: (error) => {
-        console.error('Error al obtener el alumno:', error);
-        return "Error";
-      }
-    });
+    }
   }
 
   getInstrumento(idInstrumento: number): string {
@@ -172,18 +166,9 @@ export class AdmisionesListaComponent {
     }
   }
 
-  admitir(idAdmision: number) {
-    this.admisionService.getById(idAdmision).subscribe({
-      next: (admision: Admision) => {
-        this.admision = admision;
-      },
-      error: () => {
-        console.error('Error.');
-      }
-    });
-
-    this.admision.apto = true;
-    this.admisionService.update(this.admision, this.admision.idAdmision).subscribe({
+  admitir(admision: Admision) {
+    admision.apto = true;
+    this.admisionService.update(admision, admision.id).subscribe({
       next: () => {
         window.location.reload();
       },
@@ -193,18 +178,9 @@ export class AdmisionesListaComponent {
     });
   }
 
-  denegar(idAdmision: number) {
-    this.admisionService.getById(idAdmision).subscribe({
-      next: (admision: Admision) => {
-        this.admision = admision;
-      },
-      error: () => {
-        console.error('Error.');
-      }
-    });
-
-    this.admision.noApto = true;
-    this.admisionService.update(this.admision, this.admision.idAdmision).subscribe({
+  denegar(admision: Admision) {
+    admision.noApto = true;
+    this.admisionService.update(admision, admision.id).subscribe({
       next: () => {
         window.location.reload();
       },

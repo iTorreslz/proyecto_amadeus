@@ -28,13 +28,6 @@ CREATE TABLE alumno (
     instrumento INT
 );
 
-DROP TABLE IF EXISTS `nota_alumno`;
-CREATE TABLE nota_alumno (
-    id_alumno INT,
-    nota INT,
-    FOREIGN KEY (id_alumno) REFERENCES alumno(id)
-);
-
 DROP TABLE IF EXISTS `profesor`;
 CREATE TABLE profesor (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -48,20 +41,30 @@ CREATE TABLE profesor (
 DROP TABLE IF EXISTS `clase`;
 CREATE TABLE clase (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    dia_hora DATETIME,
+    dia VARCHAR(100),
+    hora VARCHAR(100),
+    id_alumno INT,
+    id_profesor INT
+);
+
+DROP TABLE IF EXISTS `tarea`;
+CREATE TABLE tarea (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    publicacion DATETIME,
+    entrega DATETIME,
     id_alumno INT,
     id_profesor INT,
-    duracion TIME,
-    FOREIGN KEY (id_alumno) REFERENCES alumno(id),
-    FOREIGN KEY (id_profesor) REFERENCES profesor(id)
+    descripcion VARCHAR(250),
+    completada BOOLEAN
 );
 
 DROP TABLE IF EXISTS `nota`;
 CREATE TABLE nota (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100),
     calificacion DOUBLE,
     id_alumno INT,
-    FOREIGN KEY (id_alumno) REFERENCES alumno(id)
+    id_profesor INT
 );
 
 DROP TABLE IF EXISTS `admision`;
@@ -76,19 +79,11 @@ CREATE TABLE admision (
 DROP TABLE IF EXISTS `audicion`;
 CREATE TABLE audicion (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    instrumento INT,
     dia_hora DATETIME
 );
 
-DROP TABLE IF EXISTS `audicion_alumno`;
-CREATE TABLE audicion_alumno (
-    audicion_id INT,
-    alumno_id INT,
-    FOREIGN KEY (audicion_id) REFERENCES audicion(id),
-    FOREIGN KEY (alumno_id) REFERENCES alumno(id),
-    PRIMARY KEY (audicion_id, alumno_id)
-);
-
--- Volcando datos para la tabla amadeus.admisiones:
+-- Volcando datos para la tabla amadeus.admision:
 DELETE FROM `admision`;
 INSERT INTO `admision` (`id`, `id_alumno`, `apto`, `no_apto`, `instrumento`) VALUES
 	(1, 1, false, false, 1);

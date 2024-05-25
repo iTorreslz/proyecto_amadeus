@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Admision} from '../interfaces/admision';
+import { Injectable } from '@angular/core';
+import { Admision } from '../interfaces/admision';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NewAdmision } from '../interfaces/newAdmision';
 
@@ -16,7 +16,7 @@ export class AdmisionesService {
 
   create(admision: NewAdmision) { return this.http.post<any>(`http://localhost:8082/admisiones/nuevo`, admision); }
 
-  update(admision: Admision, id: number) { return this.http.post<any>(`http://localhost:8082/admisiones/edit/${id}`, admision); }
+  update(admision: Admision, id: number) { return this.http.post<any>(`http://localhost:8082/admisiones/${id}/decision`, admision); }
 
-  delete(id: number) { return this.http.delete<any>(`http://localhost:8082/admisiones/delete/${id}`); }
+  delete(id: number) { return this.http.delete<any>(`http://localhost:8082/admisiones/${id}`); }
 }

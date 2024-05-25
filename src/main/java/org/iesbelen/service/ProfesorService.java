@@ -20,7 +20,7 @@ public class ProfesorService {
         return this.profesorRepository.findAll();
     }
 
-    public Profesor one(Long id) {
+    public Profesor one(int id) {
         return this.profesorRepository.findById(id)
                 .orElseThrow(() -> new ProfesorNotFoundException(id));
     }
@@ -33,7 +33,7 @@ public class ProfesorService {
         return this.profesorRepository.save(profesor);
     }
 
-    public Profesor update(Long id, Profesor updatedProfesor) {
+    public Profesor update(int id, Profesor updatedProfesor) {
         Profesor profesor = this.profesorRepository.findById(id)
                 .orElseThrow(() -> new ProfesorNotFoundException(id));
 
@@ -46,7 +46,7 @@ public class ProfesorService {
         return this.profesorRepository.save(profesor);
     }
 
-    public void delete(Long id) {
+    public void delete(int id) {
         Profesor profesor = this.profesorRepository.findById(id)
                 .orElseThrow(() -> new ProfesorNotFoundException(id));
 

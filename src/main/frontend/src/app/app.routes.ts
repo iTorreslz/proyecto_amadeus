@@ -18,7 +18,12 @@ import { ProfesoradoDetalleComponent } from './components/admin/profesorado/prof
 import { ProfesoradoEditarComponent } from './components/admin/profesorado/profesorado-editar/profesorado-editar.component';
 import { ProfesoradoCrearComponent } from './components/admin/profesorado/profesorado-crear/profesorado-crear.component';
 import { AudicionesCrearComponent } from './components/admin/audiciones/audiciones-crear/audiciones-crear.component';
-import { AdmisionesCrearComponent } from './components/users/admisiones-crear/admisiones-crear.component';
+import { AdmisionesCrearComponent } from './components/users/alumnos/admisiones-crear/admisiones-crear.component';
+import { PerfilAlumnoComponent } from './components/users/alumnos/perfil-alumno/perfil-alumno.component';
+import { PerfilProfesorComponent } from './components/users/profesores/perfil-profesor/perfil-profesor.component';
+import { AlumnadoAsignarClaseComponent } from './components/admin/alumnado/alumnado-asignar-clase/alumnado-asignar-clase.component';
+import { VerTareasComponent } from './components/users/profesores/ver-tareas/ver-tareas.component';
+import { CrearTareasComponent } from './components/users/profesores/crear-tareas/crear-tareas.component';
 
 export const routes: Routes = [
     {
@@ -37,11 +42,6 @@ export const routes: Routes = [
         title: 'Información'
     },
     {
-        path: 'register',
-        component: RegisterComponent,
-        title: 'Registro'
-    },
-    {
         path: 'contacto',
         component: ContactComponent,
         title: 'Contacto'
@@ -55,6 +55,36 @@ export const routes: Routes = [
         path: 'login',
         component: LoginComponent,
         title: 'Login'
+    },
+    {
+        path: 'register',
+        component: RegisterComponent,
+        title: 'Registro'
+    },
+    {
+        path: 'perfil_alumno',
+        component: PerfilAlumnoComponent,
+        title: 'Perfil Alumno'
+    },
+    {
+        path: 'admisiones/nuevo',
+        component: AdmisionesCrearComponent,
+        title: 'Nueva Admisión'
+    },
+    {
+        path: 'perfil_profesor',
+        component: PerfilProfesorComponent,
+        title: 'Perfil Profesor'
+    },
+    {
+        path: 'nueva-tarea/:idProfesor',
+        component: CrearTareasComponent,
+        title: 'Nueva tarea'
+    },
+    {
+        path: 'tareas-alum/:idAlumno/prof/:idProfesor',
+        component: VerTareasComponent,
+        title: 'Tareas alumno'
     },
     {
         path: 'admin',
@@ -80,6 +110,11 @@ export const routes: Routes = [
                 path: 'alumnado/editar/:id',
                 component: AlumnadoEditarComponent,
                 title: 'Editar alumno'
+            },
+            {
+                path: 'alumnado/asignar_clase/:id',
+                component: AlumnadoAsignarClaseComponent,
+                title: 'Asignar clase'
             },
             {
                 path: 'profesorado',
@@ -115,11 +150,6 @@ export const routes: Routes = [
                 path: 'admisiones',
                 component: AdmisionesListaComponent,
                 title: 'Administración Admisiones'
-            },
-            {
-                path: 'admisiones/nuevo',
-                component: AdmisionesCrearComponent,
-                title: 'Nueva Admisión'
             }
         ]
     },

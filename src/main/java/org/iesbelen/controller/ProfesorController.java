@@ -35,20 +35,20 @@ public class ProfesorController {
     }
 
     @GetMapping("/{id}")
-    public Profesor one(@PathVariable("id") Long id) {
+    public Profesor one(@PathVariable("id") int id) {
         log.info("Accediendo al profesor con código {}", id);
         return this.profesorService.one(id);
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<Void> update(@PathVariable("id") Long id, @RequestBody Profesor updatedProfesor) {
+    public ResponseEntity<Void> update(@PathVariable("id") int id, @RequestBody Profesor updatedProfesor) {
         log.info("Actualizando el profesor con código {}", id);
         this.profesorService.update(id, updatedProfesor);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Map<String, String>> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Map<String, String>> delete(@PathVariable("id") int id) {
         log.info("Eliminando el profesor con código {}", id);
         profesorService.delete(id);
         Map<String, String> response = new HashMap<>();

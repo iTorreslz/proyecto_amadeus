@@ -1,3 +1,4 @@
 export interface NewAudicion {
-    diaHora: string;
+    idInstrumento: number;
+    diaHoraString: string;
 }

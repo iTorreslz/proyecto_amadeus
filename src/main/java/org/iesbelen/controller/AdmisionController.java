@@ -16,9 +16,11 @@ import java.util.Map;
 @RequestMapping("/admisiones")
 public class AdmisionController {
     private final AdmisionService admisionService;
+    private final AlumnoService alumnoService;
 
-    public AdmisionController(AdmisionService admisionService) {
+    public AdmisionController(AdmisionService admisionService, AlumnoService alumnoService) {
         this.admisionService = admisionService;
+        this.alumnoService = alumnoService;
     }
 
     // ADMISIÓN
@@ -51,6 +53,10 @@ public class AdmisionController {
     public void decision(@RequestBody Admision admision, @PathVariable("id") int id) {
         if (admision != null) {
             admisionService.update(id, admision);
+            Alumno alumno = alumnoService.one(admision.getIdAlumno());
+            alumno.setCurso(1);
+            alumno.setIdInstrumento(admision.getInstrumento());
+            alumnoService.update(alumno.getId(), alumno);
         } else {
             System.out.println("Error. Objeto Admisión erróneo.");
         }

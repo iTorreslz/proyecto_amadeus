@@ -20,7 +20,7 @@ public class AudicionService {
         return this.audicionRepository.findAll();
     }
 
-    public Audicion one(Long id) {
+    public Audicion one(int id) {
         return this.audicionRepository.findById(id)
                 .orElseThrow(() -> new AudicionNotFoundException(id));
     }

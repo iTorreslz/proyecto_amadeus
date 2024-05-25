@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdmisionesService } from '../../../services/admisiones.service';
-import { NewAdmision } from '../../../interfaces/newAdmision';
+import { AdmisionesService } from '../../../../services/admisiones.service';
+import { NewAdmision } from '../../../../interfaces/newAdmision';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admisiones-crear',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   template: `
-  <div class="relative rounded w-700 max-w-95 mx-auto bg-blue-200 shadow-3xl p-3">
+  <div class="relative rounded w-8/12 max-w-full mx-auto bg-blue-200 shadow-3xl p-3">
     <div class="mt-2 mb-8">
       <h4 class="text-3xl text-center font-bold text-navy-700">
         Solicitar admisión 
@@ -18,16 +20,15 @@ import { NewAdmision } from '../../../interfaces/newAdmision';
     <p class="text-xl text-gray-600 text-center">Selecciona instrumento a solicitar</p>
 
     <div class="border border-gray-300 flex flex-row flex-wrap justify-between">
-      <div class="rounded-2xl bg-blue-800 px-3 py-4 shadow-3xl mt-4 mr-4" *ngFor="let instrumento of instrumentos">
-        <input type="radio" class="text-base font-medium text-navy-700 w-14" name="instrumento" [id]="instrumento"/>
+      <div class="rounded-2xl flex items-center text-4xl w-full h-32 bg-blue-800 px-3 py-4 shadow-3xl mt-4 mr-4" *ngFor="let instrumento of instrumentos">
+        <input type="radio" class="text-base font-medium text-navy-700 w-14" name="instrumento" [value]="instrumento" [id]="instrumento" [(ngModel)]="selectedInstrumento"/>
         <label class="text-white" [for]="instrumento">{{ instrumento }}</label>
       </div>
     </div>
-
     <div class="flex justify-center">
-      <button type="submit" (click)="this.guardarCambios(this.idAlumnoSolicitante, 0)"
+      <button type="submit" (click)="enviar(this.idAlumnoSolicitante)"
         class="m-4 p-4 bg-blue-800 text-white font-semibold rounded-md shadow-md hover:bg-blue-600">
-        Guardar cambios
+        Enviar solicitud
       </button>
     </div>
   </div>
@@ -37,10 +38,10 @@ import { NewAdmision } from '../../../interfaces/newAdmision';
 export class AdmisionesCrearComponent {
   idAlumnoSolicitante: number = 0;
   nuevaAdmision: NewAdmision = { idAlumno: 0, apto: false, noApto: false, instrumento: 0 };
-  instrumento: string = "";
+  selectedInstrumento: string = "";
   instrumentos: string[] = ["Piano", "Guitarra", "Clarinete", "Saxofón", "Flauta", "Trompeta", "Bombardino", "Tuba", "Trombón", "Canto"]
 
-  constructor(private admisionService: AdmisionesService) { }
+  constructor(private admisionService: AdmisionesService, private router: Router) { }
 
   ngOnInit(): void {
     let usuarioString = localStorage.getItem("usuario");
@@ -51,46 +52,51 @@ export class AdmisionesCrearComponent {
   getInstrumento(idInstrumento: number) {
     switch (idInstrumento) {
       case 1:
-        this.instrumento = "Piano";
+        this.selectedInstrumento = "Piano";
         break;
       case 2:
-        this.instrumento = "Guitarra";
+        this.selectedInstrumento = "Guitarra";
         break;
       case 3:
-        this.instrumento = "Clarinete";
+        this.selectedInstrumento = "Clarinete";
         break;
       case 4:
-        this.instrumento = "Saxofón";
+        this.selectedInstrumento = "Saxofón";
         break;
       case 5:
-        this.instrumento = "Flauta";
+        this.selectedInstrumento = "Flauta";
         break;
       case 6:
-        this.instrumento = "Trompeta";
+        this.selectedInstrumento = "Trompeta";
         break;
       case 7:
-        this.instrumento = "Bombardino";
+        this.selectedInstrumento = "Bombardino";
         break;
       case 8:
-        this.instrumento = "Tuba";
+        this.selectedInstrumento = "Tuba";
         break;
       case 9:
-        this.instrumento = "Trombón";
+        this.selectedInstrumento = "Trombón";
         break;
       case 10:
-        this.instrumento = "Canto";
+        this.selectedInstrumento = "Canto";
         break;
       default:
-        this.instrumento = "No asignado";
+        this.selectedInstrumento = "No asignado";
     }
   }
 
-  guardarCambios(idAlumno: number, instrumento: number) {
+  enviar(idAlumno: number) {
     this.nuevaAdmision.idAlumno = idAlumno;
-    this.nuevaAdmision.instrumento = instrumento;
+    for (let i = 0; i < this.instrumentos.length; i++) {
+      let instrumentoLoop: string = this.instrumentos[i];
+      if (instrumentoLoop.includes(this.selectedInstrumento)) {
+        this.nuevaAdmision.instrumento = i + 1;
+      }
+    }
     this.admisionService.create(this.nuevaAdmision).subscribe({
       next: () => {
-
+        this.router.navigate(['/perfil_alumno']);
       },
       error: (error) => {
         console.error(error);

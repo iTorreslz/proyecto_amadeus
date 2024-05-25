@@ -1,5 +1,5 @@
 export interface Admision {
-    idAdmision: number;
+    id: number;
     idAlumno: number;
     apto: boolean;
     noApto: boolean;

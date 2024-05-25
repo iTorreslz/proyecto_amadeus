@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Alumno } from '../../../../interfaces/alumno';
 import { AlumnosService } from '../../../../services/alumnos.service';
 import { Router, RouterLink } from '@angular/router';
+import { Clase } from '../../../../interfaces/clase';
+import { ClasesService } from '../../../../services/clases.service';
 
 @Component({
   selector: 'app-alumnado-lista',
@@ -29,6 +31,10 @@ import { Router, RouterLink } from '@angular/router';
             Curso actual
         </th>
         <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left font-semibold text-blue-900 tracking-wider">
+            Clase
+        </th>
+        <th
             class="border-b-2 border-gray-200 bg-blue-100">
         </th>
       </tr>
@@ -47,11 +53,17 @@ import { Router, RouterLink } from '@angular/router';
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
           {{ getNombreCurso(alumno.curso) }}
         </td>
+        <td *ngIf="checkClases(alumno.id) === true" class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
+          {{clase!.dia}} | {{clase!.hora}}
+        </td>
+        <td *ngIf="checkClases(alumno.id) === false" class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
+          <a [routerLink]="['/admin/alumnado/asignar_clase', alumno.id]" class="text-blue-700 font-bold cursor-pointer">Asignar</a>
+        </td>
         <td class="border-b border-gray-200 bg-white text-blue-900 text-center">
           <button class="mr-3" [routerLink]="['/admin/alumnado/detalle', alumno.id]">
               <i class="fa-solid fa-eye"></i>
           </button>
-          <button class="mr-3"[routerLink]="['/admin/alumnado/editar', alumno.id]">
+          <button class="mr-3" [routerLink]="['/admin/alumnado/editar', alumno.id]">
               <i class="fa-solid fa-pencil-alt"></i>
           </button>
           <button (click)="deleteAlumno(alumno.id)">
@@ -67,8 +79,10 @@ import { Router, RouterLink } from '@angular/router';
 export class AlumnadoListaComponent implements OnInit {
   alumnosList: Alumno[] = [];
   nombreCurso: string = '';
+  clases: Clase[] = [];
+  clase: Clase | undefined;
 
-  constructor(private alumnosService: AlumnosService, private router: Router) { }
+  constructor(private alumnosService: AlumnosService, private claseService: ClasesService, private router: Router) { }
 
   ngOnInit() {
     this.alumnosService.getAll().subscribe({
@@ -79,6 +93,25 @@ export class AlumnadoListaComponent implements OnInit {
         console.error('Error al obtener la lista de alumnos:', error);
       }
     });
+
+    this.claseService.getAll().subscribe({
+      next: (clases: Clase[]) => {
+        this.clases = clases;
+      },
+      error: (error) => {
+        console.error('Error al obtener la lista de clases:', error);
+      }
+    });
+  }
+
+  checkClases(idAlumno: number): boolean {
+    for (let clase of this.clases) {
+      if (clase.idAlumno === idAlumno) {
+        this.clase = clase;
+        return true;
+      }
+    }
+    return false;
   }
 
   deleteAlumno(id: number) {

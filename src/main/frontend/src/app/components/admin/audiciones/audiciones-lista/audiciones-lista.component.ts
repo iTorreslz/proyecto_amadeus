@@ -18,6 +18,10 @@ import { AudicionesService } from '../../../../services/audiciones.service';
         </th>
         <th
             class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left font-semibold text-blue-900 tracking-wider">
+            Instrumento
+        </th>
+        <th
+            class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left font-semibold text-blue-900 tracking-wider">
             Día y Hora
         </th>
         <th class="border-b-2 border-gray-200 bg-blue-100">
@@ -33,7 +37,10 @@ import { AudicionesService } from '../../../../services/audiciones.service';
           {{ audicion.id }}
         </td>
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
-          {{ audicion.diaHora }}
+          {{ getInstrumento(audicion.idInstrumento) }}
+        </td>
+        <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
+          {{ formatDate(audicion.diaHora) }}
         </td>
         <td class="border-b border-gray-200 bg-white text-blue-900 text-center">
           <button class="mr-3">
@@ -67,5 +74,36 @@ export class AudicionesListaComponent {
         console.error('Error al obtener la lista de audiciones:', error);
       }
     });
+  }
+
+  formatDate(date: string): string {
+    return date.replace("T"," ");
+  }
+
+  getInstrumento(idInstrumento: number): string {
+    switch (idInstrumento) {
+      case 1:
+        return "Piano";
+      case 2:
+        return "Guitarra";
+      case 3:
+        return "Clarinete";
+      case 4:
+        return "Saxofón";
+      case 5:
+        return "Flauta";
+      case 6:
+        return "Trompeta";
+      case 7:
+        return "Bombardino";
+      case 8:
+        return "Tuba";
+      case 9:
+        return "Trombón";
+      case 10:
+        return "Canto";
+      default:
+        return "No asignado";
+    }
   }
 }

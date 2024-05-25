@@ -19,6 +19,12 @@ public class Audicion {
     @Column(name="id")
     private long id;
 
+    @Column(name="instrumento")
+    private long idInstrumento;
+
+    @Transient
+    private String diaHoraString;
+
     @Column(name="dia_hora")
     private LocalDateTime diaHora;
 }

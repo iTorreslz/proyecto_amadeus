@@ -20,7 +20,7 @@ public class AlumnoService {
         return this.alumnoRepository.findAll();
     }
 
-    public Alumno one(Long id) {
+    public Alumno one(int id) {
         return this.alumnoRepository.findById(id)
                 .orElseThrow(() -> new AlumnoNotFoundException(id));
     }
@@ -33,7 +33,7 @@ public class AlumnoService {
         return this.alumnoRepository.save(alumno);
     }
 
-    public Alumno update(Long id, Alumno updatedAlumno) {
+    public Alumno update(int id, Alumno updatedAlumno) {
         Alumno alumno = this.alumnoRepository.findById(id)
                 .orElseThrow(() -> new AlumnoNotFoundException(id));
 
@@ -47,7 +47,7 @@ public class AlumnoService {
         return this.alumnoRepository.save(alumno);
     }
 
-    public void delete(Long id) {
+    public void delete(int id) {
         Alumno alumno = this.alumnoRepository.findById(id)
                 .orElseThrow(() -> new AlumnoNotFoundException(id));
 
