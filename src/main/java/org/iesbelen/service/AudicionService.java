@@ -5,6 +5,8 @@ import org.iesbelen.exception.AudicionNotFoundException;
 import org.iesbelen.repository.AudicionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -17,7 +19,9 @@ public class AudicionService {
     }
 
     public List<Audicion> all() {
-        return this.audicionRepository.findAll();
+        List<Audicion> audiciones = this.audicionRepository.findAll();
+        audiciones.sort(Comparator.comparing(Audicion::getDiaHora));
+        return audiciones;
     }
 
     public Audicion one(int id) {

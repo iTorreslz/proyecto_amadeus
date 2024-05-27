@@ -1,9 +1,11 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service';
-import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 
 @Component({
   selector: 'app-root',
@@ -49,10 +51,12 @@ import { Observable } from 'rxjs';
                       </div>
                       <ng-template #loggedInNav>
                         <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
-                          <a *ngIf="tipoUsuario.includes('alumno')" [routerLink]="['/perfil_alumno']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
+                          <a *ngIf="tipoUsuario.includes('alumno')" [routerLink]="['/perfil_alumno']" class="text-white ml-10
+                            mr-3 bg-blue-800 p-2 rounded-xl">
                             Mi usuario
                           </a>
-                          <a *ngIf="tipoUsuario.includes('profesor')" [routerLink]="['/perfil_profesor']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
+                          <a *ngIf="tipoUsuario.includes('profesor')" [routerLink]="['/perfil_profesor']" class="text-white ml-10
+                            mr-3 bg-blue-800 p-2 rounded-xl">
                             Mi usuario
                           </a>
                           <button (click)="this.logout()" class="hover:bg-blue-400 p-2 rounded-xl">
@@ -62,11 +66,12 @@ import { Observable } from 'rxjs';
                       </ng-template>
                     </div>
                     <div *ngIf="!loggedIn">
-                      <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l">
-                        <a [routerLink]="['/register']" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
+                      <div class="text-blue-800 text-lg font-semibold pr-4 border-black flex flex-row items-center border-l
+                        cursor-pointer">
+                        <a (click)="openRegister()" class="text-white ml-10 mr-3 bg-blue-800 p-2 rounded-xl">
                           Registrarse
                         </a>
-                        <a [routerLink]="['/login']" class="hover:bg-blue-400 p-2 rounded-xl">
+                        <a (click)="openLogin()" class="hover:bg-blue-400 p-2 rounded-xl cursor-pointer">
                           Iniciar sesión
                         </a>
                       </div>
@@ -83,7 +88,7 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private dialog: MatDialog) { }
 
   tipoUsuario: string = "";
   loggedIn: boolean = false;
@@ -110,6 +115,20 @@ export class AppComponent implements OnInit {
     } else {
       return false
     }
+  }
+
+  openLogin() {
+    this.dialog.open(LoginComponent, {
+      width: 'fit-content',
+      height: 'fit-content'
+    });
+  }
+
+  openRegister() {
+    this.dialog.open(RegisterComponent, {
+      width: 'fit-content',
+      height: 'fit-content'
+    });
   }
 
   logout() {

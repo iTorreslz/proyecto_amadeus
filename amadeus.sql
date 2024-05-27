@@ -54,7 +54,7 @@ CREATE TABLE tarea (
     entrega DATETIME,
     id_alumno INT,
     id_profesor INT,
-    descripcion VARCHAR(250),
+    descripcion VARCHAR(3000),
     completada BOOLEAN
 );
 
@@ -82,11 +82,6 @@ CREATE TABLE audicion (
     instrumento INT,
     dia_hora DATETIME
 );
-
--- Volcando datos para la tabla amadeus.admision:
-DELETE FROM `admision`;
-INSERT INTO `admision` (`id`, `id_alumno`, `apto`, `no_apto`, `instrumento`) VALUES
-	(1, 1, false, false, 1);
 
 -- Volcando datos para la tabla amadeus.alumno:
 DELETE FROM `admin`;

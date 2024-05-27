@@ -6,8 +6,6 @@ import { AdminMainComponent } from './components/admin/admin-main/admin-main.com
 import { ProfesoradoListaComponent } from './components/admin/profesorado/profesorado-lista/profesorado-lista.component';
 import { AudicionesListaComponent } from './components/admin/audiciones/audiciones-lista/audiciones-lista.component';
 import { AdmisionesListaComponent } from './components/admin/admisiones/admisiones-lista/admisiones-lista.component';
-import { LoginComponent } from './components/auth/login/login.component';
-import { RegisterComponent } from './components/auth/register/register.component';
 import { AlumnadoDetalleComponent } from './components/admin/alumnado/alumnado-detalle/alumnado-detalle.component';
 import { InformacionComponent } from './components/informacion/informacion.component';
 import { ContactComponent } from './components/contact/contact.component';
@@ -24,6 +22,8 @@ import { PerfilProfesorComponent } from './components/users/profesores/perfil-pr
 import { AlumnadoAsignarClaseComponent } from './components/admin/alumnado/alumnado-asignar-clase/alumnado-asignar-clase.component';
 import { VerTareasComponent } from './components/users/profesores/ver-tareas/ver-tareas.component';
 import { CrearTareasComponent } from './components/users/profesores/crear-tareas/crear-tareas.component';
+import { EditarTareasComponent } from './components/users/profesores/editar-tareas/editar-tareas.component';
+import { InstrumentosComponent } from './components/instrumentos/instrumentos.component';
 
 export const routes: Routes = [
     {
@@ -42,6 +42,11 @@ export const routes: Routes = [
         title: 'Información'
     },
     {
+        path: 'instrumentos',
+        component: InstrumentosComponent,
+        title: 'Guía de instrumentos'
+    },
+    {
         path: 'contacto',
         component: ContactComponent,
         title: 'Contacto'
@@ -50,16 +55,6 @@ export const routes: Routes = [
         path: 'about',
         component: AboutComponent,
         title: 'Sobre nosotros'
-    },
-    {
-        path: 'login',
-        component: LoginComponent,
-        title: 'Login'
-    },
-    {
-        path: 'register',
-        component: RegisterComponent,
-        title: 'Registro'
     },
     {
         path: 'perfil_alumno',
@@ -85,6 +80,11 @@ export const routes: Routes = [
         path: 'tareas-alum/:idAlumno/prof/:idProfesor',
         component: VerTareasComponent,
         title: 'Tareas alumno'
+    },
+    {
+        path: 'tareas-alum/:idAlumno/prof/:idProfesor/editar/:id',
+        component: EditarTareasComponent,
+        title: 'Editar tarea'
     },
     {
         path: 'admin',

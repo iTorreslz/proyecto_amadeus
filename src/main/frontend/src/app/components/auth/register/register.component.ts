@@ -1,14 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [],
+  imports: [MatDialogModule],
   template: `
-  <div class="mt-20 w-96 mx-auto rounded-xl bg-white shadow-md">
+  <div class="mt-12 w-96 mx-auto rounded-xl bg-white shadow-md">
     <div
         class="mx-4 -mt-6 mb-4 grid h-28 place-items-center overflow-hidden rounded-xl bg-gradient-to-tr from-blue-800 to-blue-300 text-white shadow-lg">
         <h3 class="text-3xl font-semibold leading-snug">Crear una cuenta</h3>
@@ -60,9 +61,17 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class RegisterComponent {
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
+  constructor(
+    private http: HttpClient, private router: Router, private authService: AuthService,
+    @Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialogRef<RegisterComponent>
+) { }
 
   register(email: string, password: string, nombre: string, apellidos: string) {
     this.authService.register(email, password, nombre, apellidos);
+    this.close();
+  }
+
+  close() {
+    this.dialog.close();
   }
 }

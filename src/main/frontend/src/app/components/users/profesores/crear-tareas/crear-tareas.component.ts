@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlumnosService } from '../../../../services/alumnos.service';
 import { ProfesoresService } from '../../../../services/profesores.service';
 import { TareaService } from '../../../../services/tareas.service';
@@ -62,7 +62,8 @@ export class CrearTareasComponent {
 
   constructor(
     private route: ActivatedRoute, private alumnosService: AlumnosService,
-    private tareasService: TareaService, private profesorService: ProfesoresService
+    private tareasService: TareaService, private profesorService: ProfesoresService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -108,7 +109,7 @@ export class CrearTareasComponent {
 
     this.tareasService.create(this.newTarea).subscribe({
       next: () => {
-        window.location.reload();
+        this.router.navigate(['/perfil_profesor']);
       }
     });
   }

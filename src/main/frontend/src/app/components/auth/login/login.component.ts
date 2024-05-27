@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [HttpClientModule, RouterLink, RouterOutlet],
+  imports: [HttpClientModule, MatDialogModule, RouterLink, RouterOutlet],
   template: `
-  <div class="mt-20 w-96 mx-auto rounded-xl bg-white shadow-md">
+  <div class="mt-12 w-96 mx-auto rounded-xl bg-white shadow-md">
     <div
         class="mx-4 -mt-6 mb-4 grid h-28 place-items-center overflow-hidden rounded-xl bg-gradient-to-tr from-blue-800 to-blue-300 text-white shadow-lg">
         <h3 class="text-3xl font-semibold leading-snug">Conectar</h3>
@@ -37,7 +40,7 @@ import { AuthService } from '../../../services/auth.service';
         type="button" (click)="login(email.value,password.value)">Iniciar sesión</button>
       <p class="text-sm font-light text-center text-blue-gray-400">
         ¿No eres alumno aún?
-        <a [routerLink]="['/register']" class="ml-1 font-bold text-blue-800">Crear cuenta</a>
+        <a (click)="openRegister()" class="ml-1 font-bold text-blue-800 cursor-pointer">Crear cuenta</a>
       </p>
     </div>
   </div>
@@ -46,9 +49,27 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class LoginComponent {
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService) { }
+  constructor(
+    private http: HttpClient, private router: Router, private authService: AuthService,
+    @Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialogRef<LoginComponent>,
+    private registerDialog: MatDialog
+  ) { }
 
   login(email: string, password: string) {
     this.authService.login(email, password);
+    this.close();
+  }
+
+  openRegister() {
+    this.close();
+
+    this.registerDialog.open(RegisterComponent, {
+      width: 'fit-content',
+      height: 'fit-content'
+    });
+  }
+
+  close() {
+    this.dialog.close();
   }
 }

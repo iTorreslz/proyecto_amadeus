@@ -6,6 +6,13 @@ import { Profesor } from '../../../../interfaces/profesor';
 import { ProfesoresService } from '../../../../services/profesores.service';
 import { ClasesService } from '../../../../services/clases.service';
 import { Clase } from '../../../../interfaces/clase';
+import { Tarea } from '../../../../interfaces/tarea';
+import { TareaService } from '../../../../services/tareas.service';
+import { Audicion } from '../../../../interfaces/audicion';
+import { AudicionesService } from '../../../../services/audiciones.service';
+import { AlumnosService } from '../../../../services/alumnos.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AjustesPerfilProfesorComponent } from '../../profesores/ajustes-perfil-profesor/ajustes-perfil-profesor.component';
 
 @Component({
   selector: 'app-perfil-alumno',
@@ -16,7 +23,7 @@ import { Clase } from '../../../../interfaces/clase';
     <div class="bg-blue-300 shadow-lg pb-3 rounded-b-3xl">
       <div class="flex rounded-b-3xl bg-blue-100 space-y-5 flex-col items-center py-7">
         <h1 class="text-4xl">{{alumno!.nombre}} {{alumno!.apellidos}}</h1>
-        <a href="#"><span class="text-lg font-bold text-blue-700">Ajustes</span></a>
+        <a (click)="openAjustesDialog()"><span class="text-lg font-bold text-blue-700 cursor-pointer">Ajustes</span></a>
       </div>
       <div class="grid px-7 py-2 items-center justify-around grid-cols-3 gap-4 divide-x divide-solid">
         <div class="col-span-1 flex flex-col items-center" *ngIf="alumno!.idInstrumento !== -1">
@@ -39,40 +46,85 @@ import { Clase } from '../../../../interfaces/clase';
     <div class="py-16" *ngIf="alumno!.idInstrumento !== -1">
       <div class="mx-auto px-6 max-w-6xl">
         <div class="grid gap-3 grid-cols-6">
-          <div class="col-span-2 flex flex-col p-8 rounded-xl bg-blue-200 border border-gray-200">
+          <div class="col-span-2 flex flex-col justify-around items-center p-8 rounded-xl bg-blue-200 border border-gray-200">
             <h1 class="w-full text-center text-2xl font-bold">Tareas</h1>
-            <table class="w-full mt-4">
+            <table class="mt-4">
               <thead>
-                <tr>
-                  <th class="px-4 py-2 text-center">Tarea</th>
-                  <th class="px-4 py-2 text-center">Fecha</th>
-                  <th class="px-4 py-2 text-center">Estado</th>
+                <tr class="uppercase">
+                  <th
+                      class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left font-semibold text-blue-900 tracking-wider">
+                      Nombre
+                  </th>
+                  <th
+                      class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left font-semibold text-blue-900 tracking-wider">
+                      Entrega
+                  </th>
+                  <th
+                      class="bg-blue-100">
+                  </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody *ngFor="let tarea of tareas">
                 <tr>
-                  <td class="px-4 py-2">Tarea 1</td>
-                  <td class="px-4 py-2">2024-05-23</td>
-                  <td class="px-4 py-2">Completada</td>
+                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
+                  {{ tarea.id }}
+                  </td>
+                  <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
+                    {{ formatDate(tarea.fechaEntrega) }}
+                  </td>
+                  <td class="px-3 py-5 border-b border-gray-200 bg-white text-blue-900">
+                    <a>Completar</a>
+                  </td>
                 </tr>
-                <tr>
-                  <td class="px-4 py-2">Tarea 2</td>
-                  <td class="px-4 py-2">2024-05-24</td>
-                  <td class="px-4 py-2">Pendiente</td>
-                </tr>
-                <!-- Agrega más filas según sea necesario -->
               </tbody>
             </table>
+            <p class="font-bold">Tareas pendientes totales: {{tareas.length}} </p>
+            <div class="flex flex-col">
+              <a class="font-bold mt-2 cursor-pointer text-blue-800">Ver todas las tareas</a>
+              <a class="font-bold mt-2 cursor-pointer text-blue-800">Ver calificaciones</a>
+            </div>
           </div>
-          <div class="col-span-full sm:col-span-3 lg:col-span-2 overflow-hidden relative p-8 rounded-xl bg-blue-200 border border-gray-200">
+          <div class="flex flex-col justify-around col-span-full sm:col-span-3 lg:col-span-2 overflow-hidden relative p-8 rounded-xl bg-blue-200 border border-gray-200">
             <h1 class="w-full text-center text-2xl mb-4">¡Hola, <span class="font-bold">{{alumno?.nombre}}</span>!</h1>
             <h1 *ngIf="clase != undefined" class="w-full text-center text-xl">Tus clases de {{getInstrumento(alumno!.idInstrumento)}} son los {{clase!.dia.toLowerCase()}} a las {{clase!.hora}} de la tarde.</h1>
             <h1 *ngIf="clase == undefined" class="w-full text-center text-xl">Tus clases no han sido asignadas aún pero, en menos de 24 horas laborables, un responsable se hará cargo de ello.</h1>
             <h1 class="w-full text-center text-xl">Las clases comienzan el 1 de octubre y acaban el 12 de junio; y recuerda que todas duran 30 minutos.</h1>
-            <h1 class="w-full text-center text-xl">Cualquier duda o cuestión la podrás consultar con tu profesor, o llamando al 952481779.</h1>
+            <h1 class="w-full text-center text-xl mb-4">Cualquier duda o cuestión la podrás consultar con tu profesor, o llamando al teléfono del centro: 952 481 779.</h1>
           </div>
           <div class="col-span-full sm:col-span-3 lg:col-span-2 overflow-hidden relative p-8 rounded-xl bg-blue-200 border border-gray-200">
-            <h1 class="w-full text-center text-2xl font-bold">Audiciones</h1>
+            <h1 class="w-full text-center text-2xl font-bold">Próximas audiciones</h1>
+            <div *ngIf="audiciones.length > 0" class="flex flex-col items-center justify-around h-full">
+              <p class="text-xl mb-2 text-center">Estas son las <span class="font-bold">próximas audiciones</span>:</p>
+              <table class="mb-32">
+                <thead>
+                  <tr class="uppercase">
+                    <th
+                      class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left font-semibold text-blue-900 tracking-wider">
+                      Día | Hora
+                    </th>
+                    <th
+                      class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left font-semibold text-blue-900 tracking-wider">
+                      Intérpretes
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let a of audiciones">
+                  <tr>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
+                      {{ formatDate(a.diaHora) }}
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
+                      {{ alumnosAudicion.length }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div *ngIf="audiciones.length == 0" class="h-full flex flex-col justify-between items-center">
+              <p class="w-full mt-2 text-center text-2xl mt-4">Aún no hay audiciones programadas.</p>
+              <p class="w-full mt-2 text-center text-2xl mt-4">En cuanto se anuncie una audición de tu especialidad podrás verlo aquí.</p>
+              <p class="w-full mt-2 text-center text-2xl mt-4 m-10">Cualquier posible error o falta de actualización comunicarlo al Centro o a Jefatura de Estudios.</p>
+            </div>
           </div>
           <div class="col-span-full lg:col-span-3 overflow-hidden relative p-8 rounded-xl bg-blue-200 border border-gray-200">
             <h1 class="w-full text-center text-2xl font-bold">Profesor</h1>
@@ -124,8 +176,15 @@ export class PerfilAlumnoComponent {
   profesores: Profesor[] = [];
   profesor: Profesor | undefined;
   clase: Clase | undefined;
+  tareas: Tarea[] = [];
+  audiciones: Audicion[] = [];
+  alumnosAudicion: Alumno[] = [];
 
-  constructor(private profesoresService: ProfesoresService, private clasesService: ClasesService) { }
+  constructor(
+    private profesoresService: ProfesoresService, private clasesService: ClasesService,
+    private tareasService: TareaService, private audicionService: AudicionesService,
+    private alumnosService: AlumnosService, private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     let alumnoString = localStorage.getItem("usuario");
@@ -146,6 +205,45 @@ export class PerfilAlumnoComponent {
       }
     });
 
+    this.tareasService.getAll().subscribe({
+      next: (tareas: Tarea[]) => {
+        tareas.forEach(tarea => {
+          if (tarea.idAlumno == this.alumno!.id && !tarea.completada) {
+            this.tareas.push(tarea);
+          }
+        })
+      },
+      error: (error) => {
+        console.error('Error al obtener la lista de tareas:', error);
+      }
+    });
+
+    this.audicionService.getAll().subscribe({
+      next: (audiciones: Audicion[]) => {
+        audiciones.forEach(audicion => {
+          if (audicion.idInstrumento == this.alumno!.idInstrumento) {
+            this.audiciones.push(audicion);
+          }
+        })
+      },
+      error: (error) => {
+        console.error('Error al obtener la lista de audiciones:', error);
+      }
+    });
+
+    this.alumnosService.getAll().subscribe({
+      next: (alumnos: Alumno[]) => {
+        alumnos.forEach(alumno => {
+          if (alumno.idInstrumento == this.alumno!.idInstrumento) {
+            this.alumnosAudicion.push(alumno);
+          }
+        })
+      },
+      error: (error) => {
+        console.error('Error al obtener la lista de alumnos:', error);
+      }
+    });
+
     this.clasesService.getAll().subscribe({
       next: (clases: Clase[]) => {
         clases.forEach(clase => {
@@ -158,6 +256,30 @@ export class PerfilAlumnoComponent {
         console.error('Error al obtener la lista de clases:', error);
       }
     });
+  }
+
+  openAjustesDialog() {
+    let dialog = this.dialog.open(AjustesPerfilProfesorComponent, {
+      width: 'fit-content',
+      height: 'fit-content',
+      data: this.alumno!.password
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.alumno!.password = result;
+        this.alumnosService.update(this.alumno!, this.alumno!.id).subscribe({
+          next: () => { },
+          error: (error) => {
+            console.error(error);
+          }
+        });
+      }
+    })
+  }
+
+  formatDate(date: string): string {
+    return date.replace("T", " ").replaceAll("-", "/").slice(0, -3);
   }
 
   getInstrumento(idInstrumento: number) {

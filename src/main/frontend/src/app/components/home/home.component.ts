@@ -33,7 +33,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
           <p class="text-base text-sky-950">En esta sección te brindaremos una amplia descripción de cada
               instrumento, te mostraremos su sonido y lo que serías capaz de lograr.</p>
       </div>
-      <button
+      <button [routerLink]="['/instrumentos']"
           class="text-sky-950 uppercase py-3 text-base px-10 border border-sky-950 hover:bg-sky-950 hover:bg-opacity-10">Te guiamos aquí</button>
     </div>
   </div>

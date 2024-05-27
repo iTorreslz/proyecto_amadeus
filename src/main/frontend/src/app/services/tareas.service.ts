@@ -16,7 +16,7 @@ export class TareaService {
 
   create(tarea: NewTarea) { return this.http.post<any>(`http://localhost:8082/tareas/nuevo`, tarea); }
 
-  update(tarea: Tarea, id: number) { return this.http.post<any>(`http://localhost:8082/tareas/edit/${id}`, tarea); }
+  update(tarea: NewTarea, id: number) { return this.http.post<any>(`http://localhost:8082/tareas/edit/${id}`, tarea); }
 
   delete(id: number) { return this.http.delete<any>(`http://localhost:8082/tareas/${id}`); }
 }

@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from '../auth/login/login.component';
 
 @Component({
-  selector: 'app-informacion',
-  standalone: true,
-  imports: [],
-  template: `
-  
+    selector: 'app-informacion',
+    standalone: true,
+    imports: [RouterLink],
+    template: `
   <div class="bg-blue-200 py-20">
     <div class="max-w-screen-lg mx-auto flex justify-between items-center">
       <div class="max-w-xl">
@@ -37,7 +39,7 @@ import { Component } from '@angular/core';
                   Faucibus ornare suspendisse sed nisi lacus sed viverra. Diam in arcu cursus euismod quis viverra
                   nibh cras pulvinar.
               </p>
-              <button
+              <button (click)="openLogin()"
                   class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10">Click
                   aquí</button>
           </div>
@@ -57,7 +59,7 @@ import { Component } from '@angular/core';
                   Faucibus ornare suspendisse sed nisi lacus sed viverra. Diam in arcu cursus euismod quis viverra
                   nibh cras pulvinar.
               </p>
-              <button
+              <button [routerLink]="['/instrumentos']"
                   class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10">Click
                   aquí</button>
           </div>
@@ -91,9 +93,6 @@ import { Component } from '@angular/core';
                   Faucibus ornare suspendisse sed nisi lacus sed viverra. Diam in arcu cursus euismod quis viverra
                   nibh cras pulvinar.
               </p>
-              <button
-                  class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10">Click
-                  aquí</button>
           </div>
       </div>
     </div>
@@ -111,9 +110,15 @@ import { Component } from '@angular/core';
                   Faucibus ornare suspendisse sed nisi lacus sed viverra. Diam in arcu cursus euismod quis viverra
                   nibh cras pulvinar.
               </p>
-              <button
+              <button *ngIf="checkLogin(); else notLogged" [routerLink]="['/perfil_alumno']"
                   class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10">Click
-                  aquí</button>
+                  aquí
+              </button>
+              <ng-template #notLogged>
+                <button class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10">Click
+                    aquí
+                </button>
+              </ng-template>
           </div>
       </div>
       <div class="w-full flex flex-col pl-16 items-center">
@@ -126,8 +131,21 @@ import { Component } from '@angular/core';
     </div>
   </div>
   `,
-  styleUrl: './informacion.component.css'
+    styleUrl: './informacion.component.css'
 })
 export class InformacionComponent {
+    constructor(
+        private dialog: MatDialog
+    ) { }
 
+    openLogin() {
+        this.dialog.open(LoginComponent, {
+            width: 'fit-content',
+            height: 'fit-content'
+        });
+    }
+
+    checkLogin() {
+        return localStorage.getItem('usuario') != null;
+    }
 }
