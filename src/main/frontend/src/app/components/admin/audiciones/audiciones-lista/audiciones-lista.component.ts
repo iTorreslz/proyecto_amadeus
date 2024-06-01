@@ -49,7 +49,7 @@ import { AudicionesService } from '../../../../services/audiciones.service';
           <button class="mr-3">
               <i class="fa-solid fa-pencil-alt"></i>
           </button>
-          <button>
+          <button (click)="deleteAudicion(audicion.id)">
               <i class="fa-solid fa-trash-alt"></i>
           </button>
         </td>
@@ -78,6 +78,17 @@ export class AudicionesListaComponent {
 
   formatDate(date: string): string {
     return date.replace("T"," ");
+  }
+
+  deleteAudicion(id: number) {
+    this.audicionesService.delete(id).subscribe({
+      next: () => {
+        window.location.reload();
+      },
+      error: () => {
+        console.error('Error al eliminar audición con código ' + id);
+      }
+    });
   }
 
   getInstrumento(idInstrumento: number): string {

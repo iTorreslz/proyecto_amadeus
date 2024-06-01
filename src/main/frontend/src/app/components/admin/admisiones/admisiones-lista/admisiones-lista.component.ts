@@ -121,34 +121,24 @@ export class AdmisionesListaComponent {
     switch (idInstrumento) {
       case 1:
         return "Piano";
-        break;
       case 2:
         return "Guitarra";
-        break;
       case 3:
         return "Clarinete";
-        break;
       case 4:
         return "Saxofón";
-        break;
       case 5:
         return "Flauta";
-        break;
       case 6:
         return "Trompeta";
-        break;
       case 7:
         return "Bombardino";
-        break;
       case 8:
         return "Tuba";
-        break;
       case 9:
         return "Trombón";
-        break;
       case 10:
         return "Canto";
-        break;
       default:
         return "No asignado";
     }

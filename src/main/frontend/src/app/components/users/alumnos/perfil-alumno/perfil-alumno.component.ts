@@ -27,7 +27,7 @@ import { AjustesPerfilProfesorComponent } from '../../profesores/ajustes-perfil-
       </div>
       <div class="grid px-7 py-2 items-center justify-around grid-cols-3 gap-4 divide-x divide-solid">
         <div class="col-span-1 flex flex-col items-center" *ngIf="alumno!.idInstrumento !== -1">
-          <span class="text-2xl font-bold">0</span>
+          <span class="text-2xl font-bold">{{tareas.length}}</span>
           <span class="text-lg font-medium">Tareas pendientes</span>
         </div>
         <div class="col-span-1 px-3 flex flex-col items-center" *ngIf="alumno!.idInstrumento !== -1">
@@ -35,7 +35,7 @@ import { AjustesPerfilProfesorComponent } from '../../profesores/ajustes-perfil-
           <span class="text-lg font-medium">Instrumento</span>
         </div>
         <div class="col-span-1 px-3 flex flex-col items-center" *ngIf="alumno!.idInstrumento !== -1">
-          <span class="text-2xl font-bold">2</span>
+          <span class="text-2xl font-bold">{{ audiciones.length }}</span>
           <span class="text-lg font-medium">Próximas audiciones</span>
         </div>
       </div>

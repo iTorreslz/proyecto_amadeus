@@ -11,8 +11,10 @@ import { Component } from '@angular/core';
         <span class="block mb-4 text-base text-blue-900 font-semibold">Formulario de contacto</span>
         <h2 class="text-blue-900 mb-6 uppercase font-bold text-[32px] sm:text-[40px] lg:text-[36px] xl:text-[40px]">contacta con Nosotros</h2>
         <p class="text-base text-body-color leading-relaxed mb-9">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius tempor incididunt ut labore et dolore magna aliqua. Ut enim adiqua minim veniam quis nostrud exercitation ullamco
+          En el formulario de contacto de nuestra escuela de música, puedes ponerte en contacto con nosotros fácilmente. Ya sea para consultas,
+          inscripciones o cualquier otra pregunta, estamos aquí para ayudarte.<br>¡Esperamos saber de ti pronto!
         </p>
+        <img src="../../../assets/images/help.jpg" alt="image" loading="lazy" class="w-11/12">
       </div>
     </div>
     <div class="w-full lg:w-1/2 xl:w-5/12 px-4">
@@ -25,13 +27,13 @@ import { Component } from '@angular/core';
               <input type="email" placeholder="Tu correo electrónico" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] outline-none focus-visible:shadow-none focus:border-primary" />
           </div>
           <div class="mb-6">
-              <input type="text" placeholder="Tu número de teléfono" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] outline-none focus-visible:shadow-none focus:border-primary" />
+              <input type="text" placeholder="Tu número de teléfono (opcional)" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] outline-none focus-visible:shadow-none focus:border-primary" />
           </div>
           <div class="mb-6">
               <textarea rows="6" placeholder="Tu mensaje" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] resize-none outline-none focus-visible:shadow-none focus:border-primary"></textarea>
           </div>
           <div>
-              <button type="submit" class="w-full text-white bg-blue-700 rounded border border-primary p-3 transition hover:bg-opacity-90">Envía tu mensaje</button>
+              <button type="submit" (click)="onClick()" class="w-full text-white bg-blue-700 rounded border border-primary p-3 transition hover:bg-opacity-90">Envía tu mensaje</button>
           </div>
         </form>
       </div>
@@ -41,5 +43,8 @@ import { Component } from '@angular/core';
   styleUrl: './contact.component.css'
 })
 export class ContactComponent {
-
+  onClick() {
+    console.log("Mensaje enviado.");
+    window.location.reload();
+  }
 }

@@ -3,6 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',

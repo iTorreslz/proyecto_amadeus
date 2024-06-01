@@ -75,7 +75,7 @@ import { Component } from '@angular/core';
   <div class="py-12 relative overflow-hidden bg-white">
     <div class="grid grid-cols-2 max-w-screen-lg mx-auto">
       <div class="w-full flex flex-col items-center pr-16">
-          <h2 class="font-bold text-3xl max-w-sm text-center mb-12 mt-10">Clarinete</h2>
+          <h2 class="font-bold text-3xl max-w-sm text-center mb-12 mt-10">CLARINETE</h2>
           <div class="h-full mt-auto overflow-hidden relative">
               <img src="../../../assets/images/ofertas/clarinete.jpg" class="h-full w-full object-contain" alt="">
           </div>

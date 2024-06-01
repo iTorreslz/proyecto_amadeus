@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alumno } from '../../../../interfaces/alumno';
 import { AlumnosService } from '../../../../services/alumnos.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-alumnado-editar',
@@ -52,7 +53,7 @@ export class AlumnadoEditarComponent {
   alumno: Alumno | undefined;
   instrumento: string = "";
 
-  constructor(private route: ActivatedRoute, private alumnosService: AlumnosService,  private router: Router) { }
+  constructor(private route: ActivatedRoute, private alumnosService: AlumnosService, private router: Router) { }
 
   ngOnInit(): void {
     let idAlumno = parseInt(this.route.snapshot.params['id']);
@@ -65,6 +66,30 @@ export class AlumnadoEditarComponent {
         console.error(error);
       }
     });
+  }
+
+  guardarCambios(nombre: string, apellidos: string, curso: string) {
+    if (this.alumno) {
+      this.alumno.nombre = nombre;
+      this.alumno.apellidos = apellidos;
+      this.alumno.curso = parseInt(curso);
+      this.alumnosService.update(this.alumno, this.alumno.id).subscribe({
+        next: () => {
+          Swal.fire({
+            title: "¡Hecho!",
+            text: "Cambios guardados.",
+            showConfirmButton: false,
+            timer: 1500,
+            icon: "success"
+          }).then(() => {
+            this.router.navigate(['/admin/alumnado']);
+          });
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    }
   }
 
   getInstrumento(idInstrumento: number) {
@@ -101,22 +126,6 @@ export class AlumnadoEditarComponent {
         break;
       default:
         this.instrumento = "No asignado";
-    }
-  }
-
-  guardarCambios(nombre: string, apellidos: string, curso: string) {
-    if (this.alumno) {
-      this.alumno.nombre = nombre;
-      this.alumno.apellidos = apellidos;
-      this.alumno.curso = parseInt(curso);
-      this.alumnosService.update(this.alumno, this.alumno.id).subscribe({
-        next: () => {
-          
-        },
-        error: (error) => {
-          console.error(error);
-        }
-      });
     }
   }
 }

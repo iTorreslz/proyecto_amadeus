@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from '../register/register.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -50,14 +51,25 @@ import { RegisterComponent } from '../register/register.component';
 export class LoginComponent {
 
   constructor(
-    private http: HttpClient, private router: Router, private authService: AuthService,
+    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialogRef<LoginComponent>,
     private registerDialog: MatDialog
   ) { }
 
   login(email: string, password: string) {
     this.authService.login(email, password);
-    this.close();
+    this.authService.loggedIn$.subscribe(loggedIn => {
+      if (loggedIn) {
+        Swal.fire({
+          title: "Correcto",
+          text: "¡Has iniciado sesión correctamente!",
+          showConfirmButton: false,
+          timer: 1600,
+          icon: "success"
+        });
+        this.close();
+      }
+    });
   }
 
   openRegister() {

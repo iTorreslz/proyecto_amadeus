@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginResponse } from '../interfaces/LoginResponse';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -64,9 +65,13 @@ export class AuthService {
           localStorage.setItem('usuario', JSON.stringify(response.usuario));
           this.setLoggedIn(true);
           this.setTipoUsuario(tipoUsuario);
-          this.router.navigate(['/']);
+
         } else {
-          alert("Error");
+          Swal.fire({
+            title: "Incorrecto",
+            text: "Credenciales inválidas.",
+            icon: "warning"
+          });
         }
       },
       error: (error) => {
@@ -85,6 +90,13 @@ export class AuthService {
           localStorage.removeItem('tipoUsuario');
           this.setLoggedIn(false);
           this.setTipoUsuario('');
+          Swal.fire({
+            title: "Cerrando...",
+            text: "¡Has cerrado sesión correctamente!",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1600,
+          });
           this.router.navigate(['/']);
         }
       },
@@ -114,7 +126,13 @@ export class AuthService {
         switch (response.respuesta) {
           case 'Registro exitoso':
             this.login(email, password);
-            this.router.navigate(['/']);
+            Swal.fire({
+              title: "Correcto",
+              text: "¡Tu cuenta ha sido creada! Sesión iniciada.",
+              showConfirmButton: false,
+              timer: 1600,
+              icon: "success"
+            });
             break;
           case 'Credenciales inválidas':
             alert('Credenciales inválidas');

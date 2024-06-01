@@ -32,4 +32,6 @@ public class AudicionService {
     public Audicion create(Audicion audicion) {
         return this.audicionRepository.save(audicion);
     }
+
+    public void delete(int id) { this.audicionRepository.deleteById(id); }
 }

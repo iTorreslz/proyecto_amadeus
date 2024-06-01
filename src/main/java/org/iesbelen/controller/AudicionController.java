@@ -45,4 +45,9 @@ public class AudicionController {
         this.audicionService.create(nuevaAud);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") int id) {
+        audicionService.delete(id);
+    }
 }

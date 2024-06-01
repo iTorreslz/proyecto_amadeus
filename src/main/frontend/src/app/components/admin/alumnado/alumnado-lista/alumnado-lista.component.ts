@@ -5,6 +5,10 @@ import { AlumnosService } from '../../../../services/alumnos.service';
 import { Router, RouterLink } from '@angular/router';
 import { Clase } from '../../../../interfaces/clase';
 import { ClasesService } from '../../../../services/clases.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AlumnadoAsignarClaseComponent } from '../alumnado-asignar-clase/alumnado-asignar-clase.component';
+import { NewClase } from '../../../../interfaces/newClase';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-alumnado-lista',
@@ -57,7 +61,7 @@ import { ClasesService } from '../../../../services/clases.service';
           {{clase!.dia}} | {{clase!.hora}}
         </td>
         <td *ngIf="checkClases(alumno.id) === false" class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
-          <a [routerLink]="['/admin/alumnado/asignar_clase', alumno.id]" class="text-blue-700 font-bold cursor-pointer">Asignar</a>
+          <a (click)="openAsignar(alumno)" class="text-blue-700 font-bold cursor-pointer">Asignar</a>
         </td>
         <td class="border-b border-gray-200 bg-white text-blue-900 text-center">
           <button class="mr-3" [routerLink]="['/admin/alumnado/detalle', alumno.id]">
@@ -77,12 +81,13 @@ import { ClasesService } from '../../../../services/clases.service';
   styleUrl: './alumnado-lista.component.css'
 })
 export class AlumnadoListaComponent implements OnInit {
+
+  constructor(private alumnosService: AlumnosService, private claseService: ClasesService, private dialog: MatDialog) { }
+
   alumnosList: Alumno[] = [];
   nombreCurso: string = '';
   clases: Clase[] = [];
   clase: Clase | undefined;
-
-  constructor(private alumnosService: AlumnosService, private claseService: ClasesService, private router: Router) { }
 
   ngOnInit() {
     this.alumnosService.getAll().subscribe({
@@ -100,6 +105,38 @@ export class AlumnadoListaComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al obtener la lista de clases:', error);
+      }
+    });
+  }
+
+  openAsignar(alumno: Alumno) {
+
+    let dialog = this.dialog.open(AlumnadoAsignarClaseComponent, {
+      width: 'fit-content',
+      height: 'fit-content',
+      data: alumno
+    });
+
+    dialog.afterClosed().subscribe((result: NewClase) => {
+      if (result) {
+        this.claseService.create(result).subscribe({
+          next: () => {
+            Swal.fire({
+              title: "¡Hecho!",
+              text: "Clase asignada al alumno " + alumno.nombre + ".",
+              showConfirmButton: false,
+              timer: 1700,
+              icon: "success"
+            }).then(() => {
+              window.location.reload();
+            });
+          },
+          error: (error) => {
+            console.error('Error al generar clase.');
+          }
+        });
+      } else {
+        console.log('El diálogo se cerró sin pasar datos');
       }
     });
   }

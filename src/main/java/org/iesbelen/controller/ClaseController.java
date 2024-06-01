@@ -38,6 +38,7 @@ public class ClaseController {
     public ResponseEntity<Void> create(@RequestBody Clase clase) {
         log.info("Creando una nueva clase");
         this.claseService.create(clase);
+        System.out.println(new ResponseEntity<>(HttpStatus.CREATED));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

@@ -13,6 +13,7 @@ import { Audicion } from '../../../../interfaces/audicion';
 import { AudicionesService } from '../../../../services/audiciones.service';
 import { AjustesPerfilProfesorComponent } from '../ajustes-perfil-profesor/ajustes-perfil-profesor.component';
 import { ProfesoresService } from '../../../../services/profesores.service';
+import { AjustarCalifComponent } from '../ajustar-calif/ajustar-calif.component';
 
 @Component({
   selector: 'app-perfil-profesor',
@@ -82,7 +83,7 @@ import { ProfesoresService } from '../../../../services/profesores.service';
             <p class="font-bold">Tareas pendientes totales: {{tareas.length}} </p>
             <div class="flex flex-col">
               <a (click)="openTasksDialog()" class="font-bold mt-2 cursor-pointer text-blue-800">Gestionar tareas</a>
-              <a (click)="openTasksDialog()" class="font-bold mt-2 cursor-pointer text-blue-800">Gestionar calificaciones</a>
+              <a (click)="openCalifsDialog()" class="font-bold mt-2 cursor-pointer text-blue-800">Gestionar calificaciones</a>
             </div>
           </div>
           <div class="flex flex-col justify-around col-span-full sm:col-span-3 lg:col-span-2 overflow-hidden relative p-8 rounded-xl bg-blue-200 border border-gray-200">
@@ -337,6 +338,19 @@ export class PerfilProfesorComponent {
     }
 
     this.dialog.open(AjustarTareasComponent, {
+      width: '500px',
+      height: '300px',
+      data: dialogData
+    });
+  }
+
+  openCalifsDialog() {
+    let dialogData = {
+      alumnos: this.alumnos,
+      profesor: this.profesor
+    }
+
+    this.dialog.open(AjustarCalifComponent, {
       width: '500px',
       height: '300px',
       data: dialogData

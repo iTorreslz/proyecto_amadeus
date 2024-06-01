@@ -1,13 +1,10 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlumnosService } from '../../../../services/alumnos.service';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Alumno } from '../../../../interfaces/alumno';
-import { Clase } from '../../../../interfaces/clase';
 import { NewClase } from '../../../../interfaces/newClase';
-import { ClasesService } from '../../../../services/clases.service';
 import { Profesor } from '../../../../interfaces/profesor';
-import { ProfesoresService } from '../../../../services/profesores.service';
+import { LoginComponent } from '../../../auth/login/login.component';
 
 @Component({
   selector: 'app-alumnado-asignar-clase',
@@ -52,48 +49,21 @@ export class AlumnadoAsignarClaseComponent {
   profesor: Profesor | undefined;
   clase: NewClase | undefined;
 
-  constructor(private route: ActivatedRoute, private alumnosService: AlumnosService,
-    private claseService: ClasesService, private router: Router, private profesorService: ProfesoresService) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: Alumno, private dialog: MatDialogRef<LoginComponent>
+  ) { }
 
   ngOnInit() {
-    let idAlumno = parseInt(this.route.snapshot.params['id']);
-    this.alumnosService.getById(idAlumno).subscribe({
-      next: (alumno: Alumno) => {
-        this.alumno = alumno;
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
-
-    this.profesorService.getAll().subscribe({
-      next: (profesores: Profesor[]) => {
-        profesores.forEach(profesor => {
-          if (profesor.idInstrumento == this.alumno!.idInstrumento) {
-            this.profesor = profesor;
-          }
-        })
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+    this.alumno = this.data;
   }
 
   asignarClase(dia: string, hora: string) {
     this.clase = {
       dia: dia,
       hora: hora,
-      idAlumno: this.alumno!.id,
-      idProfesor: this.profesor!.id
+      idAlumno: this.alumno!.id
     };
-    this.claseService.create(this.clase).subscribe({
-      next: () => {
-        this.router.navigate(['/admin/alumnado']);
-      },
-      error: (error) => {
-        console.error('Error al generar clase.');
-      }
-    });
+    
+    this.dialog.close(this.clase);
   }
 }
