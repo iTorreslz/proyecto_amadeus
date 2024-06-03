@@ -40,21 +40,23 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   <div class="py-12 relative overflow-hidden bg-white">
     <div class="grid grid-cols-2 max-w-screen-lg mx-auto">
       <div class="w-full flex flex-col items-end pr-16">
-          <h2 class="font-bold text-2xl max-w-xs text-right mb-12 mt-10">Noticia nº1</h2>
+          <h2 class="font-bold text-3xl max-w-xs text-right mb-12 mt-10">¡Comienzan las audiciones finales!</h2>
           <div class="h-full mt-auto overflow-hidden relative">
-              <img src="https://texashistory.unt.edu/ark:/67531/metadc1942522/m1/1/med_res/" class="h-full w-full object-contain" alt="">
+              <img src="../../../assets/images/noticia_1.jpg" class="h-full w-full object-contain" alt="">
           </div>
       </div>
 
       <div
           class="py-20 bg-slate-100 relative before:absolute before:h-full before:w-screen before:bg-sky-950 before:top-0 before:left-0">
           <div class="relative z-20 pl-12">
-              <h2 class="text-white font-black text-5xl leading-snug mb-10">Contenido <br>de la noticia
+              <h2 class="text-white font-black text-5xl leading-snug mb-10">Ya están aquí las <br> audiciones finales
               </h2>
-              <p class="text-white text-sm">
-                  Purus in massa tempor nec. Magna etiam tempor orci eu lobortis elementum nibh tellus molestie.
-                  Faucibus ornare suspendisse sed nisi lacus sed viverra. Diam in arcu cursus euismod quis viverra
-                  nibh cras pulvinar.
+              <p class="text-white text-xl">
+                ¡Ya están aquí las audiciones finales! <br> Estamos emocionados de ver el talento y el esfuerzo que nuestros alumnos han demostrado
+                a lo largo del curso. Queremos felicitar a todos por llegar a esta etapa y animarlos a dar lo mejor de sí mismos en estas
+                presentaciones tan importantes. <br> Los horarios de las audiciones están disponibles en la sección de Próximos Eventos de nuestra web.
+                Invitamos a todos a consultar los horarios y venir a apoyar a nuestros talentosos músicos. <br> ¡Mucho ánimo y éxito para todos en
+                esta fase final! ¡Estamos muy orgullosos de cada uno de ustedes!
               </p>
           </div>
       </div>
@@ -66,20 +68,20 @@ import { RouterLink, RouterOutlet } from '@angular/router';
       <div
           class="py-20 bg-blue-200 relative before:absolute before:h-full before:w-screen before:bg-blue-200 before:top-0 before:right-0">
           <div class="relative z-20 pl-12">
-              <h2 class="text-sky-950 font-black text-5xl leading-snug mb-10">Contenido <br>de la noticia
+              <h2 class="text-sky-950 font-black text-5xl leading-snug mb-10">Tenemos nueva profesora <br>de trompeta
               </h2>
-              <p class="text-sky-950 text-sm">
-                  Purus in massa tempor nec. Magna etiam tempor orci eu lobortis elementum nibh tellus molestie.
-                  Faucibus ornare suspendisse sed nisi lacus sed viverra. Diam in arcu cursus euismod quis viverra
-                  nibh cras pulvinar.
+              <p class="text-sky-950 text-xl mr-12">
+              ¡Tenemos nueva profesora de trompeta! <br> Nos complace dar la bienvenida a Pilar Suárez Ortega a nuestro equipo docente. <br>
+              Pilar cuenta con 6 años de experiencia en la docencia y ha sido premiada en numerosas ocasiones por su destacada trayectoria musical.
+              Su pasión por la trompeta y su dedicación a la enseñanza serán una gran inspiración para nuestros alumnos. <br>
+              ¡Estamos emocionados de tener a Pilar con nosotros y seguros de que será una valiosa adición a nuestra escuela!
               </p>
           </div>
       </div>
-      <div class="w-full flex flex-col pl-16">
-          <h2 class="text-[#64618C] font-bold text-2xl max-w-xs text-left mb-12 mt-10">Noticia nº2
-          </h2>
+      <div class="w-full flex flex-col items-start pl-16">
+          <h2 class="font-bold text-3xl max-w-xs text-left mb-12 mt-10">¡Nueva profesora de trompeta!</h2>
           <div class="h-full mt-auto overflow-hidden relative">
-              <img src="https://texashistory.unt.edu/ark:/67531/metadc1942522/m1/1/med_res/" class="h-full w-full object-contain" alt="">
+              <img src="../../../assets/images/noticia_2.jpg" class="h-full w-full object-contain" alt="">
           </div>
       </div>
     </div>

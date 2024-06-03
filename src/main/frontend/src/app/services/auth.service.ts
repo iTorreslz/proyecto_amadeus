@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginResponse } from '../interfaces/LoginResponse';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Alumno } from '../interfaces/alumno';
 
 @Injectable({
   providedIn: 'root'
@@ -108,41 +109,57 @@ export class AuthService {
 
   //-------------------- REGISTRO --------------------//
 
-  register(email: string, password: string, nombre: string, apellidos: string) {
-    const body = {
-      email: email,
-      password: password,
-      nombre: nombre,
-      apellidos: apellidos,
-      curso: 1
-    };
+  register(email: string, password: string, nombre: string, apellidos: string, alumnos: Alumno[]) {
 
-    const options = {
-      headers: new HttpHeaders().set('Content-Type', 'application/json')
-    };
+    let existe = false;
 
-    this.http.post<any>('http://localhost:8082/auth/register', body, options).subscribe(
-      response => {
-        switch (response.respuesta) {
-          case 'Registro exitoso':
-            this.login(email, password);
-            Swal.fire({
-              title: "Correcto",
-              text: "¡Tu cuenta ha sido creada! Sesión iniciada.",
-              showConfirmButton: false,
-              timer: 1600,
-              icon: "success"
-            });
-            break;
-          case 'Credenciales inválidas':
-            alert('Credenciales inválidas');
-            break;
-          default:
-            alert('Ocurrió un error');
-            break;
-        }
+    alumnos.forEach(alumno => {
+      if (alumno.email === email) {
+        Swal.fire({
+          title: "Error en el Correo electrónico",
+          text: "Este correo ya está en uso (" + email + ").",
+          icon: "error"
+        });
+        existe = true;
       }
-    );
+    });
+
+    if (!existe) {
+      const body = {
+        email: email,
+        password: password,
+        nombre: nombre,
+        apellidos: apellidos,
+        curso: 1
+      };
+
+      const options = {
+        headers: new HttpHeaders().set('Content-Type', 'application/json')
+      };
+
+      this.http.post<any>('http://localhost:8082/auth/register', body, options).subscribe(
+        response => {
+          switch (response.respuesta) {
+            case 'Registro exitoso':
+              this.login(email, password);
+              Swal.fire({
+                title: "Correcto",
+                text: "¡Tu cuenta ha sido creada! Sesión iniciada.",
+                showConfirmButton: false,
+                timer: 1600,
+                icon: "success"
+              });
+              break;
+            case 'Credenciales inválidas':
+              alert('Credenciales inválidas');
+              break;
+            default:
+              alert('Ocurrió un error');
+              break;
+          }
+        }
+      );
+    }
   }
 
   //-------------------- CHECK LOGGEDIN --------------------//

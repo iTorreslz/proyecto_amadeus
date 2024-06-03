@@ -51,9 +51,11 @@ public class TareaController {
     @PostMapping("/edit/{id}")
     public void edit(@RequestBody Tarea tarea, @PathVariable("id") int id) {
         if (tarea != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-            LocalDateTime fechaHoraEntrega = LocalDateTime.parse(tarea.getFechaEntregaString(), formatter);
-            tarea.setFechaEntrega(fechaHoraEntrega);
+            if (tarea.getIdAlumno() != -1) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                LocalDateTime fechaHoraEntrega = LocalDateTime.parse(tarea.getFechaEntregaString(), formatter);
+                tarea.setFechaEntrega(fechaHoraEntrega);
+            }
             tareaService.update(id, tarea);
         } else {
             System.out.println("Error. Objeto Tarea errónea.");

@@ -24,6 +24,11 @@ import { VerTareasComponent } from './components/users/profesores/ver-tareas/ver
 import { CrearTareasComponent } from './components/users/profesores/crear-tareas/crear-tareas.component';
 import { EditarTareasComponent } from './components/users/profesores/editar-tareas/editar-tareas.component';
 import { InstrumentosComponent } from './components/instrumentos/instrumentos.component';
+import { AudicionesEditarComponent } from './components/admin/audiciones/audiciones-editar/audiciones-editar.component';
+import { NuevaCalifComponent } from './components/users/profesores/nueva-calif/nueva-calif.component';
+import { VerCalifComponent } from './components/users/profesores/ver-calif/ver-calif.component';
+import { EditarCalifComponent } from './components/users/profesores/editar-calif/editar-calif.component';
+import { VerTareasAComponent } from './components/users/alumnos/ver-tareas-a/ver-tareas-a.component';
 
 export const routes: Routes = [
     {
@@ -67,6 +72,11 @@ export const routes: Routes = [
         title: 'Nueva Admisión'
     },
     {
+        path: 'tareas-alum/:idAlumno',
+        component: VerTareasAComponent,
+        title: 'Tareas alumno'
+    },
+    {
         path: 'perfil_profesor',
         component: PerfilProfesorComponent,
         title: 'Perfil Profesor'
@@ -85,6 +95,21 @@ export const routes: Routes = [
         path: 'tareas-alum/:idAlumno/prof/:idProfesor/editar/:id',
         component: EditarTareasComponent,
         title: 'Editar tarea'
+    },
+    {
+        path: 'nueva-calif/:idProfesor',
+        component: NuevaCalifComponent,
+        title: 'Nueva calificación'
+    },
+    {
+        path: 'califs-alum/:idAlumno/prof/:idProfesor',
+        component: VerCalifComponent,
+        title: 'Calificaciones'
+    },
+    {
+        path: 'califs-alum/:idAlumno/prof/:idProfesor/editar/:id',
+        component: EditarCalifComponent,
+        title: 'Editar calificación'
     },
     {
         path: 'admin',
@@ -145,6 +170,11 @@ export const routes: Routes = [
                 path: 'audiciones/nuevo',
                 component: AudicionesCrearComponent,
                 title: 'Nueva Audición'
+            },
+            {
+                path: 'audiciones/editar/:id',
+                component: AudicionesEditarComponent,
+                title: 'Editar audición'
             },
             {
                 path: 'admisiones',

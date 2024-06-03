@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Profesor } from '../../../../interfaces/profesor';
 import { ProfesoresService } from '../../../../services/profesores.service';
 import { Router, RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profesorado-lista',
@@ -52,7 +53,7 @@ import { Router, RouterLink } from '@angular/router';
           <button class="mr-3" [routerLink]="['/admin/profesorado/editar', profesor.id]">
               <i class="fa-solid fa-pencil-alt"></i>
           </button>
-          <button (click)="deleteProfesor(profesor.id)">
+          <button (click)="deleteProfesor(profesor.id, profesor)">
               <i class="fa-solid fa-trash-alt"></i>
           </button>
         </td>
@@ -78,51 +79,63 @@ export class ProfesoradoListaComponent {
     });
   }
 
+  deleteProfesor(id: number, profesor: Profesor) {
+    Swal.fire({
+      title: "¿Está seguro de borrar al profesor " + profesor.nombre + " " + profesor.apellidos + "?",
+      text: "No podrá revertir este cambio.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, borrar"
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        this.profesoresService.delete(id).subscribe({
+          next: () => { },
+          error: () => {
+            console.error('Error al eliminar el profesor con código ' + id);
+          }
+        });
+
+        Swal.fire({
+          title: "¡Hecho!",
+          text: "El profesor ya no pertenece a la escuela.",
+          showConfirmButton: false,
+          timer: 1700,
+          icon: "success"
+        }).then(() => {
+          window.location.reload();
+        });
+      }
+    });
+  }
+
   getInstrumento(idInstrumento: number): string {
     switch (idInstrumento) {
       case 1:
         return "Piano";
-        break;
       case 2:
         return "Guitarra";
-        break;
       case 3:
         return "Clarinete";
-        break;
       case 4:
         return "Saxofón";
-        break;
       case 5:
         return "Flauta";
-        break;
       case 6:
         return "Trompeta";
-        break;
       case 7:
         return "Bombardino";
-        break;
       case 8:
         return "Tuba";
-        break;
       case 9:
         return "Trombón";
-        break;
       case 10:
         return "Canto";
-        break;
       default:
         return "No asignado";
     }
-  }
-
-  deleteProfesor(id: number) {
-    this.profesoresService.delete(id).subscribe({
-      next: (response) => {
-        window.location.reload();
-      },
-      error: () => {
-        console.error('Error al eliminar el profesor con código ' + id);
-      }
-    });
   }
 }

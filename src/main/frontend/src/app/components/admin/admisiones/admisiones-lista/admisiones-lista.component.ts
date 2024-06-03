@@ -5,6 +5,7 @@ import { Admision } from '../../../../interfaces/admision';
 import { AdmisionesService } from '../../../../services/admisiones.service';
 import { Alumno } from '../../../../interfaces/alumno';
 import { AlumnosService } from '../../../../services/alumnos.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admisiones-lista',
@@ -35,9 +36,6 @@ import { AlumnosService } from '../../../../services/alumnos.service';
             Decisión
         </th>
         <th class="border-b-2 border-gray-200 bg-blue-100">
-          <button class="" [routerLink]="['/admin/admisiones/nuevo']">
-            <i class="fa-regular fa-square-plus text-3xl"></i>
-          </button>
         </th>
       </tr>
     </thead>
@@ -117,6 +115,121 @@ export class AdmisionesListaComponent {
     }
   }
 
+  getDecision(apto: boolean, noApto: boolean) {
+    if (apto === false && noApto === false) {
+      return "Aún no gestionado"
+    } else if (apto === true && noApto === false) {
+      return "Admitido";
+    } else if (apto === false && noApto === true) {
+      return "No admitido";
+    } else {
+      return "Error";
+    }
+  }
+
+  admitir(admision: Admision) {
+    Swal.fire({
+      title: "¿Está seguro de admitir a este alumno?",
+      text: "El alumno formará parte de la escuela a partir de este momento.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, admitir"
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        admision.apto = true;
+
+        this.admisionService.update(admision, admision.id).subscribe({
+          next: () => { },
+          error: (error) => {
+            console.error(error);
+          }
+        });
+
+        Swal.fire({
+          title: "¡Hecho!",
+          text: "El alumno ya pertenece a la escuela. Ahora tendrá que proceder a asignarle un horario adecuado.",
+          showConfirmButton: false,
+          timer: 3250,
+          icon: "success"
+        }).then(() => {
+          window.location.reload();
+        });
+      }
+    });
+  }
+
+  denegar(admision: Admision) {
+    Swal.fire({
+      title: "¿Está seguro de denegar la solicitud de este alumno?",
+      text: "El alumno no podrá formar parte de la escuela.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, denegar solicitud"
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        admision.noApto = true;
+
+        this.admisionService.update(admision, admision.id).subscribe({
+          next: () => { },
+          error: (error) => {
+            console.error(error);
+          }
+        });
+
+        Swal.fire({
+          title: "¡Hecho!",
+          text: "Esta solicitud ha sido denegada correctamente.",
+          showConfirmButton: false,
+          timer: 2500,
+          icon: "success"
+        }).then(() => {
+          window.location.reload();
+        });
+      }
+    });
+  }
+
+  deleteAdmision(id: number) {
+    Swal.fire({
+      title: "¿Está seguro de borrar esta admisión?",
+      text: "No se denegará ni se aceptará, sino que se borrará de la base de datos.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, borrar"
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        this.admisionService.delete(id).subscribe({
+          next: () => { },
+          error: () => {
+            console.error('Error al eliminar la admisión con código ' + id);
+          }
+        });
+
+        Swal.fire({
+          title: "¡Hecho!",
+          text: "Esta admisión ha sido eliminada.",
+          showConfirmButton: false,
+          timer: 1700,
+          icon: "success"
+        }).then(() => {
+          window.location.reload();
+        });
+      }
+    });
+  }
+
   getInstrumento(idInstrumento: number): string {
     switch (idInstrumento) {
       case 1:
@@ -142,52 +255,5 @@ export class AdmisionesListaComponent {
       default:
         return "No asignado";
     }
-  }
-
-  getDecision(apto: boolean, noApto: boolean) {
-    if (apto === false && noApto === false) {
-      return "Aún no gestionado"
-    } else if (apto === true && noApto === false) {
-      return "Admitido";
-    } else if (apto === false && noApto === true) {
-      return "No admitido";
-    } else {
-      return "Error";
-    }
-  }
-
-  admitir(admision: Admision) {
-    admision.apto = true;
-    this.admisionService.update(admision, admision.id).subscribe({
-      next: () => {
-        window.location.reload();
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
-  }
-
-  denegar(admision: Admision) {
-    admision.noApto = true;
-    this.admisionService.update(admision, admision.id).subscribe({
-      next: () => {
-        window.location.reload();
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
-  }
-
-  deleteAdmision(id: number) {
-    this.admisionService.delete(id).subscribe({
-      next: (response) => {
-        window.location.reload();
-      },
-      error: () => {
-        console.error('Error al eliminar admisión con código ' + id);
-      }
-    });
   }
 }

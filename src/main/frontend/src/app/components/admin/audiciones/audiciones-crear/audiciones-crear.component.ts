@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { NewAudicion } from '../../../../interfaces/newAudicion';
 import { AudicionesService } from '../../../../services/audiciones.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { Audicion } from '../../../../interfaces/audicion';
 
 @Component({
   selector: 'app-audiciones-crear',
@@ -44,10 +46,17 @@ import { Router } from '@angular/router';
 })
 export class AudicionesCrearComponent {
   audicion: NewAudicion = { idInstrumento: 0, diaHoraString: "" };
+  audiciones: Audicion[] = [];
   fechaHora: string = "";
   instrumento: string = "";
   idInstrumento: number = 0;
   instrumentos: string[] = ["Piano", "Guitarra", "Clarinete", "Saxofón", "Flauta", "Trompeta", "Bombardino", "Tuba", "Trombón", "Canto"]
+
+  ngOnInit(): void {
+    this.audicionesService.getAll().subscribe(audiciones => {
+      this.audiciones = audiciones;
+    });
+  }
 
   constructor(private audicionesService: AudicionesService, private router: Router) { }
 
@@ -88,6 +97,12 @@ export class AudicionesCrearComponent {
     }
   }
 
+  comparadorFechas(dateString1: string, dateString2: string) {
+    let date1 = dateString1.split(' ')[0];
+    let date2 = dateString2.split(' ')[0];
+    return date1 === date2;
+  }
+
   publicarAudicion(instrumento: string, fecha: string, hora: string) {
 
     let fechaSplitted: string[] = fecha.split('-');
@@ -100,16 +115,43 @@ export class AudicionesCrearComponent {
       }
     }
 
-    this.audicion.diaHoraString= this.fechaHora;
+    this.audicion.diaHoraString = this.fechaHora;
     this.audicion.idInstrumento = this.idInstrumento;
+    let fechasCoincidentes: boolean = false;
 
-    this.audicionesService.create(this.audicion).subscribe({
-      next: () => {
-        this.router.navigate(['/admin/audiciones']);
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+    if (this.audiciones.length > 0) {
+      this.audiciones.forEach(audicion => {
+        let fechaSplittedBD1: string[] = audicion.diaHora.split('T');
+        let fechaSplittedBD2: string[] = fechaSplittedBD1[0].split('-');
+        let fechaDia = `${fechaSplittedBD2[2]}/${fechaSplittedBD2[1]}/${fechaSplittedBD2[0]}`;
+        if (this.comparadorFechas(fechaDia, this.audicion.diaHoraString)) {
+          Swal.fire({
+            title: "Error",
+            text: "Ya existe una audición para el día " + fecha + " a las " + hora + ". No puede haber dos audiciones del mismo instrumento un mismo día.",
+            icon: "error"
+          });
+          fechasCoincidentes = true;
+        }
+      });
+    }
+
+    if (!fechasCoincidentes) {
+      this.audicionesService.create(this.audicion).subscribe({
+        next: () => {
+          Swal.fire({
+            title: "¡Hecho!",
+            text: "Se ha creado una nueva audición para el día " + fecha + " a las " + hora + ".",
+            showConfirmButton: false,
+            timer: 2300,
+            icon: "success"
+          }).then(() => {
+            this.router.navigate(['/admin/audiciones']);
+          });
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    }
   }
 }

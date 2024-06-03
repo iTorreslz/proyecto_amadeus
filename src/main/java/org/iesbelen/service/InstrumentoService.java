@@ -20,12 +20,8 @@ public class InstrumentoService {
         return this.instrumentoRepository.findAll();
     }
 
-    public Instrumento one(Long id) {
+    public Instrumento one(int id) {
         return this.instrumentoRepository.findById(id)
                 .orElseThrow(() -> new InstrumentoNotFoundException(id));
-    }
-
-    public Instrumento create(Instrumento instrumento) {
-        return this.instrumentoRepository.save(instrumento);
     }
 }

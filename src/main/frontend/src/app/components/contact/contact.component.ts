@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-contact',
@@ -33,7 +34,7 @@ import { Component } from '@angular/core';
               <textarea rows="6" placeholder="Tu mensaje" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] resize-none outline-none focus-visible:shadow-none focus:border-primary"></textarea>
           </div>
           <div>
-              <button type="submit" (click)="onClick()" class="w-full text-white bg-blue-700 rounded border border-primary p-3 transition hover:bg-opacity-90">Envía tu mensaje</button>
+              <button type="button" (click)="onClick()" class="w-full text-white bg-blue-700 rounded border border-primary p-3 transition hover:bg-opacity-90">Envía tu mensaje</button>
           </div>
         </form>
       </div>
@@ -44,7 +45,14 @@ import { Component } from '@angular/core';
 })
 export class ContactComponent {
   onClick() {
-    console.log("Mensaje enviado.");
-    window.location.reload();
+    Swal.fire({
+      title: "¡Mensaje enviado!",
+      text: "Tendrá una respuesta en menos de 24 horas laborables.",
+      showConfirmButton: false,
+      timer: 3200,
+      icon: "success"
+    }).then(() => {
+      window.location.reload();
+    });
   }
 }

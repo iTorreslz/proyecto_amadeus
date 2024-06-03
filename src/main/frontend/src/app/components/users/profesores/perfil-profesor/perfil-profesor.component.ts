@@ -46,7 +46,7 @@ import { AjustarCalifComponent } from '../ajustar-calif/ajustar-calif.component'
         <div class="grid gap-3 grid-cols-6">
           <div class="col-span-2 flex flex-col justify-around items-center p-8 rounded-xl bg-blue-200 border border-gray-200">
             <h1 class="w-full text-center text-2xl font-bold">Alumnos</h1>
-            <table class="mt-4">
+            <table *ngIf="alumnos.length > 0" class="mt-4">
               <thead>
                 <tr class="uppercase">
                   <th

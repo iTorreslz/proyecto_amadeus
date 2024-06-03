@@ -1,7 +1,9 @@
 package org.iesbelen.service;
 
 import org.iesbelen.domain.Audicion;
+import org.iesbelen.domain.Tarea;
 import org.iesbelen.exception.AudicionNotFoundException;
+import org.iesbelen.exception.TareaNotFoundException;
 import org.iesbelen.repository.AudicionRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,16 @@ public class AudicionService {
     }
 
     public Audicion create(Audicion audicion) {
+        return this.audicionRepository.save(audicion);
+    }
+
+    public Audicion update(int id, Audicion updatedAudicion) {
+        Audicion audicion = this.audicionRepository.findById(id)
+                .orElseThrow(() -> new AudicionNotFoundException(id));
+
+        audicion.setIdInstrumento(updatedAudicion.getIdInstrumento());
+        audicion.setDiaHora(updatedAudicion.getDiaHora());
+
         return this.audicionRepository.save(audicion);
     }
 

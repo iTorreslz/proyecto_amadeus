@@ -1,8 +1,6 @@
 package org.iesbelen.service;
 
-import org.iesbelen.domain.Profesor;
 import org.iesbelen.domain.Tarea;
-import org.iesbelen.exception.ProfesorNotFoundException;
 import org.iesbelen.exception.TareaNotFoundException;
 import org.iesbelen.repository.TareaRepository;
 import org.springframework.stereotype.Service;
@@ -35,11 +33,14 @@ public class TareaService {
         Tarea tarea = this.tareaRepository.findById(id)
                 .orElseThrow(() -> new TareaNotFoundException(id));
 
-        tarea.setFechaEntrega(updatedTarea.getFechaEntrega());
-        tarea.setIdAlumno(updatedTarea.getIdAlumno());
-        tarea.setDescripcion(updatedTarea.getDescripcion());
-        tarea.setCompletada(updatedTarea.isCompletada());
-
+        if (updatedTarea.getIdAlumno() == -1) {
+            tarea.setCompletada(updatedTarea.isCompletada());
+        } else {
+            tarea.setFechaEntrega(updatedTarea.getFechaEntrega());
+            tarea.setIdAlumno(updatedTarea.getIdAlumno());
+            tarea.setDescripcion(updatedTarea.getDescripcion());
+            tarea.setCompletada(updatedTarea.isCompletada());
+        }
         return this.tareaRepository.save(tarea);
     }
 

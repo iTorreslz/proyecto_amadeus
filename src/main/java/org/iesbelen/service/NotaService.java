@@ -29,8 +29,9 @@ public class NotaService {
                 .orElseThrow(() -> new NotaNotFoundException(id));
 
         nota.setNombre(updatedNota.getNombre());
-        nota.setIdAlumno(updatedNota.getIdAlumno());
         nota.setCalificacion(updatedNota.getCalificacion());
+        nota.setIdAlumno(updatedNota.getIdAlumno());
+        nota.setIdProfesor(updatedNota.getIdProfesor());
 
         return this.notaRepository.save(nota);
     }

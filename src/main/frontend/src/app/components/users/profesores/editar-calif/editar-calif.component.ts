@@ -1,36 +1,36 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Tarea } from '../../../../interfaces/tarea';
-import { TareaService } from '../../../../services/tareas.service';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NewTarea } from '../../../../interfaces/newTarea';
+import { NewNota } from '../../../../interfaces/NewNota';
+import { Nota } from '../../../../interfaces/Nota';
 import { Alumno } from '../../../../interfaces/alumno';
-import { AlumnosService } from '../../../../services/alumnos.service';
 import { Profesor } from '../../../../interfaces/profesor';
+import { AlumnosService } from '../../../../services/alumnos.service';
 import { ProfesoresService } from '../../../../services/profesores.service';
+import { NotasService } from '../../../../services/notas-service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-editar-tareas',
+  selector: 'app-editar-calif',
   standalone: true,
   imports: [CommonModule],
   template: `
   <div class="rounded max-w-sm m-auto bg-blue-200">
     <div class="mt-2 mb-8">
       <h4 class="text-xl text-center font-bold text-navy-700">
-      Editar tarea {{this.tarea!.id}}
+      Editar calificación {{this.nota!.id}}
       </h4>
     </div>
     <div class="flex flex-col items-center">
       <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600 mr-2">Fecha entrega</label>
-        <input type="date" class="text-base font-medium text-navy-700 w-48" name="fechaEntrega" [value]="formatDate(tarea!.fechaEntrega)"
-          #fechaEntrega>
+        <label class="text-sm text-gray-600 mr-2">Nombre</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48" name="nombre" [value]="nota!.nombre"
+          #nombre>
       </div>
       <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600 mr-2">Fecha entrega</label>
-        <input type="time" class="text-base font-medium text-navy-700 w-48" name="horaEntrega" [value]="formatTime(tarea!.fechaEntrega)"
-          #horaEntrega>
+        <label class="text-sm text-gray-600 mr-2">Calificación</label>
+        <input type="number" class="text-base font-medium text-navy-700 w-48" name="calif" [value]="nota!.calificacion"
+          #calif>
       </div>
       <div class="flex items-center rounded-2xl bg-white px-3 py-4 shadow-3xl">
         <label class="text-sm text-gray-600 mr-2">Alumno</label>
@@ -41,37 +41,32 @@ import Swal from 'sweetalert2';
           </option>
         </select>
       </div>
-      <div class="flex rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600 mr-2">Descripción</label>
-        <textarea name="descripcion" id="descripcion" class="text-base font-medium text-navy-700 w-48"
-          rows="7" #descripcion [value]="tarea!.descripcion"></textarea>
-      </div>
-      <button type="submit" (click)="this.editarTarea(fechaEntrega.value,horaEntrega.value,idAlumno.value,descripcion.value)"
+      <button type="submit" (click)="this.editarNota(nombre.value,calif.value,idAlumno.value)"
         class="p-2 m-4 bg-blue-800 text-white font-semibold rounded-md shadow-md hover:bg-blue-600">
         Guardar cambios
       </button>
     </div>
   </div>
   `,
-  styleUrl: './editar-tareas.component.css'
+  styleUrl: './editar-calif.component.css'
 })
-export class EditarTareasComponent {
-  tarea: Tarea | undefined;
-  editedTarea: NewTarea | undefined;
+export class EditarCalifComponent {
+  nota: Nota | undefined;
+  editedNota: NewNota | undefined;
   alumnos: Alumno[] = [];
   profesor: Profesor | undefined;
 
   constructor(
-    private route: ActivatedRoute, private tareasService: TareaService, private router: Router,
+    private route: ActivatedRoute, private notasService: NotasService, private router: Router,
     private alumnosService: AlumnosService, private profesorService: ProfesoresService
   ) { }
 
   ngOnInit(): void {
-    let idTarea = parseInt(this.route.snapshot.params['id']);
-    this.tareasService.getById(idTarea).subscribe({
-      next: (tarea: Tarea) => {
-        this.tarea = tarea;
-        this.profesorService.getById(this.tarea.idProfesor).subscribe({
+    let idNota = parseInt(this.route.snapshot.params['id']);
+    this.notasService.getById(idNota).subscribe({
+      next: (nota: Nota) => {
+        this.nota = nota;
+        this.profesorService.getById(this.nota.idProfesor).subscribe({
           next: (profesor: Profesor) => {
             this.profesor = profesor;
             this.alumnosService.getAll().subscribe({
@@ -94,19 +89,14 @@ export class EditarTareasComponent {
     });
   }
 
-  editarTarea(fechaEntrega: string, horaEntrega: string, idAlumno: string, descripcion: string) {
-    let fechaEntregaSplitted: string[] = fechaEntrega.split('-');
-    fechaEntrega = `${fechaEntregaSplitted[2]}/${fechaEntregaSplitted[1]}/${fechaEntregaSplitted[0]}`;
-
-    this.editedTarea = {
-      fechaPublicacionString: "",
-      fechaEntregaString: fechaEntrega + " " + horaEntrega,
+  editarNota(nombre: string, calif: string, idAlumno: string) {
+    this.editedNota = {
+      nombre: nombre,
+      calificacion: parseInt(calif),
       idAlumno: parseInt(idAlumno),
-      idProfesor: this.tarea!.idProfesor,
-      descripcion: descripcion,
-      completada: this.tarea!.completada
+      idProfesor: this.nota!.idProfesor
     };
-    this.tareasService.update(this.editedTarea, this.tarea!.id).subscribe({
+    this.notasService.update(this.editedNota, this.nota!.id).subscribe({
       next: () => {
         Swal.fire({
           title: "¡Hecho!",
@@ -115,20 +105,12 @@ export class EditarTareasComponent {
           timer: 1500,
           icon: "success"
         }).then(() => {
-          this.router.navigate(['/tareas-alum/' + idAlumno + '/prof/' + this.tarea!.idProfesor]);
+          this.router.navigate(['/notas-alum/' + idAlumno + '/prof/' + this.nota!.idProfesor]);
         });
       },
       error: (error) => {
         console.error(error);
       }
     });
-  }
-
-  formatDate(date: string): string {
-    return date.slice(0, 10);
-  }
-
-  formatTime(date: string): string {
-    return date.slice(11, 16);
   }
 }

@@ -45,6 +45,18 @@ public class AudicionController {
         this.audicionService.create(nuevaAud);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+    
+    @PostMapping("/edit/{id}")
+    public void edit(@RequestBody Audicion audicion, @PathVariable("id") int id) {
+        if (audicion != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            LocalDateTime fechaHoraAudicion = LocalDateTime.parse(audicion.getDiaHoraString(), formatter);
+            audicion.setDiaHora(fechaHoraAudicion);
+            audicionService.update(id, audicion);
+        } else {
+            System.out.println("Error. Objeto Audición erróneo.");
+        }
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {

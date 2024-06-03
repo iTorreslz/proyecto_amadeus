@@ -10,7 +10,7 @@ import { AudicionesService } from '../../services/audiciones.service';
   template: `
   <div class="w-full mx-auto px-4">
     <div *ngIf="audiciones.length > 0" class="flex flex-col justify-center divide-y divide-slate-200 [&>*]:py-16">
-      <div class="w-full max-w-7xl mx-auto">
+      <div class="flex flex-col items-center w-full max-w-7xl mx-auto">
         <div class="-my-6">
           <div *ngFor="let audicion of audiciones" class="relative pl-8 sm:pl-32 py-6 group">
             <div class="font-medium text-indigo-500 mb-1 sm:mb-0">
@@ -35,12 +35,12 @@ import { AudicionesService } from '../../services/audiciones.service';
             </div>
           </div>
         </div>
-        <img src="../../../assets/images/orquestra.jpg" class="h-full w-4/6 object-contain mt-8 mb-6 rounded-lg" alt="">
+        <img src="../../../assets/images/orquestra.jpg" class="h-full w-11/12 object-contain mt-12 mb-6 rounded-lg" alt="">
       </div>
     </div>
     <div *ngIf="audiciones.length == 0" class="flex flex-col items-center">
       <p class="text-xl mt-16">No hay audiciones disponibles en este momento. Pronto se organizarán y aparecerán en este apartado.</p>
-      <img src="../../../assets/images/orquestra.jpg" class="h-full w-4/6 object-contain mt-8 mb-6 rounded-lg" alt="">
+      <img src="../../../assets/images/orquestra.jpg" class="h-full w-8/12 object-contain mt-8 mb-6 rounded-lg" alt="">
     </div>
   </div>
   `,

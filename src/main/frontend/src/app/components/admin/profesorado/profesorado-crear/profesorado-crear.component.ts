@@ -2,11 +2,16 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProfesoresService } from '../../../../services/profesores.service';
 import { NewProfesor } from '../../../../interfaces/newProfesor';
+import Swal from 'sweetalert2';
+import { Profesor } from '../../../../interfaces/profesor';
+import { Instrumento } from '../../../../interfaces/instrumento';
+import { InstrumentosService } from '../../../../services/instrumentos-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profesorado-crear',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   template: `
   <div class="relative rounded w-700 max-w-95 mx-auto bg-blue-200 shadow-3xl p-3">
     <div class="mt-2 mb-8">
@@ -35,10 +40,14 @@ import { NewProfesor } from '../../../../interfaces/newProfesor';
         <input type="text" class="text-base font-medium text-navy-700 w-48" name="apellidos"
           #apellidos>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600">Instrumento</label>
-        <input type="text" class="text-base font-medium text-navy-700 w-48" name="instrumento"
-        #instrumento>
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4">
+        <label for="instrumento" class="block text-sm font-medium text-gray-700">Instrumento</label>
+        <select id="instrumento" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          #instrumento>
+          <option *ngFor="let instrumento of instrumentos" [value]="instrumento.id">
+            {{ instrumento.nombre }}
+          </option>
+        </select>
       </div>
       <button type="submit" (click)="this.guardarCambios(email.value,password.value,nombre.value,apellidos.value,instrumento.value)"
         class="m-4 bg-blue-800 text-white font-semibold rounded-md shadow-md hover:bg-blue-600">
@@ -51,9 +60,71 @@ import { NewProfesor } from '../../../../interfaces/newProfesor';
 })
 export class ProfesoradoCrearComponent {
   profesor: NewProfesor = { email: '', password: '', nombre: '', apellidos: '', idInstrumento: 0 };
+  profesores: Profesor[] = [];
   instrumento: string = "";
+  instrumentos: Instrumento[] = [];
 
-  constructor(private route: ActivatedRoute, private profesoresService: ProfesoresService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private profesoresService: ProfesoresService, private router: Router, private instService: InstrumentosService) { }
+
+  ngOnInit() {
+    this.profesoresService.getAll().subscribe({
+      next: (profesores) => {
+        this.profesores = profesores;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+
+    this.instService.getAll().subscribe({
+      next: (instrumentos) => {
+        this.instrumentos = instrumentos;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  guardarCambios(email: string, password: string, nombre: string, apellidos: string, instrumento: string) {
+    this.profesor.email = email;
+    this.profesor.password = password;
+    this.profesor.nombre = nombre;
+    this.profesor.apellidos = apellidos;
+    this.profesor.idInstrumento = parseInt(instrumento);
+
+    let yaExiste: boolean = false;
+
+    this.profesores.forEach(profesor => {
+      if (profesor.email === this.profesor.email) {
+        Swal.fire({
+          title: "Error",
+          text: "Ya existe este profesor. Email " + profesor.email + " ya registrado.",
+          icon: "error"
+        });
+        yaExiste = true;
+      }
+    });
+
+    if (!yaExiste) {
+      this.profesoresService.create(this.profesor).subscribe({
+        next: () => {
+          Swal.fire({
+            title: "¡Hecho!",
+            text: nombre + " " + apellidos + " ya puede iniciar sesión con sus credenciales de acceso.",
+            showConfirmButton: false,
+            timer: 2500,
+            icon: "success"
+          }).then(() => {
+            this.router.navigate(['/admin/profesorado']);
+          });
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    }
+  }
 
   getInstrumento(idInstrumento: number) {
     switch (idInstrumento) {
@@ -90,21 +161,5 @@ export class ProfesoradoCrearComponent {
       default:
         this.instrumento = "No asignado";
     }
-  }
-
-  guardarCambios(email: string, password: string, nombre: string, apellidos: string, instrumento: string) {
-    this.profesor.email = email;
-    this.profesor.password = password;
-    this.profesor.nombre = nombre;
-    this.profesor.apellidos = apellidos;
-    this.profesor.idInstrumento = parseInt(instrumento);
-    this.profesoresService.create(this.profesor).subscribe({
-      next: () => {
-        window.location.reload();
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
   }
 }
