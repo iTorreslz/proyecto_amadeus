@@ -328,7 +328,7 @@ export class PerfilProfesorComponent {
           }
         });
       }
-    })
+    });
   }
 
   openTasksDialog() {

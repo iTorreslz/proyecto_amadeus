@@ -115,6 +115,8 @@ export class AuthService {
 
     alumnos.forEach(alumno => {
       if (alumno.email === email) {
+        console.log("llego");
+        
         Swal.fire({
           title: "Error en el Correo electrónico",
           text: "Este correo ya está en uso (" + email + ").",

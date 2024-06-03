@@ -63,16 +63,24 @@ import Swal from 'sweetalert2';
 export class RegisterComponent {
 
   constructor(
-    private http: HttpClient, private router: Router, private authService: AuthService,
+    private http: HttpClient, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any, private dialog: MatDialogRef<RegisterComponent>
 ) { }
 
-  register(email: string, password: string, nombre: string, apellidos: string) {
-    this.authService.register(email, password, nombre, apellidos);
-    this.close();
-  }
+    credentials = {
+      email: '',
+      password: '',
+      nombre: '',
+      apellidos: ''
+    }
 
-  close() {
-    this.dialog.close();
+  register(email: string, password: string, nombre: string, apellidos: string) {
+    this.credentials = {
+      email: email,
+      password: password,
+      nombre: nombre,
+      apellidos: apellidos
+    }
+    this.dialog.close(this.credentials);
   }
 }

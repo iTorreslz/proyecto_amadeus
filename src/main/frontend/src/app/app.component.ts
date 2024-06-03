@@ -6,6 +6,8 @@ import { AuthService } from './services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
+import { Alumno } from './interfaces/alumno';
+import { AlumnosService } from './services/alumnos.service';
 
 @Component({
   selector: 'app-root',
@@ -88,10 +90,11 @@ import { RegisterComponent } from './components/auth/register/register.component
 })
 export class AppComponent implements OnInit {
 
-  constructor(private authService: AuthService, private dialog: MatDialog) { }
+  constructor(private authService: AuthService, private dialog: MatDialog, private alumServ: AlumnosService) { }
 
   tipoUsuario: string = "";
   loggedIn: boolean = false;
+  alumnos: Alumno[] = [];
 
   ngOnInit() {
     this.authService.loggedIn$.subscribe(loggedIn => {
@@ -125,9 +128,24 @@ export class AppComponent implements OnInit {
   }
 
   openRegister() {
-    this.dialog.open(RegisterComponent, {
+    let dialogReference = this.dialog.open(RegisterComponent, {
       width: 'fit-content',
       height: 'fit-content'
+    });
+
+    this.alumServ.getAll().subscribe({
+      next: (alumnos: Alumno[]) => {
+        this.alumnos = alumnos;
+      },
+      error: (error) => {
+        console.error('Error al obtener la lista de alumnos:', error);
+      }
+    });
+
+    dialogReference.afterClosed().subscribe(result => {
+      if (result) {
+        this.authService.register(result.email, result.password, result.nombre, result.apellidos, this.alumnos);
+      }
     });
   }
 
