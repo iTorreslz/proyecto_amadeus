@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Alumno } from '../../../../interfaces/alumno';
-import { AlumnosService } from '../../../../services/alumnos.service';
-import { TareaService } from '../../../../services/tareas.service';
-import { Tarea } from '../../../../interfaces/tarea';
-import { ProfesoresService } from '../../../../services/profesores.service';
-import { Profesor } from '../../../../interfaces/profesor';
-import { MatDialog } from '@angular/material/dialog';
-import { DescripcionTareasComponent } from '../descripcion-tareas/descripcion-tareas.component';
 import Swal from 'sweetalert2';
+import { Alumno } from '../../../../interfaces/alumno';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Profesor } from '../../../../interfaces/profesor';
+import { Tarea } from '../../../../interfaces/tarea';
+import { AlumnosService } from '../../../../services/alumnos.service';
+import { ProfesoresService } from '../../../../services/profesores.service';
+import { TareaService } from '../../../../services/tareas.service';
+import { DescripcionTareasComponent } from '../../profesores/descripcion-tareas/descripcion-tareas.component';
+import { NewTarea } from '../../../../interfaces/newTarea';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ver-tareas',
@@ -41,14 +42,7 @@ import Swal from 'sweetalert2';
           </th>
           <th
               class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left font-semibold text-blue-900 tracking-wider">
-              Alumno
-          </th>
-          <th
-              class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100 text-left font-semibold text-blue-900 tracking-wider">
               Descripción
-          </th>
-          <th
-              class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100">
           </th>
           <th
               class="px-5 py-3 border-b-2 border-gray-200 bg-blue-100">
@@ -69,9 +63,6 @@ import Swal from 'sweetalert2';
           <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
             {{ formatDate(tarea.fechaEntrega) }}
           </td>
-          <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
-            {{ alumno!.nombre }} {{ alumno!.apellidos }}
-          </td>
           <td (click)="openDescripcion(tarea.descripcion)" class="cursor-pointer px-5 py-5 font-bold border-b border-gray-200 bg-white text-blue-700">
             Ver descripcion
           </td>
@@ -80,11 +71,8 @@ import Swal from 'sweetalert2';
             {{ checkTarea(tarea.completada) }}
           </td>
           <td class="border-b border-gray-200 bg-white text-blue-900 text-center">
-            <button class="mr-3">
-              <i [routerLink]="['editar', tarea.id]" class="fa-solid fa-pencil-alt"></i>
-            </button>
             <button>
-              <i (click)="deleteTarea(tarea.id)" class="fa-solid fa-trash-alt"></i>
+              <i (click)="completarTarea(tarea.id, tarea)" class="fa-solid fa-trash-alt"></i>
             </button>
           </td>
         </tr>
@@ -95,7 +83,6 @@ import Swal from 'sweetalert2';
   styleUrl: './ver-tareas.component.css'
 })
 export class VerTareasComponent {
-
   alumno: Alumno | undefined;
   profesor: Profesor | undefined;
   tareas: Tarea[] = [];
@@ -108,27 +95,16 @@ export class VerTareasComponent {
 
   ngOnInit(): void {
     let idAlumno = parseInt(this.route.snapshot.params['idAlumno']);
-    let idProfesor = parseInt(this.route.snapshot.params['idProfesor']);
 
     this.alumnosService.getById(idAlumno).subscribe({
       next: (alumno: Alumno) => {
         this.alumno = alumno;
-
-        this.profesorService.getById(idProfesor).subscribe({
-          next: (profesor: Profesor) => {
-            this.profesor = profesor;
-
-            this.tareasService.getAll().subscribe({
-              next: (tareas: Tarea[]) => {
-                this.tareas = tareas.filter(tarea => tarea.idAlumno === this.alumno!.id && tarea.idProfesor === this.profesor!.id);
-              },
-              error: (error) => {
-                console.error('Error al obtener la lista de tareas:', error);
-              }
-            });
+        this.tareasService.getAll().subscribe({
+          next: (tareas: Tarea[]) => {
+            this.tareas = tareas.filter(tarea => tarea.idAlumno === this.alumno!.id);
           },
           error: (error) => {
-            console.error(error);
+            console.error('Error al obtener la lista de tareas:', error);
           }
         });
       },
@@ -137,7 +113,6 @@ export class VerTareasComponent {
       }
     });
   }
-
 
   formatDate(date: string): string {
     return date.replace("T", " ").replaceAll("-", "/").slice(0, -3);
@@ -162,32 +137,41 @@ export class VerTareasComponent {
     return "Pendiente";
   }
 
-  deleteTarea(id: number) {
+  completarTarea(id: number, tarea: Tarea) {
     Swal.fire({
-      title: "¿Está seguro de eliminar la tarea con código número " + id + "?",
-      text: "No podrá revertir este cambio.",
+      title: "¿Está seguro de marcar como completada esta tarea?",
+      text: "No podrá revertir este cambio, y su profesor será notificado.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, borrar"
+      confirmButtonText: "Confirmar"
     }).then((result) => {
-      
+
       if (result.isConfirmed) {
-        this.tareasService.delete(id).subscribe({
+        let tareaUpdated: NewTarea = {
+          completada: true,
+          fechaPublicacionString: '',
+          fechaEntregaString: '',
+          idAlumno: -1,
+          idProfesor: 0,
+          descripcion: ''
+        }
+
+        this.tareasService.update(tareaUpdated, id).subscribe({
           next: () => {
             Swal.fire({
               title: "¡Hecho!",
-              text: "Esta tarea ha sido eliminada.",
+              text: "Ha marcado como finalizada esta tarea y su profesor ha sido informado.",
               showConfirmButton: false,
-              timer: 1700,
+              timer: 2000,
               icon: "success"
             }).then(() => {
               window.location.reload();
             });
           },
           error: () => {
-            console.error('Error al eliminar la tarea con código ' + id);
+            console.error('Error al modificar la tarea con código ' + id);
           }
         });
       }

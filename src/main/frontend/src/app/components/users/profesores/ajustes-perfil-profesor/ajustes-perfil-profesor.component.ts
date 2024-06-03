@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ajustes-perfil-profesor',
@@ -42,12 +43,37 @@ export class AjustesPerfilProfesorComponent {
   newPasswd: string = "";
 
   guardarCambios(lastPasswd: string, newPasswd: string) {
-    if (lastPasswd === this.lastPasswd) {
-      this.newPasswd = newPasswd;
-      this.dialog.close(this.newPasswd);
-    } else {
-      console.log("Error introduciendo contraseña actual.");
-      
-    }
+    Swal.fire({
+      title: "Confirme los cambios",
+      text: "¿Está seguro de modificar su contraseña?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, modificar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (lastPasswd === this.lastPasswd) {
+          this.newPasswd = newPasswd;
+          Swal.fire({
+            title: "¡Hecho!",
+            text: "Contraseña modificada correctamente.",
+            showConfirmButton: false,
+            timer: 1700,
+            icon: "success"
+          }).then(() => {
+            this.dialog.close(this.newPasswd);
+          });
+        } else {
+          Swal.fire({
+            title: "Error",
+            text: "La contraseña actual no es correcta.",
+            showConfirmButton: false,
+            timer: 1700,
+            icon: "error"
+          });
+        }
+      }
+    });
   }
 }

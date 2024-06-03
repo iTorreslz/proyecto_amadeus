@@ -70,7 +70,7 @@ import Swal from 'sweetalert2';
           <button class="mr-3" [routerLink]="['/admin/alumnado/editar', alumno.id]">
               <i class="fa-solid fa-pencil-alt"></i>
           </button>
-          <button (click)="deleteAlumno(alumno.id)">
+          <button (click)="deleteAlumno(alumno.id, alumno)">
               <i class="fa-solid fa-trash-alt"></i>
           </button>
         </td>
@@ -123,7 +123,7 @@ export class AlumnadoListaComponent implements OnInit {
           next: () => {
             Swal.fire({
               title: "¡Hecho!",
-              text: "Clase asignada al alumno " + alumno.nombre + ".",
+              text: "Clase asignada al alumno " + alumno.nombre + " " + alumno.apellidos + ".",
               showConfirmButton: false,
               timer: 1700,
               icon: "success"
@@ -151,13 +151,35 @@ export class AlumnadoListaComponent implements OnInit {
     return false;
   }
 
-  deleteAlumno(id: number) {
-    this.alumnosService.delete(id).subscribe({
-      next: (response) => {
-        window.location.reload();
-      },
-      error: () => {
-        console.error('Error al eliminar el alumno con código ' + id);
+  deleteAlumno(id: number, alumno: Alumno) {
+    Swal.fire({
+      title: "¿Está seguro de borrar al alumno " + alumno.nombre + " " + alumno.apellidos + "?",
+      text: "No podrá revertir este cambio.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, borrar"
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        this.alumnosService.delete(id).subscribe({
+          next: () => { },
+          error: () => {
+            console.error('Error al eliminar el alumno con código ' + id);
+          }
+        });
+
+        Swal.fire({
+          title: "¡Hecho!",
+          text: "El alumno ya no pertenece a la escuela.",
+          showConfirmButton: false,
+          timer: 1700,
+          icon: "success"
+        }).then(() => {
+          window.location.reload();
+        });
       }
     });
   }

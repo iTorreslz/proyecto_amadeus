@@ -35,11 +35,14 @@ public class TareaService {
         Tarea tarea = this.tareaRepository.findById(id)
                 .orElseThrow(() -> new TareaNotFoundException(id));
 
-        tarea.setFechaEntrega(updatedTarea.getFechaEntrega());
-        tarea.setIdAlumno(updatedTarea.getIdAlumno());
-        tarea.setDescripcion(updatedTarea.getDescripcion());
-        tarea.setCompletada(updatedTarea.isCompletada());
-
+        if (updatedTarea.getIdAlumno() == -1) {
+            tarea.setCompletada(updatedTarea.isCompletada());
+        } else {
+            tarea.setFechaEntrega(updatedTarea.getFechaEntrega());
+            tarea.setIdAlumno(updatedTarea.getIdAlumno());
+            tarea.setDescripcion(updatedTarea.getDescripcion());
+            tarea.setCompletada(updatedTarea.isCompletada());
+        }
         return this.tareaRepository.save(tarea);
     }
 

@@ -4,4 +4,5 @@ export interface NewTarea {
     idAlumno: number;
     idProfesor: number;
     descripcion: string;
+    completada: boolean;
 }

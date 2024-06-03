@@ -4,6 +4,7 @@ import { AdmisionesService } from '../../../../services/admisiones.service';
 import { NewAdmision } from '../../../../interfaces/newAdmision';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admisiones-crear',
@@ -87,19 +88,39 @@ export class AdmisionesCrearComponent {
   }
 
   enviar(idAlumno: number) {
-    this.nuevaAdmision.idAlumno = idAlumno;
-    for (let i = 0; i < this.instrumentos.length; i++) {
-      let instrumentoLoop: string = this.instrumentos[i];
-      if (instrumentoLoop.includes(this.selectedInstrumento)) {
-        this.nuevaAdmision.instrumento = i + 1;
-      }
-    }
-    this.admisionService.create(this.nuevaAdmision).subscribe({
-      next: () => {
-        this.router.navigate(['/perfil_alumno']);
-      },
-      error: (error) => {
-        console.error(error);
+    Swal.fire({
+      title: "¿Está seguro de escoger este instrumento?",
+      text: "Esta es una decisión muy importante. Si usted obtiene plaza, este será su instrumento durante toda la etapa académica.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, escoger instrumento",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+        this.nuevaAdmision.idAlumno = idAlumno;
+        for (let i = 0; i < this.instrumentos.length; i++) {
+          let instrumentoLoop: string = this.instrumentos[i];
+          if (instrumentoLoop.includes(this.selectedInstrumento)) {
+            this.nuevaAdmision.instrumento = i + 1;
+          }
+        }
+        this.admisionService.create(this.nuevaAdmision).subscribe({
+          next: () => {
+            Swal.fire({
+              title: "¡Hecho!, su solicitud ha sido enviada",
+              text: "Esto no quiere decir que ya tenga plaza para este instrumento. En menos de 48 horas laborables obtendrá una respuesta por parte del centro.",
+              icon: "success"
+            }).then(() => {
+              this.router.navigate(['/perfil_alumno']);
+            });
+          },
+          error: (error) => {
+            console.error(error);
+          }
+        });
       }
     });
   }

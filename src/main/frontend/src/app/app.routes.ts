@@ -24,6 +24,7 @@ import { VerTareasComponent } from './components/users/profesores/ver-tareas/ver
 import { CrearTareasComponent } from './components/users/profesores/crear-tareas/crear-tareas.component';
 import { EditarTareasComponent } from './components/users/profesores/editar-tareas/editar-tareas.component';
 import { InstrumentosComponent } from './components/instrumentos/instrumentos.component';
+import { AudicionesEditarComponent } from './components/admin/audiciones/audiciones-editar/audiciones-editar.component';
 
 export const routes: Routes = [
     {
@@ -65,6 +66,11 @@ export const routes: Routes = [
         path: 'admisiones/nuevo',
         component: AdmisionesCrearComponent,
         title: 'Nueva Admisión'
+    },
+    {
+        path: 'tareas-alum/:idAlumno',
+        component: VerTareasComponent,
+        title: 'Tareas alumno'
     },
     {
         path: 'perfil_profesor',
@@ -145,6 +151,11 @@ export const routes: Routes = [
                 path: 'audiciones/nuevo',
                 component: AudicionesCrearComponent,
                 title: 'Nueva Audición'
+            },
+            {
+                path: 'audiciones/editar/:id',
+                component: AudicionesEditarComponent,
+                title: 'Editar audición'
             },
             {
                 path: 'admisiones',

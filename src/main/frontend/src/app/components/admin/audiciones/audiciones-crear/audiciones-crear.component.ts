@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NewAudicion } from '../../../../interfaces/newAudicion';
 import { AudicionesService } from '../../../../services/audiciones.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-audiciones-crear',
@@ -100,12 +101,20 @@ export class AudicionesCrearComponent {
       }
     }
 
-    this.audicion.diaHoraString= this.fechaHora;
+    this.audicion.diaHoraString = this.fechaHora;
     this.audicion.idInstrumento = this.idInstrumento;
 
     this.audicionesService.create(this.audicion).subscribe({
       next: () => {
-        this.router.navigate(['/admin/audiciones']);
+        Swal.fire({
+          title: "¡Hecho!",
+          text: "Se ha creado una nueva audición para el día " + fecha + " a las " + hora + ".",
+          showConfirmButton: false,
+          timer: 2300,
+          icon: "success"
+        }).then(() => {
+          this.router.navigate(['/admin/audiciones']);
+        });
       },
       error: (error) => {
         console.error(error);

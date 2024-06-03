@@ -8,6 +8,7 @@ import { Alumno } from '../../../../interfaces/alumno';
 import { AlumnosService } from '../../../../services/alumnos.service';
 import { Profesor } from '../../../../interfaces/profesor';
 import { ProfesoresService } from '../../../../services/profesores.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-editar-tareas',
@@ -102,11 +103,20 @@ export class EditarTareasComponent {
       fechaEntregaString: fechaEntrega + " " + horaEntrega,
       idAlumno: parseInt(idAlumno),
       idProfesor: this.tarea!.idProfesor,
-      descripcion: descripcion
+      descripcion: descripcion,
+      completada: this.tarea!.completada
     };
     this.tareasService.update(this.editedTarea, this.tarea!.id).subscribe({
       next: () => {
-        this.router.navigate(['/tareas-alum/' + idAlumno + '/prof/' + this.tarea!.idProfesor]);
+        Swal.fire({
+          title: "¡Hecho!",
+          text: "Cambios guardados.",
+          showConfirmButton: false,
+          timer: 1500,
+          icon: "success"
+        }).then(() => {
+          this.router.navigate(['/tareas-alum/' + idAlumno + '/prof/' + this.tarea!.idProfesor]);
+        });
       },
       error: (error) => {
         console.error(error);

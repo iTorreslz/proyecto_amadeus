@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Audicion } from '../../../../interfaces/audicion';
 import { AudicionesService } from '../../../../services/audiciones.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-audiciones-lista',
@@ -43,13 +44,13 @@ import { AudicionesService } from '../../../../services/audiciones.service';
           {{ formatDate(audicion.diaHora) }}
         </td>
         <td class="border-b border-gray-200 bg-white text-blue-900 text-center">
-          <button class="mr-3">
+          <button class="mr-3 hidden">
               <i class="fa-solid fa-eye"></i>
           </button>
-          <button class="mr-3">
+          <button [routerLink]="['/admin/audiciones/editar', audicion.id]" class="mr-3">
               <i class="fa-solid fa-pencil-alt"></i>
           </button>
-          <button (click)="deleteAudicion(audicion.id)">
+          <button (click)="deleteAudicion(audicion.id, audicion)">
               <i class="fa-solid fa-trash-alt"></i>
           </button>
         </td>
@@ -80,13 +81,35 @@ export class AudicionesListaComponent {
     return date.replace("T"," ");
   }
 
-  deleteAudicion(id: number) {
-    this.audicionesService.delete(id).subscribe({
-      next: () => {
-        window.location.reload();
-      },
-      error: () => {
-        console.error('Error al eliminar audición con código ' + id);
+  deleteAudicion(id: number, audicion: Audicion) {
+    Swal.fire({
+      title: "¿Está seguro de borrar esta audición de " + this.getInstrumento(audicion!.idInstrumento).toLowerCase() + "?",
+      text: "No podrá revertir este cambio.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, borrar"
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        this.audicionesService.delete(id).subscribe({
+          next: () => { },
+          error: () => {
+            console.error('Error al eliminar el audición con código ' + id);
+          }
+        });
+
+        Swal.fire({
+          title: "¡Hecho!",
+          text: "La audición ha sido borrada correctamente.",
+          showConfirmButton: false,
+          timer: 1700,
+          icon: "success"
+        }).then(() => {
+          window.location.reload();
+        });
       }
     });
   }

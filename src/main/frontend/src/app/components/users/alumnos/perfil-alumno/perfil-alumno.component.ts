@@ -80,7 +80,7 @@ import { AjustesPerfilProfesorComponent } from '../../profesores/ajustes-perfil-
             </table>
             <p class="font-bold">Tareas pendientes totales: {{tareas.length}} </p>
             <div class="flex flex-col">
-              <a class="font-bold mt-2 cursor-pointer text-blue-800">Ver todas las tareas</a>
+              <a [routerLink]="['/tareas-alum', alumno!.id]" class="font-bold mt-2 cursor-pointer text-blue-800">Ver todas las tareas</a>
               <a class="font-bold mt-2 cursor-pointer text-blue-800">Ver calificaciones</a>
             </div>
           </div>

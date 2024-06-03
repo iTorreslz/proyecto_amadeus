@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Profesor } from '../../../../interfaces/profesor';
 import { ProfesoresService } from '../../../../services/profesores.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profesorado-editar',
@@ -62,6 +63,29 @@ export class ProfesoradoEditarComponent {
     });
   }
 
+  guardarCambios(nombre: string, apellidos: string) {
+    if (this.profesor) {
+      this.profesor.nombre = nombre;
+      this.profesor.apellidos = apellidos;
+      this.profesoresService.update(this.profesor, this.profesor.id).subscribe({
+        next: () => {
+          Swal.fire({
+            title: "¡Hecho!",
+            text: "Cambios guardados.",
+            showConfirmButton: false,
+            timer: 1500,
+            icon: "success"
+          }).then(() => {
+            this.router.navigate(['/admin/profesorado']);
+          });
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    }
+  }
+
   getInstrumento(idInstrumento: number) {
     switch (idInstrumento) {
       case 1:
@@ -96,21 +120,6 @@ export class ProfesoradoEditarComponent {
         break;
       default:
         this.instrumento = "No asignado";
-    }
-  }
-
-  guardarCambios(nombre: string, apellidos: string) {
-    if (this.profesor) {
-      this.profesor.nombre = nombre;
-      this.profesor.apellidos = apellidos;
-      this.profesoresService.update(this.profesor, this.profesor.id).subscribe({
-        next: () => {
-
-        },
-        error: (error) => {
-          console.error(error);
-        }
-      });
     }
   }
 }

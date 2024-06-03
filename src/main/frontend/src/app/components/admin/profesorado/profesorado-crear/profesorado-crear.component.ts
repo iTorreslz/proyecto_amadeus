@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProfesoresService } from '../../../../services/profesores.service';
 import { NewProfesor } from '../../../../interfaces/newProfesor';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profesorado-crear',
@@ -55,6 +56,30 @@ export class ProfesoradoCrearComponent {
 
   constructor(private route: ActivatedRoute, private profesoresService: ProfesoresService, private router: Router) { }
 
+  guardarCambios(email: string, password: string, nombre: string, apellidos: string, instrumento: string) {
+    this.profesor.email = email;
+    this.profesor.password = password;
+    this.profesor.nombre = nombre;
+    this.profesor.apellidos = apellidos;
+    this.profesor.idInstrumento = parseInt(instrumento);
+    this.profesoresService.create(this.profesor).subscribe({
+      next: () => {
+        Swal.fire({
+          title: "¡Hecho!",
+          text: nombre + " " + apellidos + " ya puede iniciar sesión con sus credenciales de acceso.",
+          showConfirmButton: false,
+          timer: 2500,
+          icon: "success"
+        }).then(() => {
+          this.router.navigate(['/admin/profesorado']);
+        });
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
   getInstrumento(idInstrumento: number) {
     switch (idInstrumento) {
       case 1:
@@ -90,21 +115,5 @@ export class ProfesoradoCrearComponent {
       default:
         this.instrumento = "No asignado";
     }
-  }
-
-  guardarCambios(email: string, password: string, nombre: string, apellidos: string, instrumento: string) {
-    this.profesor.email = email;
-    this.profesor.password = password;
-    this.profesor.nombre = nombre;
-    this.profesor.apellidos = apellidos;
-    this.profesor.idInstrumento = parseInt(instrumento);
-    this.profesoresService.create(this.profesor).subscribe({
-      next: () => {
-        window.location.reload();
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
   }
 }

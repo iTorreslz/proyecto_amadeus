@@ -7,6 +7,7 @@ import { TareaService } from '../../../../services/tareas.service';
 import { NewTarea } from '../../../../interfaces/newTarea';
 import { Profesor } from '../../../../interfaces/profesor';
 import { Alumno } from '../../../../interfaces/alumno';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-tareas',
@@ -104,12 +105,21 @@ export class CrearTareasComponent {
       fechaEntregaString: fechaEntrega + " " + horaEntrega,
       idAlumno: parseInt(idAlumno),
       idProfesor: this.profesor!.id,
-      descripcion: descripcion
+      descripcion: descripcion,
+      completada: false
     }
 
     this.tareasService.create(this.newTarea).subscribe({
       next: () => {
-        this.router.navigate(['/perfil_profesor']);
+        Swal.fire({
+          title: "¡Hecho!",
+          text: "Tarea creada correctamente.",
+          showConfirmButton: false,
+          timer: 1700,
+          icon: "success"
+        }).then(() => {
+          this.router.navigate(['/perfil_profesor']);
+        });
       }
     });
   }
