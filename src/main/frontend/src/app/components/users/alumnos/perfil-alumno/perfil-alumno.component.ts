@@ -18,6 +18,7 @@ import { Nota } from '../../../../interfaces/Nota';
 import { NotasService } from '../../../../services/notas-service';
 import { NewTarea } from '../../../../interfaces/newTarea';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-perfil-alumno',
@@ -72,7 +73,7 @@ import Swal from 'sweetalert2';
               <tbody *ngFor="let tarea of tareas">
                 <tr>
                   <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
-                  {{ tarea.id }}
+                  {{ tarea.titulo }}
                   </td>
                   <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
                     {{ formatDate(tarea.fechaEntrega) }}
@@ -86,7 +87,7 @@ import Swal from 'sweetalert2';
             <p class="font-bold">Tareas pendientes totales: {{tareas.length}} </p>
             <div class="flex flex-col">
               <a [routerLink]="['/tareas-alum', alumno!.id]" class="font-bold mt-2 cursor-pointer text-blue-800">Ver todas las tareas</a>
-              <a class="font-bold mt-2 cursor-pointer text-blue-800">Ver calificaciones</a>
+              <a [routerLink]="['/calif-alum', alumno!.id]" class="font-bold mt-2 cursor-pointer text-blue-800">Ver calificaciones</a>
             </div>
           </div>
           <div class="flex flex-col justify-around col-span-full sm:col-span-3 lg:col-span-2 overflow-hidden relative p-8 rounded-xl bg-blue-200 border border-gray-200">
@@ -213,7 +214,8 @@ export class PerfilAlumnoComponent {
   constructor(
     private profesoresService: ProfesoresService, private clasesService: ClasesService,
     private tareasService: TareaService, private audicionService: AudicionesService,
-    private alumnosService: AlumnosService, private dialog: MatDialog, private notasService: NotasService
+    private alumnosService: AlumnosService, private dialog: MatDialog, private notasService: NotasService,
+    private authServ: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -303,21 +305,61 @@ export class PerfilAlumnoComponent {
   openAjustesDialog() {
     let dialog = this.dialog.open(AjustesPerfilProfesorComponent, {
       width: 'fit-content',
-      height: 'fit-content',
-      data: this.alumno!.password
+      height: 'fit-content'
     });
 
     dialog.afterClosed().subscribe(result => {
       if (result) {
-        this.alumno!.password = result;
-        this.alumnosService.update(this.alumno!, this.alumno!.id).subscribe({
-          next: () => { },
+        let inputLastPassword = result[0];
+        let inputNewPassword = result[1];
+        let inputLastPasswordEncoded = "";
+        this.authServ.encript(inputLastPassword).subscribe({
+          next: (respuesta) => {
+            inputLastPasswordEncoded = respuesta.respuesta;
+            if (inputLastPasswordEncoded === this.alumno!.password) {
+              this.authServ.encript(inputNewPassword).subscribe({
+                next: (respuesta2) => {
+                  this.alumno!.password = respuesta2.respuesta;
+                  localStorage.removeItem('usuario');
+                  localStorage.setItem('usuario', JSON.stringify(this.alumno));
+
+                  Swal.fire({
+                    title: "¡Hecho!",
+                    text: "Contraseña modificada correctamente.",
+                    showConfirmButton: false,
+                    timer: 1700,
+                    icon: "success"
+                  });
+
+                  this.alumnosService.update(this.alumno!, this.alumno!.id).subscribe({
+                    next: () => { },
+                    error: (error) => {
+                      console.error(error);
+                    }
+                  });
+                },
+                error: (error) => {
+                  console.error('Error al obtener la password encriptada:', error);
+                }
+              });
+            } else {
+              Swal.fire({
+                title: "Error",
+                text: "La contraseña actual que has escrito no es correcta.",
+                showConfirmButton: false,
+                timer: 2000,
+                icon: "error"
+              }).then(() => {
+                this.openAjustesDialog();
+              });
+            }
+          },
           error: (error) => {
-            console.error(error);
+            console.error('Error al obtener la password encriptada:', error);
           }
         });
       }
-    })
+    });
   }
 
   openContact() {
@@ -346,6 +388,7 @@ export class PerfilAlumnoComponent {
         let idTarea = tarea.id;
 
         let completedTarea: NewTarea = {
+          titulo: tarea.titulo,
           fechaPublicacionString: '',
           fechaEntregaString: '',
           idAlumno: -1,

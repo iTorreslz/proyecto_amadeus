@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common';
       </h4>
     </div>
     <div class="grid grid-cols-2 gap-4 border border-gray-300">
-    <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
         <label class="text-sm text-gray-600">Email</label>
         <input type="text" class="text-base font-medium text-navy-700 w-48" name="email"
           #email>

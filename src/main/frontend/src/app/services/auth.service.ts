@@ -116,9 +116,9 @@ export class AuthService {
     alumnos.forEach(alumno => {
       if (alumno.email === email) {
         console.log("llego");
-        
+
         Swal.fire({
-          title: "Error en el Correo electrónico",
+          title: "Error en el correo electrónico",
           text: "Este correo ya está en uso (" + email + ").",
           icon: "error"
         });
@@ -162,6 +162,19 @@ export class AuthService {
         }
       );
     }
+  }
+
+  //-------------------- ENCRIPT PASSWD --------------------//
+  encript(password: string) {
+    let body = {
+      password: password
+    };
+
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    };
+
+    return this.http.post<{ respuesta: string }>('http://localhost:8082/auth/encrypt', body, options);
   }
 
   //-------------------- CHECK LOGGEDIN --------------------//

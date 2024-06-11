@@ -16,8 +16,9 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, RouterLink],
   template: `
   <div class="max-w-6xl m-auto">
-    <div class="flex items-center justify-center text-xl h-64" *ngIf="tareas.length == 0">
+    <div class="flex flex-col gap-4 items-center justify-center text-xl h-64" *ngIf="tareas.length == 0">
       <p>Ninguna tarea asignada aún.</p>
+      <a [routerLink]="['/perfil_alumno']" class="mr-3 bg-blue-300 hover:bg-blue-400 transition-colors duration-700 px-4 py-2 rounded-xl">Volver</a>
     </div>
     <table class="mt-4 m-auto w-full" *ngIf="tareas.length > 0">
       <thead>
@@ -53,7 +54,7 @@ import { CommonModule } from '@angular/common';
             {{ tarea.id }}
           </td>
           <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
-            {{ tarea.idProfesor }}
+            {{ tarea.titulo }}
           </td>
           <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
             {{ formatDate(tarea.fechaPublicacion) }}
@@ -146,6 +147,7 @@ export class VerTareasAComponent {
 
       if (result.isConfirmed) {
         let tareaUpdated: NewTarea = {
+          titulo: "",
           completada: true,
           fechaPublicacionString: '',
           fechaEntregaString: '',

@@ -15,9 +15,10 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
-  <div class="max-w-6xl m-auto">
-    <div class="flex items-center justify-center text-xl h-64" *ngIf="notas.length == 0">
+  <div class="flex flex-col gap-4 max-w-6xl m-auto">
+    <div class="flex flex-col gap-2 items-center justify-center text-xl h-64" *ngIf="notas.length == 0">
       <p>Ninguna nota asignada aún.</p>
+      <a [routerLink]="['/perfil_profesor']" class="mr-3 bg-blue-300 hover:bg-blue-400 transition-colors duration-700 p-2 rounded-xl">Volver</a>
     </div>
     <table class="mt-4 m-auto w-full" *ngIf="notas.length > 0">
       <thead>
@@ -68,6 +69,7 @@ import Swal from 'sweetalert2';
         </tr>
       </tbody>
     </table>
+    <a [routerLink]="['/perfil_profesor']" class="mr-3 bg-blue-300 hover:bg-blue-400 transition-colors duration-700 py-2 px-4 rounded-xl self-center">Volver</a>
   </div>
   `,
   styleUrl: './ver-calif.component.css'

@@ -38,7 +38,7 @@ import Swal from 'sweetalert2';
 })
 export class AdmisionesCrearComponent {
   idAlumnoSolicitante: number = 0;
-  nuevaAdmision: NewAdmision = { idAlumno: 0, apto: false, noApto: false, instrumento: 0 };
+  nuevaAdmision: NewAdmision | undefined;
   selectedInstrumento: string = "";
   instrumentos: string[] = ["Piano", "Guitarra", "Clarinete", "Saxofón", "Flauta", "Trompeta", "Bombardino", "Tuba", "Trombón", "Canto"]
 
@@ -48,6 +48,57 @@ export class AdmisionesCrearComponent {
     let usuarioString = localStorage.getItem("usuario");
     let usuario = usuarioString ? JSON.parse(usuarioString) : null;
     this.idAlumnoSolicitante = usuario ? usuario.id : 0;
+  }
+
+  enviar(idAlumno: number) {
+
+    if (this.selectedInstrumento === "") {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Error: instrumento no seleccionado',
+        text: 'Tiene que seleccionar un instrumento antes de enviar la solicitud.',
+      })
+    } else {
+      Swal.fire({
+        title: "¿Está seguro de escoger este instrumento?",
+        text: "Esta es una decisión muy importante. Si usted obtiene plaza, este será su instrumento durante toda la etapa académica.",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, escoger instrumento",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+
+        if (result.isConfirmed) {
+          for (let i = 0; i < this.instrumentos.length; i++) {
+            let instrumentoLoop: string = this.instrumentos[i];
+            if (instrumentoLoop.includes(this.selectedInstrumento)) {
+              this.nuevaAdmision = {
+                idAlumno: idAlumno,
+                apto: false,
+                noApto: false,
+                instrumento: i + 1
+              };
+            }
+          }
+          this.admisionService.create(this.nuevaAdmision!).subscribe({
+            next: () => {
+              Swal.fire({
+                title: "¡Hecho!, su solicitud ha sido enviada",
+                text: "Esto no quiere decir que ya tenga plaza para este instrumento. En menos de 48 horas laborables obtendrá una respuesta por parte del centro.",
+                icon: "success"
+              }).then(() => {
+                this.router.navigate(['/perfil_alumno']);
+              });
+            },
+            error: (error) => {
+              console.error(error);
+            }
+          });
+        }
+      });
+    }
   }
 
   getInstrumento(idInstrumento: number) {
@@ -85,43 +136,5 @@ export class AdmisionesCrearComponent {
       default:
         this.selectedInstrumento = "No asignado";
     }
-  }
-
-  enviar(idAlumno: number) {
-    Swal.fire({
-      title: "¿Está seguro de escoger este instrumento?",
-      text: "Esta es una decisión muy importante. Si usted obtiene plaza, este será su instrumento durante toda la etapa académica.",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, escoger instrumento",
-      cancelButtonText: "Cancelar"
-    }).then((result) => {
-
-      if (result.isConfirmed) {
-        this.nuevaAdmision.idAlumno = idAlumno;
-        for (let i = 0; i < this.instrumentos.length; i++) {
-          let instrumentoLoop: string = this.instrumentos[i];
-          if (instrumentoLoop.includes(this.selectedInstrumento)) {
-            this.nuevaAdmision.instrumento = i + 1;
-          }
-        }
-        this.admisionService.create(this.nuevaAdmision).subscribe({
-          next: () => {
-            Swal.fire({
-              title: "¡Hecho!, su solicitud ha sido enviada",
-              text: "Esto no quiere decir que ya tenga plaza para este instrumento. En menos de 48 horas laborables obtendrá una respuesta por parte del centro.",
-              icon: "success"
-            }).then(() => {
-              this.router.navigate(['/perfil_alumno']);
-            });
-          },
-          error: (error) => {
-            console.error(error);
-          }
-        });
-      }
-    });
   }
 }

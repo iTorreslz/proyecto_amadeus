@@ -29,6 +29,7 @@ import { NuevaCalifComponent } from './components/users/profesores/nueva-calif/n
 import { VerCalifComponent } from './components/users/profesores/ver-calif/ver-calif.component';
 import { EditarCalifComponent } from './components/users/profesores/editar-calif/editar-calif.component';
 import { VerTareasAComponent } from './components/users/alumnos/ver-tareas-a/ver-tareas-a.component';
+import { VerCalifAComponent } from './components/users/alumnos/ver-calif-a/ver-calif-a.component';
 
 export const routes: Routes = [
     {
@@ -75,6 +76,11 @@ export const routes: Routes = [
         path: 'tareas-alum/:idAlumno',
         component: VerTareasAComponent,
         title: 'Tareas alumno'
+    },
+    {
+        path: 'calif-alum/:idAlumno',
+        component: VerCalifAComponent,
+        title: 'Calificaciones alumno'
     },
     {
         path: 'perfil_profesor',

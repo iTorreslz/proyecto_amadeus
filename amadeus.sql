@@ -50,6 +50,7 @@ CREATE TABLE clase (
 DROP TABLE IF EXISTS `tarea`;
 CREATE TABLE tarea (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(100),
     publicacion DATETIME,
     entrega DATETIME,
     id_alumno INT,
@@ -86,7 +87,7 @@ CREATE TABLE audicion (
 -- Volcando datos para la tabla amadeus.alumno:
 DELETE FROM `admin`;
 INSERT INTO `admin` (`id`, `email`, `password`) VALUES
-	(1, 'ivantladmin@gmail.com', '1234');
+	(1, 'ivantladmin@gmail.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4');
 
 -- Volcando datos para la tabla amadeus.instrumento:
 DELETE FROM `instrumento`;
@@ -105,28 +106,28 @@ INSERT INTO `instrumento` (`id`, `nombre`) VALUES
 -- Volcando datos para la tabla amadeus.alumno:
 DELETE FROM `alumno`;
 INSERT INTO `alumno` (`id`, `email`, `password`, `nombre`,`apellidos`,`curso`, `instrumento`) VALUES
-	(1, 'albertodm@gmail.com', 'user', 'Alberto', 'Díaz Muñoz', 4, 8),
-	(2, 'jonathanbg@gmail.com', 'user', 'Jonathan', 'Barreiro Gómez', 4, 4),
-	(3, 'mariatg@gmail.com', 'user', 'María', 'Torres González', 3, 5),
-	(4, 'jorgeantonioap@gmail.com', 'user', 'Jorge Antonio', 'Aranburu Pazos', 3, 1),
-	(5, 'mariajosegm@gmail.com', 'user', 'María José', 'Garrido Martínez', 2, 3),
-	(6, 'antoniagg@gmail.com', 'user', 'Antonia', 'Grajales García', 2, 1),
-	(7, 'lucasrj@gmail.com', 'user', 'Lucas', 'Rodríguez Jiménez', 1, -1),
-	(8, 'alonsobc@gmail.com', 'user', 'Alonso', 'Bazaga Cuesta', 1, -1),
-	(9, 'aliciaro@gmail.com', 'user', 'Alicia', 'Robles Olmedo', 1, -1),
-    (10, 'federicocl@gmail.com', 'user', 'Federico', 'Cebrián López', 1, -1);
+	(1, 'albertodm@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Alberto', 'Díaz Muñoz', 4, 8),
+	(2, 'jonathanbg@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Jonathan', 'Barreiro Gómez', 4, 4),
+	(3, 'mariatg@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'María', 'Torres González', 3, 5),
+	(4, 'jorgeantonioap@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Jorge Antonio', 'Aranburu Pazos', 3, 1),
+	(5, 'mariajosegm@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'María José', 'Garrido Martínez', 2, 3),
+	(6, 'antoniagg@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Antonia', 'Grajales García', 2, 1),
+	(7, 'lucasrj@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Lucas', 'Rodríguez Jiménez', 1, -1),
+	(8, 'alonsobc@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Alonso', 'Bazaga Cuesta', 1, -1),
+	(9, 'aliciaro@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Alicia', 'Robles Olmedo', 1, -1),
+    (10, 'federicocl@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Federico', 'Cebrián López', 1, -1);
 
 -- Volcando datos para la tabla amadeus.alumno:
 DELETE FROM `profesor`;
 INSERT INTO `profesor` (`id`, `email`, `password`, `nombre`, `apellidos`, `instrumento`) VALUES
-	(1, 'juanjosegr@gmail.com', 'user', 'Juan José', 'Gil Ramos', 1),
-    (2, 'miguelng@gmail.com', 'user', 'Miguel', 'Navarro Gómez', 2),
-    (3, 'carmenainhoang@gmail.com', 'user', 'Carmen Ainhoa', 'Núñez González', 3),
-    (4, 'aliciarm@gmail.com', 'user', 'Alicia', 'Romero Molina', 4),
-    (5, 'laurabr@gmail.com', 'user', 'Laura', 'Blanco Rivas', 5),
-    (6, 'pilarso@gmail.com', 'user', 'Pilar', 'Suárez Ortega', 6),
-    (7, 'ivantl@gmail.com', 'user', 'Iván', 'Torres López', 7),
-    (8, 'albertoms@gmail.com', 'user', 'Alberto', 'Muñoz Sánchez', 8),
-    (9, 'ricardorm@gmail.com', 'user', 'Ricardo', 'Rubio Morales', 9),
-    (10, 'claral@gmail.com', 'user', 'Clara', 'Lennon', 10);
+	(1, 'juanjosegr@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Juan José', 'Gil Ramos', 1),
+    (2, 'miguelng@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Miguel', 'Navarro Gómez', 2),
+    (3, 'carmenainhoang@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Carmen Ainhoa', 'Núñez González', 3),
+    (4, 'aliciarm@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Alicia', 'Romero Molina', 4),
+    (5, 'laurabr@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Laura', 'Blanco Rivas', 5),
+    (6, 'pilarso@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Pilar', 'Suárez Ortega', 6),
+    (7, 'ivantl@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Iván', 'Torres López', 7),
+    (8, 'albertoms@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Alberto', 'Muñoz Sánchez', 8),
+    (9, 'ricardorm@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Ricardo', 'Rubio Morales', 9),
+    (10, 'claral@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Clara', 'Lennon', 10);
     

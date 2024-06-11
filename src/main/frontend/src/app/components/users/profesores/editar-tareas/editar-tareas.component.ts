@@ -23,6 +23,11 @@ import Swal from 'sweetalert2';
     </div>
     <div class="flex flex-col items-center">
       <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
+        <label class="text-sm text-gray-600">Título</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48" name="titulo"
+          #titulo>
+      </div>
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
         <label class="text-sm text-gray-600 mr-2">Fecha entrega</label>
         <input type="date" class="text-base font-medium text-navy-700 w-48" name="fechaEntrega" [value]="formatDate(tarea!.fechaEntrega)"
           #fechaEntrega>
@@ -46,7 +51,7 @@ import Swal from 'sweetalert2';
         <textarea name="descripcion" id="descripcion" class="text-base font-medium text-navy-700 w-48"
           rows="7" #descripcion [value]="tarea!.descripcion"></textarea>
       </div>
-      <button type="submit" (click)="this.editarTarea(fechaEntrega.value,horaEntrega.value,idAlumno.value,descripcion.value)"
+      <button type="submit" (click)="this.editarTarea(titulo.value, fechaEntrega.value,horaEntrega.value,idAlumno.value,descripcion.value)"
         class="p-2 m-4 bg-blue-800 text-white font-semibold rounded-md shadow-md hover:bg-blue-600">
         Guardar cambios
       </button>
@@ -94,11 +99,12 @@ export class EditarTareasComponent {
     });
   }
 
-  editarTarea(fechaEntrega: string, horaEntrega: string, idAlumno: string, descripcion: string) {
+  editarTarea(titulo: string, fechaEntrega: string, horaEntrega: string, idAlumno: string, descripcion: string) {
     let fechaEntregaSplitted: string[] = fechaEntrega.split('-');
     fechaEntrega = `${fechaEntregaSplitted[2]}/${fechaEntregaSplitted[1]}/${fechaEntregaSplitted[0]}`;
 
     this.editedTarea = {
+      titulo: titulo,
       fechaPublicacionString: "",
       fechaEntregaString: fechaEntrega + " " + horaEntrega,
       idAlumno: parseInt(idAlumno),

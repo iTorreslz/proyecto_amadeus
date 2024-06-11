@@ -19,6 +19,9 @@ public class Tarea {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "titulo")
+    private String titulo;
+
     @Column(name = "publicacion")
     private LocalDateTime fechaPublicacion;
 

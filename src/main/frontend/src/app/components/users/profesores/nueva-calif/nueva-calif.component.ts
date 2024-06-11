@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { NewNota } from '../../../../interfaces/NewNota';
 import { Alumno } from '../../../../interfaces/alumno';
 import { Profesor } from '../../../../interfaces/profesor';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AlumnosService } from '../../../../services/alumnos.service';
 import { NotasService } from '../../../../services/notas-service';
 import { ProfesoresService } from '../../../../services/profesores.service';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-nueva-calif',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   template: `
   <div class="bg-blue-200 w-fit max-w-6xl m-auto mt-1 p-4 rounded">
     <h4 class="text-xl text-center font-bold text-navy-700">
@@ -42,6 +42,7 @@ import Swal from 'sweetalert2';
         class="p-2 mt-2 w-fit m-auto bg-blue-800 text-white font-semibold rounded-md shadow-md hover:bg-blue-600">
         Establecer calificación
       </button>
+      <a [routerLink]="['/perfil_profesor']" class="p-2 mt-2 w-fit m-auto bg-blue-800 text-white font-semibold rounded-md shadow-md hover:bg-blue-600">Cancelar</a>
     </div>
   </div>
   `,
@@ -73,26 +74,53 @@ export class NuevaCalifComponent {
     });
   }
 
-  asignarCalif(nombre: string, calif: string, idAlumno: string) {
-    this.newCalif = {
-      nombre: nombre,
-      calificacion: parseInt(calif),
-      idAlumno: parseInt(idAlumno),
-      idProfesor: this.profesor!.id
-    }
+  validation(nombre: string, calif: string): string {
 
-    this.notasService.create(this.newCalif).subscribe({
-      next: () => {
-        Swal.fire({
-          title: "¡Hecho!",
-          text: "Nota asignada correctamente.",
-          showConfirmButton: false,
-          timer: 2000,
-          icon: "success"
-        }).then(() => {
-          this.router.navigate(['/perfil_profesor']);
-        });
+    let message = "";
+    if (nombre === '' && calif === '') {
+      message = "Nombre y calificación son obligatorios. Indique qué está calificando en el campo NOMBRE.";
+    } else {
+      if (nombre === '') {
+        message = message + "El nombre de la calificación es obligatorio. Indique qué está calificando. ";
       }
-    });
+      if (calif === '') {
+        message = message + "La calificación es obligatoria. ";
+      }
+    }
+    return message;
+  }
+
+  asignarCalif(nombre: string, calif: string, idAlumno: string) {
+
+    let message = this.validation(nombre, calif);
+
+    if (message === "") {
+      this.newCalif = {
+        nombre: nombre,
+        calificacion: parseInt(calif),
+        idAlumno: parseInt(idAlumno),
+        idProfesor: this.profesor!.id
+      }
+
+      this.notasService.create(this.newCalif).subscribe({
+        next: () => {
+          Swal.fire({
+            title: "¡Hecho!",
+            text: "Nota asignada correctamente.",
+            showConfirmButton: false,
+            timer: 2000,
+            icon: "success"
+          }).then(() => {
+            this.router.navigate(['/perfil_profesor']);
+          });
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Error: campos vacíos',
+        text: this.validation(nombre, calif),
+      })
+    }
   }
 }

@@ -1,5 +1,6 @@
 export interface Tarea {
     id: number;
+    titulo: string;
     fechaPublicacion: string;
     fechaEntrega: string;
     idAlumno: number;

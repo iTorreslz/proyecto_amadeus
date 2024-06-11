@@ -37,7 +37,8 @@ import { Component } from '@angular/core';
                 de todos los niveles, nuestro piano ofrece una experiencia musical enriquecedora y versátil, permitiendo explorar desde melodías clásicas
                 hasta composiciones contemporáneas. Su presencia en la escuela fomenta el desarrollo del oído musical y la técnica pianística.
               </p>
-              <a href="" target="_blank" class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
+              <a href="https://www.youtube.com/watch?v=g8syRhvSZdk" target="_blank"
+                class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
                 ¡Escucha con tranquilidad!
               </a>
           </div>
@@ -57,7 +58,7 @@ import { Component } from '@angular/core';
                 permite interpretar una amplia gama de estilos, desde música clásica hasta piezas populares. Su inclusión en nuestra escuela enriquece la formación
                 musical, desarrollando tanto la técnica como la creatividad de los estudiantes.
               </p>
-              <a href="URL_DEL_VIDEO_DE_YOUTUBE" target="_blank" class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
+              <a href="https://www.youtube.com/watch?v=8B6jOUzBKYc" target="_blank" class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
                 ¡Escucha con tranquilidad!
               </a>
           </div>
@@ -84,15 +85,18 @@ import { Component } from '@angular/core';
       <div
           class="py-20 bg-slate-100 relative before:absolute before:h-full before:w-screen before:bg-sky-950 before:top-0 before:left-0">
           <div class="relative z-20 pl-12">
-              <h2 class="text-white font-black text-5xl leading-snug mb-10">Procesamos tu solicitud <br>y te damos una rápida respuesta
-              </h2>
-              <p class="text-white text-sm">
-                  Purus in massa tempor nec. Magna etiam tempor orci eu lobortis elementum nibh tellus molestie.
-                  Faucibus ornare suspendisse sed nisi lacus sed viverra. Diam in arcu cursus euismod quis viverra
-                  nibh cras pulvinar.
-              </p>
-              <button
-                  class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10">¡Escucha con tranquilidad!</button>
+            <h2 class="text-white font-black text-5xl leading-snug mb-10">
+              Armonía y Melodía con un sonido dulce
+            </h2>
+            <p class="text-white text-sm">
+              El clarinete es un instrumento de viento-madera conocido por su sonido suave y flexible. Ideal tanto para solistas como para conjuntos,
+              su versatilidad abarca géneros como el jazz, el clásico y la música popular. En nuestra escuela, el clarinete ayuda a los estudiantes a
+              desarrollar habilidades de respiración, control de embocadura y expresión musical, ofreciendo una experiencia educativa enriquecedora y completa.
+            </p>
+            <a href="https://www.youtube.com/watch?v=YT_63UntRJE&t=1286s" target="_blank"
+              class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
+              ¡Escucha con tranquilidad!
+            </a>
           </div>
       </div>
     </div>
@@ -110,7 +114,7 @@ import { Component } from '@angular/core';
                 como el jazz, el clásico y el pop. En nuestra escuela, el saxofón ayuda a los estudiantes a desarrollar habilidades de respiración, control de
                 embocadura y expresión musical, ofreciendo una experiencia educativa dinámica y completa.
               </p>
-              <a href="URL_DEL_VIDEO_DE_YOUTUBE" target="_blank" class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
+              <a href="https://www.youtube.com/watch?v=I6UKiPvCaYc" target="_blank" class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
                 ¡Escucha con tranquilidad!
               </a>
           </div>
@@ -144,8 +148,10 @@ import { Component } from '@angular/core';
                 principiantes y músicos avanzados, su versatilidad permite interpretar desde música clásica hasta contemporánea. En nuestra escuela, la flauta
                 ayuda a los estudiantes a mejorar su técnica de respiración, coordinación y oído musical.
               </p>
-              <button
-                  class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10">¡Escucha con tranquilidad!</button>
+              <a href="https://www.youtube.com/watch?v=LHsTr1lNkSM" target="_blank"
+                class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
+                ¡Escucha con tranquilidad!
+              </a>
           </div>
       </div>
     </div>
@@ -163,7 +169,8 @@ import { Component } from '@angular/core';
                 permite abordar diversos géneros, desde la música clásica hasta el jazz. En nuestra escuela, la trompeta ayuda a los estudiantes a desarrollar técnicas
                 de embocadura, respiración y control del sonido, enriqueciendo su formación musical integral.
               </p>
-              <a href="URL_DEL_VIDEO_DE_YOUTUBE" target="_blank" class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
+              <a href="https://www.youtube.com/watch?v=6vhgWhOcLI4" target="_blank"
+                class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
                 ¡Escucha con tranquilidad!
               </a>
           </div>
@@ -197,9 +204,11 @@ import { Component } from '@angular/core';
                 su versatilidad abarca géneros desde la música clásica hasta las bandas de concierto. En nuestra escuela, el bombardino ayuda a los estudiantes a
                 desarrollar técnicas de respiración, embocadura y control del sonido, proporcionando una base sólida para su formación musical.
               </p>
-              <button
-                  class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10">¡Escucha con tranquilidad!</button>
-          </div>
+              <a href="https://www.youtube.com/watch?v=mf2uYqDX8QA" target="_blank"
+              class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
+                ¡Escucha con tranquilidad!
+              </a>  
+            </div>
       </div>
     </div>
   </div>
@@ -216,7 +225,7 @@ import { Component } from '@angular/core';
                 versatilidad abarca desde música clásica hasta contemporánea. En nuestra escuela, la tuba permite a los estudiantes desarrollar técnicas avanzadas
                 de respiración y embocadura, proporcionando una base sólida y rica para cualquier conjunto musical.
               </p>
-              <a href="URL_DEL_VIDEO_DE_YOUTUBE" target="_blank" class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
+              <a href="https://www.youtube.com/watch?v=Na0c0Js8M1U" target="_blank" class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
                 ¡Escucha con tranquilidad!
               </a>
           </div>
@@ -250,9 +259,11 @@ import { Component } from '@angular/core';
                 potente y versátil, es ideal para géneros como el jazz, la música clásica y las bandas de concierto. En nuestra escuela, el trombón ayuda a
                 los estudiantes a desarrollar técnicas precisas de embocadura, respiración y control del tono, enriqueciendo su formación musical.
               </p>
-              <button
-                  class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10">¡Escucha con tranquilidad!</button>
-          </div>
+              <a href="https://www.youtube.com/watch?v=8BiPwDiaqt4" target="_blank"
+                class="mt-8 text-white uppercase py-3 text-sm px-10 border border-white hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
+                ¡Escucha con tranquilidad!
+              </a>
+            </div>
       </div>
     </div>
   </div>
@@ -269,7 +280,7 @@ import { Component } from '@angular/core';
                 la técnica vocal, sino también la expresividad y la conexión emocional con la música. Los estudiantes exploran diversos estilos y repertorios,
                 nutriendo su creatividad y confianza en el escenario.
               </p>
-              <a href="URL_DEL_VIDEO_DE_YOUTUBE" target="_blank" class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
+              <a href="https://www.youtube.com/watch?v=9Do6NLjGqq0" target="_blank" class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10" style="text-decoration: none; display: inline-block;">
                 ¡Escucha con tranquilidad!
               </a>
           </div>

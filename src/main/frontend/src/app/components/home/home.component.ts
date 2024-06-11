@@ -1,3 +1,4 @@
+import { ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
@@ -19,7 +20,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             música en un entorno sin presiones,
             donde el único objetivo es disfrutar y aprender a tu propio ritmo.
         </p>
-        <button [routerLink]="['/informacion']"
+        <button [routerLink]="['/informacion']" (click)="onLinkClick()"
             class="mt-8 text-white uppercase py-4 text-base font-light px-10 border border-white hover:bg-white hover:bg-opacity-10">Comenzar
             ahora</button>
       </div>
@@ -33,7 +34,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
           <p class="text-base text-sky-950">En esta sección te brindaremos una amplia descripción de cada
               instrumento, te mostraremos su sonido y lo que serías capaz de lograr.</p>
       </div>
-      <button [routerLink]="['/instrumentos']"
+      <button [routerLink]="['/instrumentos']" (click)="onLinkClick()"
           class="text-sky-950 uppercase py-3 text-base px-10 border border-sky-950 hover:bg-sky-950 hover:bg-opacity-10">Te guiamos aquí</button>
     </div>
   </div>
@@ -90,5 +91,11 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+
+  constructor(private viewportScroller: ViewportScroller) { }
+
+  onLinkClick() {
+    this.viewportScroller.scrollToPosition([0, 0]);
+  }
 
 }

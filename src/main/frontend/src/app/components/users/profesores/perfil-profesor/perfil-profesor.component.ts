@@ -14,6 +14,8 @@ import { AudicionesService } from '../../../../services/audiciones.service';
 import { AjustesPerfilProfesorComponent } from '../ajustes-perfil-profesor/ajustes-perfil-profesor.component';
 import { ProfesoresService } from '../../../../services/profesores.service';
 import { AjustarCalifComponent } from '../ajustar-calif/ajustar-calif.component';
+import { AuthService } from '../../../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-perfil-profesor',
@@ -199,7 +201,7 @@ export class PerfilProfesorComponent {
 
   constructor(
     private alumnosService: AlumnosService, private clasesService: ClasesService, private profesoresService: ProfesoresService,
-    private tareasService: TareaService, public dialog: MatDialog, private audicionService: AudicionesService
+    private tareasService: TareaService, public dialog: MatDialog, private audicionService: AudicionesService, private authServ: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -314,17 +316,57 @@ export class PerfilProfesorComponent {
   openAjustesDialog() {
     let dialog = this.dialog.open(AjustesPerfilProfesorComponent, {
       width: 'fit-content',
-      height: 'fit-content',
-      data: this.profesor!.password
+      height: 'fit-content'
     });
 
     dialog.afterClosed().subscribe(result => {
       if (result) {
-        this.profesor!.password = result;
-        this.profesoresService.update(this.profesor!, this.profesor!.id).subscribe({
-          next: () => { },
+        let inputLastPassword = result[0];
+        let inputNewPassword = result[1];
+        let inputLastPasswordEncoded = "";
+        this.authServ.encript(inputLastPassword).subscribe({
+          next: (respuesta) => {
+            inputLastPasswordEncoded = respuesta.respuesta;
+            if (inputLastPasswordEncoded === this.profesor!.password) {
+              this.authServ.encript(inputNewPassword).subscribe({
+                next: (respuesta2) => {
+                  this.profesor!.password = respuesta2.respuesta;
+                  localStorage.removeItem('usuario');
+                  localStorage.setItem('usuario', JSON.stringify(this.profesor));
+
+                  Swal.fire({
+                    title: "¡Hecho!",
+                    text: "Contraseña modificada correctamente.",
+                    showConfirmButton: false,
+                    timer: 1700,
+                    icon: "success"
+                  });
+
+                  this.profesoresService.update(this.profesor!, this.profesor!.id).subscribe({
+                    next: () => { },
+                    error: (error) => {
+                      console.error(error);
+                    }
+                  });
+                },
+                error: (error) => {
+                  console.error('Error al obtener la password encriptada:', error);
+                }
+              });
+            } else {
+              Swal.fire({
+                title: "Error",
+                text: "La contraseña actual que has escrito no es correcta.",
+                showConfirmButton: false,
+                timer: 2000,
+                icon: "error"
+              }).then(() => {
+                this.openAjustesDialog();
+              });
+            }
+          },
           error: (error) => {
-            console.error(error);
+            console.error('Error al obtener la password encriptada:', error);
           }
         });
       }

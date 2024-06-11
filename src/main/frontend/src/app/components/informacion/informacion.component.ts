@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../auth/login/login.component';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
-    selector: 'app-informacion',
-    standalone: true,
-    imports: [RouterLink],
-    template: `
+  selector: 'app-informacion',
+  standalone: true,
+  imports: [RouterLink],
+  template: `
   <div class="bg-blue-200 py-20">
     <div class="max-w-screen-lg mx-auto flex justify-between items-center">
       <div class="max-w-xl">
@@ -59,7 +60,7 @@ import { LoginComponent } from '../auth/login/login.component';
                 musicales. Si aún no sabes cuál es el adecuado, no te preocupes. Pulsa el botón de abajo para ver más detalles y obtener toda
                 la información necesaria.
               </p>
-              <button [routerLink]="['/instrumentos']"
+              <button [routerLink]="['/instrumentos']" (click)="onLinkClick()"
                   class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10">Click
                   aquí</button>
           </div>
@@ -110,7 +111,7 @@ import { LoginComponent } from '../auth/login/login.component';
                 horario para conocer tus próximas clases y eventos. Si aún no has comprobado tu horario, podrás hacerlo desde tu perfil personal, en la
                 esquina superior derecha.
               </p>
-              <button *ngIf="checkLogin(); else notLogged" [routerLink]="['/perfil_alumno']"
+              <button *ngIf="checkLogin(); else notLogged" [routerLink]="['/perfil_alumno']" (click)="onLinkClick()"
                   class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10">Click
                   aquí
               </button>
@@ -131,21 +132,25 @@ import { LoginComponent } from '../auth/login/login.component';
     </div>
   </div>
   `,
-    styleUrl: './informacion.component.css'
+  styleUrl: './informacion.component.css'
 })
 export class InformacionComponent {
-    constructor(
-        private dialog: MatDialog
-    ) { }
+  constructor(
+    private dialog: MatDialog, private viewportScroller: ViewportScroller
+  ) { }
 
-    openLogin() {
-        this.dialog.open(LoginComponent, {
-            width: 'fit-content',
-            height: 'fit-content'
-        });
-    }
+  onLinkClick() {
+    this.viewportScroller.scrollToPosition([0, 0]);
+  }
 
-    checkLogin() {
-        return localStorage.getItem('usuario') != null;
-    }
+  openLogin() {
+    this.dialog.open(LoginComponent, {
+      width: 'fit-content',
+      height: 'fit-content'
+    });
+  }
+
+  checkLogin() {
+    return localStorage.getItem('usuario') != null;
+  }
 }

@@ -22,19 +22,23 @@ import Swal from 'sweetalert2';
       <div class="bg-blue-100 relative rounded-xl p-8 sm:p-12 shadow-lg">
         <form>
           <div class="mb-6">
-              <input type="text" placeholder="Tu nombre" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] outline-none focus-visible:shadow-none focus:border-primary" />
+              <input type="text" placeholder="Tu nombre" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] outline-none focus-visible:shadow-none focus:border-primary"
+              #nombre/>
           </div>
           <div class="mb-6">
-              <input type="email" placeholder="Tu correo electrónico" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] outline-none focus-visible:shadow-none focus:border-primary" />
+              <input type="email" placeholder="Tu correo electrónico" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] outline-none focus-visible:shadow-none focus:border-primary"
+              #correo/>
           </div>
           <div class="mb-6">
-              <input type="text" placeholder="Tu número de teléfono (opcional)" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] outline-none focus-visible:shadow-none focus:border-primary" />
+              <input type="text" placeholder="Tu número de teléfono (opcional)" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] outline-none focus-visible:shadow-none focus:border-primary"
+              #numTel/>
           </div>
           <div class="mb-6">
-              <textarea rows="6" placeholder="Tu mensaje" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] resize-none outline-none focus-visible:shadow-none focus:border-primary"></textarea>
+              <textarea rows="6" placeholder="Tu mensaje" class="w-full rounded py-3 px-[14px] text-body-color text-base border border-[f0f0f0] resize-none outline-none focus-visible:shadow-none focus:border-primary"
+              #mensaje></textarea>
           </div>
           <div>
-              <button type="button" (click)="onClick()" class="w-full text-white bg-blue-700 rounded border border-primary p-3 transition hover:bg-opacity-90">Envía tu mensaje</button>
+              <button type="button" (click)="onClick(nombre.value, correo.value, mensaje.value)" class="w-full text-white bg-blue-700 rounded border border-primary p-3 transition hover:bg-opacity-90">Envía tu mensaje</button>
           </div>
         </form>
       </div>
@@ -44,15 +48,46 @@ import Swal from 'sweetalert2';
   styleUrl: './contact.component.css'
 })
 export class ContactComponent {
-  onClick() {
-    Swal.fire({
-      title: "¡Mensaje enviado!",
-      text: "Tendrá una respuesta en menos de 24 horas laborables.",
-      showConfirmButton: false,
-      timer: 3200,
-      icon: "success"
-    }).then(() => {
-      window.location.reload();
-    });
+
+  validation(nombre: string, correo: string, mensaje: string): string {
+
+    let message = "";
+    if (nombre === '' && correo === '' && mensaje === '') {
+      message = "Nombre, correo y mensaje son obligatorios.";
+    } else {
+      if (nombre === '') {
+        message = message + "El nombre es obligatorio. ";
+      }
+      if (correo === '') {
+        message = message + "El correo es obligatorio. ";
+      }
+      if (mensaje === '') {
+        message = message + "El mensaje es obligatorio. ";
+      }
+    }
+    return message;
+  }
+
+  onClick(nombre: string, correo: string, mensaje: string) {
+
+    let message = this.validation(nombre, correo, mensaje);
+
+    if (message === "") {
+      Swal.fire({
+        title: "¡Mensaje enviado!",
+        text: "Tendrá una respuesta en menos de 24 horas laborables.",
+        showConfirmButton: false,
+        timer: 3200,
+        icon: "success"
+      }).then(() => {
+        window.location.reload();
+      });
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Error: campos vacíos',
+        text: this.validation(nombre, correo, mensaje),
+      })
+    }
   }
 }
