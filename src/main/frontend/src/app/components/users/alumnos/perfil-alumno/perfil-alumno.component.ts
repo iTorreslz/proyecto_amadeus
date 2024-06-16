@@ -87,7 +87,6 @@ import { AuthService } from '../../../../services/auth.service';
             <p class="font-bold">Tareas pendientes totales: {{tareas.length}} </p>
             <div class="flex flex-col">
               <a [routerLink]="['/tareas-alum', alumno!.id]" class="font-bold mt-2 cursor-pointer text-blue-800">Ver todas las tareas</a>
-              <a [routerLink]="['/calif-alum', alumno!.id]" class="font-bold mt-2 cursor-pointer text-blue-800">Ver calificaciones</a>
             </div>
           </div>
           <div class="flex flex-col justify-around col-span-full sm:col-span-3 lg:col-span-2 overflow-hidden relative p-8 rounded-xl bg-blue-200 border border-gray-200">
@@ -137,7 +136,7 @@ import { AuthService } from '../../../../services/auth.service';
             <div class="w-full max-w-md w-full mx-auto bg-blue-100 rounded-md px-6 py-4 my-6">
               <div class="flex justify-between items-center">
                 <div class="flex items-center">
-                  <img class="h-12 w-12 rounded-full" src="https://lh3.googleusercontent.com/a-/AOh14Gi0DgItGDTATTFV6lPiVrqtja6RZ_qrY91zg42o-g" alt="">
+                  <img class="h-12 w-12 rounded-full" src="assets/images/prof.jpg" alt="">
                   <div class="ml-2">
                     <h3 class="text-lg text-gray-800 font-medium">{{profesor!.nombre}}</h3>
                     <h3 class="text-xs text-gray-800 font-medium">{{profesor!.email}}</h3>
@@ -168,8 +167,12 @@ import { AuthService } from '../../../../services/auth.service';
           </div>
           <div class="col-span-full lg:col-span-3 overflow-hidden flex flex-col gap-4 align-center justify-between p-8 rounded-xl bg-blue-200 border border-gray-200">
             <h1 class="w-full text-center text-2xl font-bold">Notas</h1>
-            <p class="text-xl mb-2 text-center">Estas son tus <span class="font-bold">calificaciones</span> actuales:</p>
-              <table class="mb-6">
+            <div *ngIf="notas.length == 0" class="h-full flex flex-col mt-8">
+              <p class="w-full mt-2 text-center text-2xl mt-4">Aún no tienes calificaciones publicadas por tu profesor.</p>
+            </div>
+            <div *ngIf="notas.length > 0" class="h-full flex flex-col justify-between items-center">
+              <p class="text-xl mb-2 text-center">Estas son tus <span class="font-bold">calificaciones</span> actuales:</p>
+              <table class="mb-10">
                 <thead>
                   <tr class="uppercase">
                     <th
@@ -193,6 +196,7 @@ import { AuthService } from '../../../../services/auth.service';
                   </tr>
                 </tbody>
               </table>
+            </div>
           </div>
         </div>
       </div>

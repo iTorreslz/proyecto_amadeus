@@ -36,6 +36,7 @@ public class TareaService {
         if (updatedTarea.getIdAlumno() == -1) {
             tarea.setCompletada(updatedTarea.isCompletada());
         } else {
+            tarea.setTitulo(updatedTarea.getTitulo());
             tarea.setFechaEntrega(updatedTarea.getFechaEntrega());
             tarea.setIdAlumno(updatedTarea.getIdAlumno());
             tarea.setDescripcion(updatedTarea.getDescripcion());

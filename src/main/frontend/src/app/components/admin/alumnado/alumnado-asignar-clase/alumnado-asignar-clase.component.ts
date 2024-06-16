@@ -18,16 +18,16 @@ import { LoginComponent } from '../../../auth/login/login.component';
     </div>
     <div class="p-6 space-y-4">
       <div class="flex items-center justify-center h-11 w-full text-xl">
-        <label for="diaSelect">Escoge el día:</label>
-        <select id="diaSelect" #dia>
+        <label class="mr-2" for="diaSelect">Escoge el día:</label>
+        <select class="border rounded border-gray-300 p-1" id="diaSelect" #dia>
           <option *ngFor="let opcion of opcionesDias">
           {{ opcion }}
           </option>
         </select>
       </div>
       <div class="flex items-center justify-center h-11 w-full text-xl">
-        <label for="horaSelect">Escoge la hora:</label>
-        <select id="horaSelect" #hora>
+        <label class="mr-2" for="horaSelect">Escoge la hora:</label>
+        <select class="border rounded border-gray-300 p-1" id="horaSelect" #hora>
           <option *ngFor="let opcion of opcionesHoras">
           {{ opcion }}
           </option>

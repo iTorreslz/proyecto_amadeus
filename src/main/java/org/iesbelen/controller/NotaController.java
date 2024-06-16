@@ -2,6 +2,7 @@ package org.iesbelen.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.iesbelen.domain.Nota;
+import org.iesbelen.domain.Profesor;
 import org.iesbelen.service.NotaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,12 @@ public class NotaController {
         log.info("Creando una nueva nota");
         this.notaService.create(nota);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public Nota one(@PathVariable("id") int id) {
+        log.info("Accediendo a nota con código {}", id);
+        return this.notaService.one(id);
     }
 
     @PostMapping("/edit/{id}")

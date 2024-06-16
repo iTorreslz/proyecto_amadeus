@@ -9,39 +9,39 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [],
   template: `
-  <div class="relative rounded w-700 max-w-95 mx-auto bg-blue-200 shadow-3xl p-3">
+  <div class="relative rounded w-1/2 m-auto max-w-95 bg-blue-200 shadow-3xl p-3">
     <div class="mt-2 mb-8">
       <h4 class="text-xl text-center font-bold text-navy-700">
       Editar datos de {{alumno?.nombre?.toUpperCase()}} {{alumno?.apellidos?.toUpperCase()}}
       </h4>
     </div>
-    <div class="grid grid-cols-2 gap-4 border border-gray-300">
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600">Nombre</label>
-        <input type="text" class="text-base font-medium text-navy-700 w-48" name="nombre" value="{{alumno?.nombre}}"
+    <div class="flex flex-col gap-4 border border-gray-300">
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Nombre</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1 text-center" name="nombre" value="{{alumno?.nombre}}"
           #nombre>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600">Apellidos</label>
-        <input type="text" class="text-base font-medium text-navy-700 w-48" name="apellidos" value="{{alumno?.apellidos}}"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Apellidos</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1 text-center" name="apellidos" value="{{alumno?.apellidos}}"
           #apellidos>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600">Código</label>
-        <input type="text" class="text-base font-medium text-navy-700 w-48" value="{{alumno?.id}}" readonly>
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Código</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1 text-center" value="{{alumno?.id}}" readonly>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600">Curso</label>
-        <input type="text" class="text-base font-medium text-navy-700 w-48" value="{{alumno?.curso}}" name="curso"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Curso</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1 text-center" value="{{alumno?.curso}}" name="curso"
           #curso>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600">Instrumento</label>
-        <input type="text" class="text-base font-medium text-navy-700 w-48" value="{{this.instrumento}}" name="instrumento"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Instrumento</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1 text-center" value="{{this.instrumento}}" name="instrumento"
         readonly>
       </div>
       <button type="submit" (click)="this.guardarCambios(nombre.value,apellidos.value,curso.value)"
-        class="m-4 bg-blue-800 text-white font-semibold rounded-md shadow-md hover:bg-blue-600">
+        class="m-auto p-2 w-fit bg-blue-800 text-white font-semibold rounded-md shadow-md hover:bg-blue-600">
         Guardar cambios
       </button>
     </div>

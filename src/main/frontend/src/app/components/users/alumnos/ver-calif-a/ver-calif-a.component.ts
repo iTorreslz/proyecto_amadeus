@@ -41,7 +41,6 @@ import { CommonModule } from '@angular/common';
         </tr>
       </tbody>
     </table>
-    <a [routerLink]="['/perfil_alumno']" class="mr-3 bg-blue-300 hover:bg-blue-400 transition-colors duration-700 py-2 px-4 rounded-xl self-center">Volver</a>
   </div>
   `,
   styleUrl: './ver-calif-a.component.css'

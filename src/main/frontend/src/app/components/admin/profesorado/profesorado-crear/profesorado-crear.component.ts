@@ -13,36 +13,36 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-  <div class="relative rounded w-700 max-w-95 mx-auto bg-blue-200 shadow-3xl p-3">
+  <div class="relative rounded w-1/2 max-w-95 mx-auto bg-blue-200 shadow-3xl p-3">
     <div class="mt-2 mb-8">
       <h4 class="text-xl text-center font-bold text-navy-700">
       Añadir un profesor nuevo
       </h4>
     </div>
-    <div class="grid grid-cols-2 gap-4 border border-gray-300">
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600">Email</label>
-        <input type="text" class="text-base font-medium text-navy-700 w-48" name="email"
+    <div class="flex flex-col gap-4 border border-gray-300">
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Email</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1 text-center" name="email"
           #email>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600">Password</label>
-        <input type="password" class="text-base font-medium text-navy-700 w-48" name="password"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Password</label>
+        <input type="password" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1 text-center" name="password"
           #password>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600">Nombre</label>
-        <input type="text" class="text-base font-medium text-navy-700 w-48" name="nombre"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Nombre</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1 text-center" name="nombre"
           #nombre>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600">Apellidos</label>
-        <input type="text" class="text-base font-medium text-navy-700 w-48" name="apellidos"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Apellidos</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1 text-center" name="apellidos"
           #apellidos>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4">
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4 flex flex-col items-center">
         <label for="instrumento" class="block text-sm font-medium text-gray-700">Instrumento</label>
-        <select id="instrumento" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        <select id="instrumento" class="mt-1 block w-48 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           #instrumento>
           <option *ngFor="let instrumento of instrumentos" [value]="instrumento.id">
             {{ instrumento.nombre }}
@@ -50,7 +50,7 @@ import { CommonModule } from '@angular/common';
         </select>
       </div>
       <button type="submit" (click)="this.guardarCambios(email.value,password.value,nombre.value,apellidos.value,instrumento.value)"
-        class="m-4 bg-blue-800 text-white font-semibold rounded-md shadow-md hover:bg-blue-600">
+        class="m-auto p-2 w-fit bg-blue-800 text-white font-semibold rounded-md shadow-md hover:bg-blue-600">
         Guardar cambios
       </button>
     </div>

@@ -1,7 +1,9 @@
 package org.iesbelen.service;
 
 import org.iesbelen.domain.Nota;
+import org.iesbelen.domain.Profesor;
 import org.iesbelen.exception.NotaNotFoundException;
+import org.iesbelen.exception.ProfesorNotFoundException;
 import org.iesbelen.repository.NotaRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,11 @@ public class NotaService {
 
     public List<Nota> all() {
         return this.notaRepository.findAll();
+    }
+
+    public Nota one(int id) {
+        return this.notaRepository.findById(id)
+                .orElseThrow(() -> new NotaNotFoundException(id));
     }
 
     public Nota create(Nota nota) {

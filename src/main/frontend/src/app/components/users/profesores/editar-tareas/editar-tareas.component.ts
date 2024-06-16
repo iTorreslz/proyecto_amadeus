@@ -15,30 +15,30 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule],
   template: `
-  <div class="rounded max-w-sm m-auto bg-blue-200">
+  <div class="rounded max-w-sm m-auto bg-blue-200 px-4 py-2 mt-2">
     <div class="mt-2 mb-8">
       <h4 class="text-xl text-center font-bold text-navy-700">
       Editar tarea {{this.tarea!.id}}
       </h4>
     </div>
-    <div class="flex flex-col items-center">
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600">Título</label>
-        <input type="text" class="text-base font-medium text-navy-700 w-48" name="titulo"
+    <div class="flex flex-col items-center gap-2">
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Título</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1" name="titulo" [value]="tarea!.titulo"
           #titulo>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600 mr-2">Fecha entrega</label>
-        <input type="date" class="text-base font-medium text-navy-700 w-48" name="fechaEntrega" [value]="formatDate(tarea!.fechaEntrega)"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Fecha entrega</label>
+        <input type="date" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1" name="fechaEntrega" [value]="formatDate(tarea!.fechaEntrega)"
           #fechaEntrega>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600 mr-2">Fecha entrega</label>
-        <input type="time" class="text-base font-medium text-navy-700 w-48" name="horaEntrega" [value]="formatTime(tarea!.fechaEntrega)"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Fecha entrega</label>
+        <input type="time" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1" name="horaEntrega" [value]="formatTime(tarea!.fechaEntrega)"
           #horaEntrega>
       </div>
-      <div class="flex items-center rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600 mr-2">Alumno</label>
+      <div class="flex items-center rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Alumno</label>
         <select id="alumno" class="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           #idAlumno>
           <option *ngFor="let alumno of alumnos" [value]="alumno.id">
@@ -46,9 +46,9 @@ import Swal from 'sweetalert2';
           </option>
         </select>
       </div>
-      <div class="flex rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600 mr-2">Descripción</label>
-        <textarea name="descripcion" id="descripcion" class="text-base font-medium text-navy-700 w-48"
+      <div class="flex rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Descripción</label>
+        <textarea name="descripcion" id="descripcion" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1"
           rows="7" #descripcion [value]="tarea!.descripcion"></textarea>
       </div>
       <button type="submit" (click)="this.editarTarea(titulo.value, fechaEntrega.value,horaEntrega.value,idAlumno.value,descripcion.value)"

@@ -59,10 +59,11 @@ import { Profesor } from '../../../../interfaces/profesor';
         <td class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
           {{ getNombreCurso(alumno.curso) }}
         </td>
-        <td *ngIf="checkClases(alumno.id) === true" class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
+        <td *ngIf="alumno.curso == 0" class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900"></td>
+        <td *ngIf="alumno.curso != 0 && checkClases(alumno.id) === true" class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
           {{clase!.dia}} | {{clase!.hora}}
         </td>
-        <td *ngIf="checkClases(alumno.id) === false" class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
+        <td *ngIf="alumno.curso != 0 && checkClases(alumno.id) === false" class="px-5 py-5 border-b border-gray-200 bg-white text-blue-900">
           <a (click)="openAsignar(alumno)" class="text-blue-700 font-bold cursor-pointer">Asignar</a>
         </td>
         <td class="border-b border-gray-200 bg-white text-blue-900 text-center">
@@ -229,6 +230,8 @@ export class AlumnadoListaComponent implements OnInit {
 
   getNombreCurso(curso: number): string {
     switch (curso) {
+      case 0:
+        return 'Sin matrícula';
       case 1:
         return 'Primero';
       case 2:

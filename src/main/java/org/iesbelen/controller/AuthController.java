@@ -36,6 +36,7 @@ public class AuthController {
         Map<String, String> response = new HashMap<>();
         String encodedPasswd = Alumno.hashPassword(alumno.getPassword());
         alumno.setPassword(encodedPasswd);
+        alumno.setIdInstrumento(-1);
         alumnoService.create(alumno);
         response.put("respuesta", "Registro exitoso");
         return ResponseEntity.ok(response);

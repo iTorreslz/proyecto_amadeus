@@ -19,10 +19,10 @@ import { AuthService } from '../../../../services/auth.service';
       <div class="flex flex-col rounded-2xl bg-white px-3 py-4 shadow-3xl">
         <p class="text-sm text-gray-600 mb-4">¿Desea cambiar la contraseña?</p>
         <label class="text-sm text-gray-600">Contraseña actual</label>
-        <input type="password" class="text-base font-medium text-navy-700 w-48" name="lastPasswd"
+        <input type="password" class="text-base border rounded border-gray-300 font-medium p-1 text-navy-700 w-48" name="lastPasswd"
           #lastPasswd>
-        <label class="text-sm text-gray-600">Nueva contraseña</label>
-        <input type="password" class="text-base font-medium text-navy-700 w-48" name="newPasswd"
+        <label class="text-sm mt-2 text-gray-600">Nueva contraseña</label>
+        <input type="password" class="text-base border rounded border-gray-300 font-medium p-1 text-navy-700 w-48" name="newPasswd"
           #newPasswd>
       </div>
       <button type="submit" (click)="this.guardarCambios(lastPasswd.value,newPasswd.value)"

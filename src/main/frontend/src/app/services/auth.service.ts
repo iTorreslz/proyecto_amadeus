@@ -132,7 +132,7 @@ export class AuthService {
         password: password,
         nombre: nombre,
         apellidos: apellidos,
-        curso: 1
+        curso: 0
       };
 
       const options = {

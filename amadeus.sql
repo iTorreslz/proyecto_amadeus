@@ -112,10 +112,10 @@ INSERT INTO `alumno` (`id`, `email`, `password`, `nombre`,`apellidos`,`curso`, `
 	(4, 'jorgeantonioap@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Jorge Antonio', 'Aranburu Pazos', 3, 1),
 	(5, 'mariajosegm@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'María José', 'Garrido Martínez', 2, 3),
 	(6, 'antoniagg@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Antonia', 'Grajales García', 2, 1),
-	(7, 'lucasrj@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Lucas', 'Rodríguez Jiménez', 1, -1),
-	(8, 'alonsobc@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Alonso', 'Bazaga Cuesta', 1, -1),
-	(9, 'aliciaro@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Alicia', 'Robles Olmedo', 1, -1),
-    (10, 'federicocl@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Federico', 'Cebrián López', 1, -1);
+	(7, 'lucasrj@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Lucas', 'Rodríguez Jiménez', 1, 2),
+	(8, 'alonsobc@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Alonso', 'Bazaga Cuesta', 0, -1),
+	(9, 'aliciaro@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Alicia', 'Robles Olmedo', 0, -1),
+    (10, 'federicocl@gmail.com', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'Federico', 'Cebrián López', 0, -1);
 
 -- Volcando datos para la tabla amadeus.alumno:
 DELETE FROM `profesor`;

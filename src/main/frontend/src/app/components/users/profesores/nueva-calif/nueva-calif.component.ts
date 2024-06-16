@@ -19,17 +19,17 @@ import Swal from 'sweetalert2';
       Publicar nueva calificación
     </h4>
     <div class="w-fit m-auto flex flex-col border border-gray-300">
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4">
-        <label class="text-sm text-gray-600 mr-2">Nombre</label>
-        <input type="text" class="text-base font-medium text-navy-700 w-48" name="nombre"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4 flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Nombre</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48  border rounded border-gray-300 p-1" name="nombre"
           #nombre>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4">
-        <label class="text-sm text-gray-600 mr-2">Calificación</label>
-        <input type="number" class="text-base font-medium text-navy-700 w-48" min="0" max="10" name="calif"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4 flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Calificación</label>
+        <input type="number" class="text-base font-medium text-navy-700 w-48  border rounded border-gray-300 p-1" min="0" max="10" name="calif"
           #calif>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4">
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4 flex flex-col items-center">
         <label for="alumno" class="block text-sm font-medium text-gray-700">Alumno</label>
         <select id="alumno" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           #alumno>

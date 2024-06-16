@@ -111,15 +111,6 @@ import { ViewportScroller } from '@angular/common';
                 horario para conocer tus próximas clases y eventos. Si aún no has comprobado tu horario, podrás hacerlo desde tu perfil personal, en la
                 esquina superior derecha.
               </p>
-              <button *ngIf="checkLogin(); else notLogged" [routerLink]="['/perfil_alumno']" (click)="onLinkClick()"
-                  class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10">Click
-                  aquí
-              </button>
-              <ng-template #notLogged>
-                <button class="mt-8 text-sky-950 uppercase py-3 text-sm px-10 border border-sky-950 hover:bg-white hover:bg-opacity-10">Click
-                    aquí
-                </button>
-              </ng-template>
           </div>
       </div>
       <div class="w-full flex flex-col pl-16 items-center">
@@ -139,6 +130,14 @@ export class InformacionComponent {
     private dialog: MatDialog, private viewportScroller: ViewportScroller
   ) { }
 
+  check: boolean = false;
+
+  ngOnInit(): void {
+    if (localStorage.getItem('usuario') != null) {
+      this.check = true;
+    }
+  }
+
   onLinkClick() {
     this.viewportScroller.scrollToPosition([0, 0]);
   }
@@ -148,9 +147,5 @@ export class InformacionComponent {
       width: 'fit-content',
       height: 'fit-content'
     });
-  }
-
-  checkLogin() {
-    return localStorage.getItem('usuario') != null;
   }
 }

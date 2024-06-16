@@ -14,27 +14,27 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
-  <div class="bg-blue-200 w-fit max-w-6xl m-auto mt-1 p-4 rounded">
-    <h4 class="text-xl text-center font-bold text-navy-700">
+  <div class="bg-blue-200 w-fit max-w-6xl m-auto mt-1 py-2 px-14 rounded">
+    <h4 class="text-xl text-center font-bold text-navy-700 mb-4">
       Publicar nueva tarea
     </h4>
     <div class="w-fit m-auto flex flex-col border border-gray-300">
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl">
-        <label class="text-sm text-gray-600">Título</label>
-        <input type="text" class="text-base font-medium text-navy-700 w-48" name="titulo"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Título</label>
+        <input type="text" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1" name="titulo"
           #titulo>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4">
-        <label class="text-sm text-gray-600 mr-2">Fecha entrega</label>
-        <input type="date" class="text-base font-medium text-navy-700 w-48" name="fecha"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4 flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Fecha entrega</label>
+        <input type="date" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1" name="fecha"
           #fechaEntrega>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4">
-        <label class="text-sm text-gray-600 mr-2">Hora entrega</label>
-        <input type="time" class="text-base font-medium text-navy-700 w-48" name="time"
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4 flex flex-col items-center">
+        <label class="text-sm text-gray-600 mb-1">Hora entrega</label>
+        <input type="time" class="text-base font-medium text-navy-700 w-48 border rounded border-gray-300 p-1" name="time"
           #horaEntrega>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4">
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4 flex flex-col items-center">
         <label for="alumno" class="block text-sm font-medium text-gray-700">Alumno</label>
         <select id="alumno" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           #alumno>
@@ -43,7 +43,7 @@ import Swal from 'sweetalert2';
           </option>
         </select>
       </div>
-      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4">
+      <div class="rounded-2xl bg-white px-3 py-4 shadow-3xl mt-4 flex flex-col items-center">
         <label class="text-sm text-gray-600">Descripción</label>
         <textarea id="descripcion" class="mt-2 w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           rows="7" placeholder="Descripción de la tarea" #descripcion></textarea>

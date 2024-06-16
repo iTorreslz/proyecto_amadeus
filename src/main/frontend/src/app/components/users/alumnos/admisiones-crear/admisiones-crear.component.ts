@@ -5,6 +5,7 @@ import { NewAdmision } from '../../../../interfaces/newAdmision';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Admision } from '../../../../interfaces/admision';
 
 @Component({
   selector: 'app-admisiones-crear',
@@ -18,12 +19,13 @@ import Swal from 'sweetalert2';
       </h4>
     </div>
 
-    <p class="text-xl text-gray-600 text-center">Selecciona instrumento a solicitar</p>
+    <p class="text-xl text-gray-600 text-center mb-4">Selecciona instrumento a solicitar</p>
 
-    <div class="border border-gray-300 flex flex-row flex-wrap justify-between">
-      <div class="rounded-2xl flex items-center text-4xl w-full h-32 bg-blue-800 px-3 py-4 shadow-3xl mt-4 mr-4" *ngFor="let instrumento of instrumentos">
+    <div class="border border-gray-300 flex flex-row flex-wrap justify-around mb-2">
+      <div class="rounded-xl flex items-center text-xl w-1/3 px-3 py-4 shadow-3xl mt-4 mr-4 transition-colors duration-700" *ngFor="let instrumento of instrumentos"
+      [ngClass]="{'bg-blue-800': selectedInstrumento !== instrumento, 'bg-blue-500': selectedInstrumento === instrumento}">
         <input type="radio" class="text-base font-medium text-navy-700 w-14" name="instrumento" [value]="instrumento" [id]="instrumento" [(ngModel)]="selectedInstrumento"/>
-        <label class="text-white" [for]="instrumento">{{ instrumento }}</label>
+        <label class="transition-colors duration-700" [for]="instrumento" [ngClass]="{'text-white': selectedInstrumento !== instrumento, 'text-black': selectedInstrumento === instrumento}">{{ instrumento }}</label>
       </div>
     </div>
     <div class="flex justify-center">
@@ -41,6 +43,7 @@ export class AdmisionesCrearComponent {
   nuevaAdmision: NewAdmision | undefined;
   selectedInstrumento: string = "";
   instrumentos: string[] = ["Piano", "Guitarra", "Clarinete", "Saxofón", "Flauta", "Trompeta", "Bombardino", "Tuba", "Trombón", "Canto"]
+  admisiones: Admision[] = [];
 
   constructor(private admisionService: AdmisionesService, private router: Router) { }
 
@@ -48,6 +51,19 @@ export class AdmisionesCrearComponent {
     let usuarioString = localStorage.getItem("usuario");
     let usuario = usuarioString ? JSON.parse(usuarioString) : null;
     this.idAlumnoSolicitante = usuario ? usuario.id : 0;
+
+    this.admisionService.getAll().subscribe({
+      next: (admisiones: Admision[]) => {
+        admisiones.forEach(admision => {
+          if (admision.idAlumno == this.idAlumnoSolicitante) {
+            this.admisiones.push(admision);
+          }
+        })
+      },
+      error: (error) => {
+        console.error('Error al obtener la lista de admisiones:', error);
+      }
+    });
   }
 
   enviar(idAlumno: number) {
@@ -70,16 +86,36 @@ export class AdmisionesCrearComponent {
         cancelButtonText: "Cancelar"
       }).then((result) => {
 
+        let yaSolicitado: boolean = false;
+
         if (result.isConfirmed) {
           for (let i = 0; i < this.instrumentos.length; i++) {
-            let instrumentoLoop: string = this.instrumentos[i];
-            if (instrumentoLoop.includes(this.selectedInstrumento)) {
-              this.nuevaAdmision = {
-                idAlumno: idAlumno,
-                apto: false,
-                noApto: false,
-                instrumento: i + 1
-              };
+
+            this.admisiones.forEach(admision => {
+              if (admision.instrumento == i + 1) {
+                yaSolicitado = true;
+              }
+            });
+
+            if (yaSolicitado) {
+              Swal.fire({
+                icon: 'warning',
+                title: 'Instrumento ya solicitado. Seleccione otro si lo desea.',
+                text: 'Tiene que esperar a la respuesta por parte de la escuela. Cualquier duda contacte con la misma.',
+              })
+
+              yaSolicitado = false;
+              
+            } else {
+              let instrumentoLoop: string = this.instrumentos[i];
+              if (instrumentoLoop.includes(this.selectedInstrumento)) {
+                this.nuevaAdmision = {
+                  idAlumno: idAlumno,
+                  apto: false,
+                  noApto: false,
+                  instrumento: i + 1
+                };
+              }
             }
           }
           this.admisionService.create(this.nuevaAdmision!).subscribe({
